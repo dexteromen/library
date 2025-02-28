@@ -56,20 +56,20 @@ func Routes(router *gin.Engine) {
 
 	router.POST("/issueregistry", controllers.CreateIssueRegistry)
 
-	users := router.Group("/users")
+	usersGroup := router.Group("/users")
 	{
-		users.POST("", controllers.CreateUser)       // Create
-		users.GET("", controllers.GetAllUsers)       // Read all
-		users.GET("/:id", controllers.GetUser)       // Read One
-		users.PUT("/:id", controllers.UpdateUser)    // Update
-		users.DELETE("/:id", controllers.DeleteUser) // Delete
+		usersGroup.POST("", controllers.CreateUser)       // Create
+		usersGroup.GET("", controllers.GetAllUsers)       // Read all
+		usersGroup.GET("/:id", controllers.GetUser)       // Read One
+		usersGroup.PUT("/:id", controllers.UpdateUser)    // Update
+		usersGroup.DELETE("/:id", controllers.DeleteUser) // Delete
 	}
-	libraries := router.Group("/libraries")
+	librariesGroup := router.Group("/libraries")
 	{
-		libraries.POST("/", controllers.CreateLibrary)
-		libraries.GET("/", controllers.GetAllLibrary)
-		libraries.GET("/:id", controllers.GetLibrary)
-		libraries.PUT("/:id", controllers.UpdateLibrary)
-		libraries.DELETE("/:id", controllers.DeleteLibrary)
+		librariesGroup.POST("/", controllers.CreateLibrary)
+		librariesGroup.GET("/", controllers.GetAllLibrary)
+		librariesGroup.GET("/:id", controllers.GetLibrary)
+		librariesGroup.PUT("/:id", controllers.UpdateLibrary)
+		librariesGroup.DELETE("/:id", controllers.DeleteLibrary)
 	}
 }
