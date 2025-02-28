@@ -14,14 +14,22 @@ import (
 // Helper function to return JSON responses
 func JSONResponse(c *gin.Context, status int, data interface{}) {
 	c.JSON(status, gin.H{
-		"status": status,
-		"data":   data,
+		"STATUS": status,
+		"DATA":   data,
 	})
 }
 
 // =====================================================
 // Library Controller
 // =====================================================
+func GetAllLibrary(c *gin.Context) {
+	var libraries []models.Library
+	if err := initializers.DB.Find(&libraries).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Libraries not found"})
+		return
+	}
+	JSONResponse(c, http.StatusOK, libraries)
+}
 
 func  CreateLibrary(c *gin.Context) {
 	var library models.Library
@@ -75,6 +83,14 @@ func  DeleteLibrary(c *gin.Context) {
 // =====================================================
 // User Controller
 // =====================================================
+func GetAllUsers(c *gin.Context) {
+	var user []models.User
+	if err := initializers.DB.Find(&user).Error; err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Users not found"})
+		return
+	}
+	JSONResponse(c, http.StatusOK, user)
+}
 
 func  CreateUser(c *gin.Context) {
 	var user models.User

@@ -34,18 +34,18 @@ func Routes(router *gin.Engine) {
 	// r.POST("/requests", controllers.CreateRequest)
 	// r.POST("/issue", controllers.IssueBook)
 
-
 	// Register routes
-	router.POST("/users", controllers.CreateUser)
-	router.GET("/users/:id", controllers.GetUser)
-	router.PUT("/users/:id", controllers.UpdateUser)
-	router.DELETE("/users/:id", controllers.DeleteUser)
+	// router.POST("/users", controllers.CreateUser)
+	// router.GET("/users", controllers.GetAllUsers) //New Created
+	// router.GET("/users/:id", controllers.GetUser)
+	// router.PUT("/users/:id", controllers.UpdateUser)
+	// router.DELETE("/users/:id", controllers.DeleteUser)
 
-
-	router.POST("/libraries", controllers.CreateLibrary)
-	router.GET("/libraries/:id", controllers.GetLibrary)
-	router.PUT("/libraries/:id", controllers.UpdateLibrary)
-	router.DELETE("/libraries/:id", controllers.DeleteLibrary)
+	// router.POST("/libraries", controllers.CreateLibrary)
+	// router.GET("/libraries", controllers.GetAllLibrary) //New created
+	// router.GET("/libraries/:id", controllers.GetLibrary)
+	// router.PUT("/libraries/:id", controllers.UpdateLibrary)
+	// router.DELETE("/libraries/:id", controllers.DeleteLibrary)
 
 	router.POST("/books", controllers.CreateBook)
 	router.GET("/books/:isbn", controllers.GetBook)
@@ -55,4 +55,21 @@ func Routes(router *gin.Engine) {
 	router.POST("/requestevents", controllers.CreateRequestEvent)
 
 	router.POST("/issueregistry", controllers.CreateIssueRegistry)
+
+	users := router.Group("/users")
+	{
+		users.POST("", controllers.CreateUser)       // Create
+		users.GET("", controllers.GetAllUsers)       // Read all
+		users.GET("/:id", controllers.GetUser)       // Read One
+		users.PUT("/:id", controllers.UpdateUser)    // Update
+		users.DELETE("/:id", controllers.DeleteUser) // Delete
+	}
+	libraries := router.Group("/libraries")
+	{
+		libraries.POST("/", controllers.CreateLibrary)
+		libraries.GET("/", controllers.GetAllLibrary)
+		libraries.GET("/:id", controllers.GetLibrary)
+		libraries.PUT("/:id", controllers.UpdateLibrary)
+		libraries.DELETE("/:id", controllers.DeleteLibrary)
+	}
 }
