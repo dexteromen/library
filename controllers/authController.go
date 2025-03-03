@@ -61,3 +61,25 @@ func SignIn(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"token": token})
 }
+
+// AdminIndex - Restricted route for admin users
+func AdminIndex(c *gin.Context) {
+	role, exists := c.Get("role")
+	if !exists || role != "admin" {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Not authorized"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Welcome, Admin!"})
+}
+
+// UserIndex - Restricted route for regular users
+func UserIndex(c *gin.Context) {
+	role, exists := c.Get("role")
+	if !exists || role != "user" {
+		c.JSON(http.StatusForbidden, gin.H{"error": "Not authorized"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Welcome, User!"})
+}
