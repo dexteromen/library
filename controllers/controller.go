@@ -1,8 +1,8 @@
 package controllers
 
 import (
-	// "github.com/dexteromen/library/config"
-	// "github.com/dexteromen/library/models"
+	// "library/config"
+	// "library/models"
 	// "github.com/gin-gonic/gin"
 	// "github.com/jinzhu/gorm"
 	// "log"

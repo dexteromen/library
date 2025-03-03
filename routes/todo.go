@@ -2,7 +2,7 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/dexteromen/library/controllers"
+	"library/controllers"
 )
 
 func TodoRoutes(r *gin.Engine) {

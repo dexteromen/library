@@ -1,29 +1,60 @@
-// /utils/jwt.go
 package utils
 
 import (
+	"errors"
+	"os"
 	"time"
 
 	"github.com/golang-jwt/jwt/v4"
+	"github.com/joho/godotenv"
 )
 
-var secretKey = []byte("secretkeyjwt")
+var secretKey []byte
 
+func init() {
+	godotenv.Load()
+	secretKey = []byte(os.Getenv("JWT_SECRET"))
+}
+
+// Claims struct for JWT payload
 type Claims struct {
 	Email string `json:"email"`
 	Role  string `json:"role"`
-	jwt.StandardClaims
+	jwt.RegisteredClaims
 }
 
+// GenerateJWT creates a new JWT token
 func GenerateJWT(email, role string) (string, error) {
-	expirationTime := time.Now().Add(time.Hour * 1).Unix()
-	claims := &Claims{
-		Email: email,
-		Role:  role,
-		StandardClaims: jwt.StandardClaims{
-			ExpiresAt: expirationTime,
-		},
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["email"] = email
+	claims["role"] = role
+	// claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
+	claims["exp"] = time.Now().Add(time.Minute * 1).Unix()
+
+	tokenString, err := token.SignedString(secretKey)
+	if err != nil {
+		return "", err
 	}
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString(secretKey)
+	return tokenString, nil
+}
+
+// ParseToken validates and extracts claims from the JWT token
+func ParseToken(tokenString string) (*Claims, error) {
+	// Parse token with Claims struct
+	token, err := jwt.ParseWithClaims(tokenString, &Claims{}, func(token *jwt.Token) (interface{}, error) {
+		return secretKey, nil
+	})
+
+	if err != nil {
+		return nil, err
+	}
+
+	// Extract claims safely
+	claims, ok := token.Claims.(*Claims)
+	if !ok || !token.Valid {
+		return nil, errors.New("invalid token")
+	}
+
+	return claims, nil
 }

@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/dexteromen/library/config"
-	"github.com/dexteromen/library/models"
-	"github.com/dexteromen/library/routes"
+	"library/config"
+	"library/models"
+	"library/routes"
 	"github.com/gin-gonic/gin"
 )
 

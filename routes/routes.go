@@ -1,8 +1,8 @@
 package routes
 
 import (
-	// "github.com/dexteromen/library/controllers"
-	// "github.com/dexteromen/library/middlewares"
+	"library/controllers"
+	"library/middlewares"
 	"github.com/gin-gonic/gin"
 )
 
@@ -50,7 +50,8 @@ func Routes(router *gin.Engine) {
 		// router.DELETE("/libraries/:id", controllers.DeleteLibrary)
 
 	*/
-
+	
+	/*
 	// router.POST("/books", controllers.CreateBook)
 	// router.GET("/books/:isbn", controllers.GetBook)
 	// router.PUT("/books/:isbn", controllers.UpdateBook)
@@ -84,4 +85,17 @@ func Routes(router *gin.Engine) {
 	// 	api.GET("/user", middleware.AuthMiddleware(), controllers.UserIndex)
 	// 	api.GET("/admin", middleware.AuthMiddleware(), controllers.AdminIndex)
 	// }
+	*/
+
+	// Public Routes
+	router.POST("/signup", controllers.SignUp)
+	router.POST("/signin", controllers.SignIn)
+
+	// Protected Routes
+	protected := router.Group("/")
+	protected.Use(middleware.AuthMiddleware()) // Apply JWT middleware
+	{
+		protected.GET("/admin", controllers.AdminIndex)
+		protected.GET("/user", controllers.UserIndex)
+	}
 }
