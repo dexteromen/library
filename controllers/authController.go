@@ -1,12 +1,12 @@
 package controllers
 
 import (
-	"net/http"
-
-	"github.com/gin-gonic/gin"
 	"library/config"
 	"library/models"
 	"library/utils"
+	"net/http"
+
+	"github.com/gin-gonic/gin"
 )
 
 // Signup user
@@ -59,7 +59,10 @@ func SignIn(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{"token": token})
+	c.JSON(http.StatusOK, gin.H{
+		"token":   token,
+		"message": "User logged-in",
+	})
 }
 
 // AdminIndex - Restricted route for admin users
