@@ -6,6 +6,7 @@ import (
 )
 
 func Routes(router *gin.Engine) {
+	/*
 	// r.GET("/user", controllers.GetAllUsers)
 	// r.POST("/user", controllers.CreateUser)
 	// r.GET("/user/:id", controllers.GetUserById)
@@ -47,6 +48,7 @@ func Routes(router *gin.Engine) {
 	// router.PUT("/libraries/:id", controllers.UpdateLibrary)
 	// router.DELETE("/libraries/:id", controllers.DeleteLibrary)
 
+	*/
 	router.POST("/books", controllers.CreateBook)
 	router.GET("/books/:isbn", controllers.GetBook)
 	router.PUT("/books/:isbn", controllers.UpdateBook)
