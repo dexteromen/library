@@ -1,0 +1,34 @@
+Test API Endpoints
+Using Postman or curl, test the following endpoints:
+
+Create a Request:
+bash
+Copy
+Edit
+curl -X POST "http://localhost:8080/requests" -H "Content-Type: application/json" -d '{
+  "book_id": 1,
+  "reader_id": 2,
+  "request_type": "Borrow"
+}'
+Approve a Request:
+bash
+Copy
+Edit
+curl -X PUT "http://localhost:8080/requests/1/approve" -H "Authorization: Bearer <JWT_TOKEN>"
+Create an Issue:
+bash
+Copy
+Edit
+curl -X POST "http://localhost:8080/issues" -H "Content-Type: application/json" -d '{
+  "isbn": "1234567890",
+  "reader_id": 2,
+  "issue_approver_id": 1,
+  "issue_status": "Issued",
+  "expected_return_date": "2025-03-10"
+}'
+Return a Book:
+bash
+Copy
+Edit
+curl -X PUT "http://localhost:8080/issues/1/return" -H "Authorization: Bearer <JWT_TOKEN>"
+This setup fully integrates RequestEvents and IssueRegistery into your Gin-GORM application with role-based permissions, JWT authentication, and session management. 🚀
