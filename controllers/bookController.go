@@ -5,7 +5,7 @@ import (
 	"library/models"
 	"library/utils"
 	"net/http"
-	"time"
+	// "time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -81,43 +81,6 @@ func DeleteBookByID(c *gin.Context) {
 	}
 
 	utils.APIResponse(c, http.StatusOK, "Book deleted successfully", nil)
-}
-
-// User: Request a Book
-func RequestBook(c *gin.Context) {
-	var request models.RequestEvents
-	if err := c.ShouldBindJSON(&request); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
-		return
-	}
-
-	request.RequestDate = time.Now()
-
-	if err := config.DB.Create(&request).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to request book"})
-		return
-	}
-
-	c.JSON(http.StatusCreated, gin.H{"message": "Book request submitted"})
-}
-
-// Approver: Approve or Reject Requests
-func ApproveRequestById(c *gin.Context) {
-	var request models.RequestEvents
-	if err := config.DB.First(&request, c.Param("id")).Error; err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Request not found"})
-		return
-	}
-
-	request.ApprovalDate = time.Now()
-	request.ApproverID = uint(c.GetInt("userID"))
-
-	if err := config.DB.Save(&request).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to approve request"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Request approved"})
 }
 
 

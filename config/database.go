@@ -36,7 +36,7 @@ func ConnectDB() {
 		&models.Session{},
 		&models.Library{},
 		&models.BookInventory{},
-		&models.RequestEvents{},
+		&models.RequestEvent{},
 		&models.IssueRegistery{},
 	)
 
