@@ -5,10 +5,11 @@ import (
 	"log"
 	"os"
 
-	"gorm.io/driver/postgres"
-	"github.com/joho/godotenv"
-	"gorm.io/gorm"
 	"library/models"
+
+	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 var DB *gorm.DB
@@ -20,18 +21,6 @@ func LoadEnvVariables() {
 	}
 }
 
-// func ConnectDB() {
-// 	var err error
-// 	dsn := os.Getenv("DB_URL")
-// 	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
-// 	if err != nil {
-// 		log.Fatal("Failed to connect to database!")
-// 	}
-
-// 	fmt.Println("Database connected successfully.")
-// }
-
 func ConnectDB() {
 	var err error
 	dsn := os.Getenv("DB_URL")
@@ -42,7 +31,14 @@ func ConnectDB() {
 	}
 
 	// Auto migrate tables
-	DB.AutoMigrate(&models.User{}, &models.Session{})
+	DB.AutoMigrate(
+		&models.User{},
+		&models.Session{},
+		&models.Library{},
+		&models.BookInventory{},
+		&models.RequestEvents{},
+		&models.IssueRegistery{},
+	)
 
 	fmt.Println("Database connected successfully.")
 }
