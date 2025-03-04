@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"time"
 	"library/config"
 	"library/models"
 	"library/utils"
@@ -34,7 +35,7 @@ func SignUp(c *gin.Context) {
 	c.JSON(http.StatusCreated, gin.H{"message": "User created successfully"})
 }
 
-// Signin user
+// SignIn updates to store session
 func SignIn(c *gin.Context) {
 	var credentials models.User
 	if err := c.ShouldBindJSON(&credentials); err != nil {
@@ -59,10 +60,28 @@ func SignIn(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, gin.H{
-		"token":   token,
-		"message": "User logged-in",
-	})
+	session := models.Session{
+		UserID:    user.ID,
+		Token:     token,
+		ExpiresAt: time.Now().Add(time.Hour * 1),
+		IsActive:  true,
+	}
+	config.DB.Create(&session)
+
+	c.JSON(http.StatusOK, gin.H{"token": token, "message": "User logged-in"})
+}
+
+// Logout handler
+func SignOut(c *gin.Context) {
+	token := c.GetHeader("Authorization")[7:]
+
+	if token == "" {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "No token provided"})
+		return
+	}
+
+	config.DB.Model(&models.Session{}).Where("token = ?", token).Update("is_active", false)
+	c.JSON(http.StatusOK, gin.H{"message": "User logged out successfully"})
 }
 
 // AdminIndex - Restricted route for admin users
