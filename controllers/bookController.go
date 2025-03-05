@@ -5,6 +5,7 @@ import (
 	"library/models"
 	"library/utils"
 	"net/http"
+
 	// "time"
 
 	"github.com/gin-gonic/gin"
@@ -31,6 +32,18 @@ func GetBooks(c *gin.Context) {
 	var books []models.BookInventory
 	config.DB.Find(&books)
 	utils.APIResponse(c, http.StatusOK, "Books retrieved successfully", books)
+}
+
+func GetBookByID(c *gin.Context) {
+	var book models.BookInventory
+	bookID := c.Param("id")
+
+	if err := config.DB.First(&book, "book_id = ?", bookID).Error; err != nil {
+		utils.APIResponse(c, http.StatusNotFound, "Book not found", nil)
+		return
+	}
+
+	utils.APIResponse(c, http.StatusOK, "Book retrieved successfully", book)
 }
 
 // // Admin: Update Book by ID
@@ -69,7 +82,7 @@ func DeleteBookByID(c *gin.Context) {
 	bookID := c.Param("id")
 
 	// Check if the book exists
-	if err := config.DB.First(&book,"book_id = ?", bookID).Error; err != nil {
+	if err := config.DB.First(&book, "book_id = ?", bookID).Error; err != nil {
 		utils.APIResponse(c, http.StatusNotFound, "Book not found", nil)
 		return
 	}
@@ -82,7 +95,6 @@ func DeleteBookByID(c *gin.Context) {
 
 	utils.APIResponse(c, http.StatusOK, "Book deleted successfully", nil)
 }
-
 
 // func UpdateBookByID(c *gin.Context) {
 // 	var book models.BookInventory

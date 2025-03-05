@@ -14,7 +14,7 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		token := c.GetHeader("Authorization")[7:]
 		if token == "" {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "No token provided"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Authorization token is required"})
 			c.Abort()
 			return
 		}
@@ -33,6 +33,8 @@ func AuthMiddleware() gin.HandlerFunc {
 			return
 		}
 
+		// Set the user ID in the context
+		c.Set("user_id", claims.UserID)
 		c.Set("email", claims.Email)
 		c.Set("role", claims.Role)
 		c.Next()

@@ -18,19 +18,21 @@ func init() {
 
 // Claims struct for JWT payload
 type Claims struct {
-	Email string `json:"email"`
-	Role  string `json:"role"`
+	UserID uint   `json:"user_id"`
+	Email  string `json:"email"`
+	Role   string `json:"role"`
 	jwt.RegisteredClaims
 }
 
 // GenerateJWT creates a new JWT token
-func GenerateJWT(email, role string) (string, error) {
+func GenerateJWT(userID uint, email, role string) (string, error) {
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
+	claims["user_id"] = userID // Add the user_id to the claims
 	claims["email"] = email
 	claims["role"] = role
-	// claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
-	claims["exp"] = time.Now().Add(time.Minute * 1).Unix()
+	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
+	// claims["exp"] = time.Now().Add(time.Minute * 1).Unix()
 
 	tokenString, err := token.SignedString(secretKey)
 	if err != nil {

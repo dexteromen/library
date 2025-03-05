@@ -32,3 +32,131 @@ Copy
 Edit
 curl -X PUT "http://localhost:8080/issues/1/return" -H "Authorization: Bearer <JWT_TOKEN>"
 This setup fully integrates RequestEvents and IssueRegistery into your Gin-GORM application with role-based permissions, JWT authentication, and session management. 🚀
+
+
+
+
+
+
+
+
+
+
+
+
+1. Testing the Create Request Endpoint
+Endpoint: POST /requests
+Purpose: To create a new request for a book (borrow or return).
+Steps:
+URL: http://localhost:8080/requests
+Method: POST
+Headers:
+Content-Type: application/json
+Body:
+Select raw and choose JSON as the type.
+Add the request data:
+json
+Copy
+Edit
+{
+  "book_id": 1,
+  "reader_id": 2,
+  "request_type": "Borrow"
+}
+Send: Click on Send in Postman.
+Response: You should get a response with a 201 Created status and the request data.
+2. Testing the Approve Request Endpoint
+Endpoint: PUT /requests/:id/approve
+Purpose: To approve a request made by a user.
+Steps:
+URL: http://localhost:8080/requests/{id}/approve (Replace {id} with an actual request ID from the database)
+
+Method: PUT
+
+Headers:
+
+Content-Type: application/json
+You may also need to include an authorization token if your system is using JWT for authentication.
+Body: You don't need any body data for this. Just approving the request with the given ID.
+
+Send: Click on Send.
+
+Response: You should get a response with status 200 OK and the updated request details.
+
+3. Testing the Get Requests Endpoint
+Endpoint: GET /requests
+Purpose: To get all requests.
+Steps:
+URL: http://localhost:8080/requests
+
+Method: GET
+
+Headers:
+
+Content-Type: application/json
+Body: No body is needed for this GET request.
+
+Send: Click on Send.
+
+Response: You should get a list of all requests stored in the database in a 200 OK response.
+
+4. Testing the Create Issue Endpoint
+Endpoint: POST /issues
+Purpose: To create an issue (book is issued to a reader).
+Steps:
+URL: http://localhost:8080/issues
+Method: POST
+Headers:
+Content-Type: application/json
+Body:
+json
+Copy
+Edit
+{
+  "isbn": "101-20-20-02",
+  "reader_id": 2,
+  "issue_approver_id": 1,
+  "issue_status": "Issued",
+  "expected_return_date": "2025-03-15"
+}
+Send: Click on Send.
+Response: You should get a response with status 201 Created and the issue details.
+5. Testing the Return Book Endpoint
+Endpoint: PUT /issues/:id/return
+Purpose: To return a book that was issued.
+Steps:
+URL: http://localhost:8080/issues/{id}/return (Replace {id} with an actual issue ID from the database)
+
+Method: PUT
+
+Headers:
+
+Content-Type: application/json
+Body: You don't need any body data, as the book is returned with the given ID.
+
+Send: Click on Send.
+
+Response: You should get a response with status 200 OK and the updated issue details.
+
+6. Testing the Get Issues Endpoint
+Endpoint: GET /issues
+Purpose: To get all issues.
+Steps:
+URL: http://localhost:8080/issues
+
+Method: GET
+
+Headers:
+
+Content-Type: application/json
+Body: No body is needed for this GET request.
+
+Send: Click on Send.
+
+Response: You should get a list of all issues stored in the database in a 200 OK response.
+
+Additional Considerations:
+Authorization: If your system uses authentication (like JWT tokens), make sure you include the token in the request headers.
+Example header for JWT:
+Authorization: Bearer <your_jwt_token>
+Response Structure: Ensure that your responses match the expected output format and include any useful details such as error messages or success messages.

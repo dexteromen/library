@@ -13,8 +13,10 @@ func bookRoutes(router *gin.Engine) {
 	// router.POST("/book", controllers.CreateBook)           // Create Book
 	// router.PUT("/book/:id", controllers.UpdateBookByID)    // Update Book
 	// router.DELETE("/book/:id", controllers.DeleteBookByID) // Delete Book
+	// router.GET("/book/:id", controllers.GetBookByID)       // Get Book By ID
 
-	router.GET("/books", controllers.GetBooks) // Get All Books
+	router.GET("/books", controllers.GetBooks)       // Get All Books
+	router.GET("/book/:id", controllers.GetBookByID) // Get Book By ID
 	bookGroup := router.Group("/")
 	bookGroup.Use(middlewares.AuthMiddleware())
 	{

@@ -9,11 +9,11 @@ import (
 
 func libraryRoutes(router *gin.Engine) {
 
-	// 	//Without auth
-	// 	router.GET("/library", controllers.GetLibraries)
-	// 	router.POST("/library", controllers.CreateLibrary)
-	// 	router.PUT("/library/:id", controllers.UpdateLibrary)
-	// 	router.DELETE("/library/:id", controllers.DeleteLibrary)
+	// //Without auth
+	// router.GET("/library", controllers.GetLibraries)
+	// router.POST("/library", controllers.CreateLibrary)
+	// router.PUT("/library/:id", controllers.UpdateLibrary)
+	// router.DELETE("/library/:id", controllers.DeleteLibrary)
 
 	router.GET("/library", controllers.GetLibraries) // Get all Libraries
 	libraryGroup := router.Group("/")
