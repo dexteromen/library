@@ -6,8 +6,8 @@ import (
 
 func Routes(router *gin.Engine) {
 
-	authRoutes(router)    //Working
+	// authRoutes(router)    //Working
 	// libraryRoutes(router) //Working
 	// bookRoutes(router)    //Working
-	// issueApprovalRoutes(router)
+	issueApprovalRoutes(router)
 }
