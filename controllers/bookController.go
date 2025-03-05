@@ -96,6 +96,37 @@ func DeleteBookByID(c *gin.Context) {
 	utils.APIResponse(c, http.StatusOK, "Book deleted successfully", nil)
 }
 
+func SearchBooks(c *gin.Context) {
+	var books []models.BookInventory
+	title := c.Query("title")
+	author := c.Query("authors")
+	publisher := c.Query("publisher")
+
+	query := config.DB
+
+	if title != "" {
+		query = query.Where("title LIKE ?", "%"+title+"%")
+	}
+	if author != "" {
+		query = query.Where("authors LIKE ?", "%"+author+"%")
+	}
+	if publisher != "" {
+		query = query.Where("publisher LIKE ?", "%"+publisher+"%")
+	}
+
+	query.Find(&books)
+
+	// for i, book := range books {
+	// 	if book.AvailableCopies > 0 {
+	// 		books[i].Status = "Available"
+	// 	} else {
+	// 		books[i].Status = "Not available, expected by " + book.ExpectedReturnDate.Format("2006-01-02")
+	// 	}
+	// }
+
+	utils.APIResponse(c, http.StatusOK, "Books retrieved successfully", books)
+}
+
 // func UpdateBookByID(c *gin.Context) {
 // 	var book models.BookInventory
 // 	bookID := c.Param("id")

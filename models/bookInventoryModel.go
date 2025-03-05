@@ -26,3 +26,17 @@ type BookInventory struct {
 // 	}
 // 	return
 // }
+
+
+// // BookInventory represents the inventory of books in the library
+// type BookInventory struct {
+// 	ID                 uint      `json:"id" gorm:"primary_key"`
+// 	Title              string    `json:"title"`
+// 	Author             string    `json:"author"`
+// 	ISBN               string    `json:"isbn"`
+// 	Available          bool      `json:"available"`
+// 	ExpectedReturnDate time.Time `json:"expected_return_date"`
+// 	Status             string    `json:"status" gorm:"-"`
+// 	CreatedAt          time.Time `json:"created_at"`
+// 	UpdatedAt          time.Time `json:"updated_at"`
+// }
