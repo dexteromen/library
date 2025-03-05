@@ -18,6 +18,6 @@ type User struct {
 	Email         string `gorm:"unique" json:"email" binding:"required,email"`
 	ContactNumber string `json:"contact_number" binding:"required,len=10,numeric"`
 	Password      string `json:"password" binding:"required"`
-	Role          string `json:"role" binding:"required,oneof=admin user approver"`
+	Role          string `json:"role" binding:"required,oneof=admin reader owner"`
 	LibID         uint   `json:"lib_id"`
 }

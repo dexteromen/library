@@ -22,7 +22,7 @@ func requestRoutes(r *gin.Engine) {
 	requestGroup.Use(middlewares.AuthMiddleware())
 	{
 		requestGroup.POST("/", controllers.CreateRequest)
-		requestGroup.PUT("/:id/approve", middlewares.RoleMiddleware("approver"), controllers.ApproveRequest)
+		requestGroup.PUT("/:id/approve", middlewares.RoleMiddleware("owner"), controllers.ApproveRequest)
 		requestGroup.GET("/", controllers.GetRequests)
 	}
 

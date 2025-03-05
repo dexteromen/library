@@ -22,7 +22,7 @@ func issuesRoutes(r *gin.Engine) {
 	issueGroup.Use(middlewares.AuthMiddleware())
 	{
 		issueGroup.POST("/", middlewares.RoleMiddleware("admin"), controllers.CreateIssue)
-		issueGroup.PUT("/:id/return", middlewares.RoleMiddleware("approver"), controllers.ReturnBook)
+		issueGroup.PUT("/:id/return", middlewares.RoleMiddleware("owner"), controllers.ReturnBook)
 		issueGroup.GET("/", controllers.GetIssues)
 	}
 
