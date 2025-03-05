@@ -1,0 +1,1010 @@
+{
+	"info": {
+		"_postman_id": "17a869f5-1769-4026-8912-c5f88547761f",
+		"name": "LMS",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "42467553"
+	},
+	"item": [
+		{
+			"name": "1. Registration",
+			"item": [
+				{
+					"name": "signup",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\n//   \"name\": \"Admin User\",\n//   \"email\": \"admin@example.com\",\n//   \"contact_number\": \"1234567890\",\n//   \"password\": \"Admin@123\",\n//   \"role\": \"admin\",\n//   \"lib_id\": 1\n// }\n// {\n//   \"name\": \"Regular User\",\n//   \"email\": \"user@example.com\",\n//   \"contact_number\": \"1234567890\",\n//   \"password\": \"User@123\",\n//   \"role\": \"user\",\n//   \"lib_id\": 1\n// }\n// {\n//   \"name\": \"Approver User\",\n//   \"email\": \"approver@example.com\",\n//   \"contact_number\": \"1234567890\",\n//   \"password\": \"Approver@123\",\n//   \"role\": \"approver\",\n//   \"lib_id\": 1\n// }\n{\n  \"name\": \"User A\",\n  \"email\": \"user_a@example.com\",\n  \"contact_number\": \"1234567890\",\n  \"password\": \"Usera@123\",\n  \"role\": \"user\",\n  \"lib_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/signup",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"signup"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Users By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"User A Updated\",\n  \"email\": \"user_a@example.com\",\n  \"contact_number\": \"1234567890\",\n  \"password\": \"Usera@123\",\n  \"role\": \"user\",\n  \"lib_id\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User By Id",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signin",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Admin@123\"\n}\n\n// {\n//   \"email\": \"user@example.com\",\n//   \"password\": \"User@123\"\n// }\n\n// {\n//   \"email\": \"approver@example.com\",\n//   \"password\": \"Approver@123\"\n// }\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/signin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"signin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "signout",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMTgzNDE2LCJyb2xlIjoiYWRtaW4iLCJ1c2VyX2lkIjo2fQ.yXEZ9Rl5cbtT4oxRVSU0yRTAvAni-GVEnYH5W5i0r7g",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/signout",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"signout"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "2. Library",
+			"item": [
+				{
+					"name": "Create a Library",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDg3NDY0LCJyb2xlIjoiYWRtaW4ifQ.EtK-iWeHf4v_GUSPHuib_cBvxkLeLAGr2JDmDJPlklk",
+								"description": "admin role only ",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Library 5\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/library",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"library"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Library",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/library",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"library"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Library",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDEwODYxMTcsInJvbGUiOiJ1c2VyIn0.udIUxG1J0Vy0paW0vbyaoN0dhsy4zdEZAGfSS4bk-lY",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": 5,\n    \"name\": \"Library 5\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/library/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"library",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Library",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDEwODYyNTQsInJvbGUiOiJ1c2VyIn0.84S4KyQgfIgi9mX1htrYb3m6xVffZ4Xe2X_3O7ARh9I",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/library/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"library",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "3. Books",
+			"item": [
+				{
+					"name": "Create a Book (Admin Only)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDkwOTIyLCJyb2xlIjoiYWRtaW4ifQ._Q06SiBf21HX4QC398FH72XgutC5y9LdEkDJ1uufOAA",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// {\n//   \"isbn\": \"101-20-20-02\",\n//   \"lib_id\": 1,\n//   \"title\": \"Go Programming 23\",\n//   \"authors\": \"John Doe\",\n//   \"publisher\": \"Tech Books\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 10,\n//   \"available_copies\": 10\n// }\n// {\n//   \"isbn\": \"102-21-21-03\",\n//   \"lib_id\": 1,\n//   \"title\": \"Advanced Python Programming\",\n//   \"authors\": \"Jane Smith\",\n//   \"publisher\": \"Code Masters\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 8,\n//   \"available_copies\": 5\n// }\n// {\n//   \"isbn\": \"103-22-22-04\",\n//   \"lib_id\": 2,\n//   \"title\": \"JavaScript Essentials\",\n//   \"authors\": \"Mark Johnson\",\n//   \"publisher\": \"Web Dev Press\",\n//   \"version\": \"3rd\",\n//   \"total_copies\": 15,\n//   \"available_copies\": 12\n// }\n// {\n//   \"isbn\": \"104-23-23-05\",\n//   \"lib_id\": 2,\n//   \"title\": \"Introduction to Machine Learning\",\n//   \"authors\": \"Emily Davis\",\n//   \"publisher\": \"AI Books\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 12,\n//   \"available_copies\": 8\n// }\n// {\n//   \"isbn\": \"105-24-24-06\",\n//   \"lib_id\": 3,\n//   \"title\": \"Database Management Systems\",\n//   \"authors\": \"Chris Miller\",\n//   \"publisher\": \"Tech Insights\",\n//   \"version\": \"4th\",\n//   \"total_copies\": 20,\n//   \"available_copies\": 18\n// }\n// {\n//   \"isbn\": \"106-25-25-07\",\n//   \"lib_id\": 3,\n//   \"title\": \"Full Stack Web Development\",\n//   \"authors\": \"Lisa Brown\",\n//   \"publisher\": \"Code Academy\",\n//   \"version\": \"5th\",\n//   \"total_copies\": 25,\n//   \"available_copies\": 22\n// }\n// {\n//   \"isbn\": \"107-26-26-08\",\n//   \"lib_id\": 1,\n//   \"title\": \"Data Science with R\",\n//   \"authors\": \"Oliver Green\",\n//   \"publisher\": \"Data Insights\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 18,\n//   \"available_copies\": 15\n// }\n// {\n//   \"isbn\": \"108-27-27-09\",\n//   \"lib_id\": 2,\n//   \"title\": \"Cloud Computing Fundamentals\",\n//   \"authors\": \"Sophia White\",\n//   \"publisher\": \"Cloud Press\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 30,\n//   \"available_copies\": 25\n// }\n// {\n//   \"isbn\": \"109-28-28-10\",\n//   \"lib_id\": 3,\n//   \"title\": \"Blockchain Technology\",\n//   \"authors\": \"Daniel Black\",\n//   \"publisher\": \"Tech Innovations\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 5,\n//   \"available_copies\": 3\n// }\n{\n  \"isbn\": \"110-29-29-11\",\n  \"lib_id\": 2,\n  \"title\": \"Artificial Intelligence 101\",\n  \"authors\": \"Grace Scott\",\n  \"publisher\": \"AI Publishers\",\n  \"version\": \"1st\",\n  \"total_copies\": 12,\n  \"available_copies\": 10\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Search Book By title, authors, publisher",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/search",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"search"
+							],
+							"query": [
+								{
+									"key": "title",
+									"value": "Go",
+									"disabled": true
+								},
+								{
+									"key": "title",
+									"value": "Advanced Python Programming",
+									"disabled": true
+								},
+								{
+									"key": "authors",
+									"value": "Lisa Brown",
+									"disabled": true
+								},
+								{
+									"key": "publisher",
+									"value": "Cloud Press",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Book (Admin Only)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDkxMDQ2LCJyb2xlIjoiYWRtaW4ifQ.Na9m0mfAiAchjHvNs88Sr6g_ZizKj52l9eQcORI3jq8",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/15d2a84c-0958-44b5-872a-f045b9bd0786",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"15d2a84c-0958-44b5-872a-f045b9bd0786"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Book (Admin Only)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDkxMzAzLCJyb2xlIjoiYWRtaW4ifQ.KUNGixyX3nJBPdcTmvyGLnauOilgcXX36Xv8qLL0KOo",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"isbn\": \"1003\",\n  \"lib_id\": 1,\n  \"title\": \"Go Programming newly update\",\n  \"authors\": \"John Doe update\",\n  \"publisher\": \"Tech Books update\",\n  \"version\": \"1st update\",\n  \"total_copies\": 20,\n  \"available_copies\": 20\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/15d2a84c-0958-44b5-872a-f045b9bd0786",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"15d2a84c-0958-44b5-872a-f045b9bd0786"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDgxNzY0LCJyb2xlIjoiYWRtaW4ifQ.zm9XcA_Y_eBRjvC5YENvVdMz8QoDNSz5YQpyQq_F1yg",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDgxNzY0LCJyb2xlIjoiYWRtaW4ifQ.zm9XcA_Y_eBRjvC5YENvVdMz8QoDNSz5YQpyQq_F1yg",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"3"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "4. Request Events",
+			"item": [
+				{
+					"name": "Get All Requests",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDExNzgzMjMsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6N30.2ciPxgXt9KH8Y_FpNZvYNDWBijYAjpCjbsHyCTUsTqU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/requests/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"requests",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Requests",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDExNzgzMjMsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6N30.2ciPxgXt9KH8Y_FpNZvYNDWBijYAjpCjbsHyCTUsTqU",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"book_id\": 1,\n  \"reader_id\": 7,\n  \"request_type\": \"Borrow\"\n}\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/requests",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"requests"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Approve",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwcHJvdmVyQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMTc4NDk2LCJyb2xlIjoiYXBwcm92ZXIiLCJ1c2VyX2lkIjo4fQ.uJgHfeHzK989rENDEGKERxNw921DZfteZSJrHjYtxGQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/requests/1/approve",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"requests",
+								"1",
+								"approve"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "5. Registry",
+			"item": [
+				{
+					"name": "Return a Book By Id (Approver Only)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwcHJvdmVyQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMTgxODY2LCJyb2xlIjoiYXBwcm92ZXIiLCJ1c2VyX2lkIjo4fQ.yGBEbqvTvrgnbfUYnb9rUjePk0q5EbukiibZyTTqc2A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/issues/1/return",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"issues",
+								"1",
+								"return"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Issues (Admin Only)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMTgxMDYxLCJyb2xlIjoiYWRtaW4iLCJ1c2VyX2lkIjo2fQ.JWG5d8posY3ArF-F-LCs7dxzSezT2EfgyEtWr012Zro",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isbn\": \"101-20-20-02\",\n    \"reader_id\": 7,\n    \"issue_approver_id\": 8,\n    \"issue_status\": \"Issued\",\n    \"expected_return_date\": \"2025-03-14\"\n}\n\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/issues",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"issues"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Issues",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwcHJvdmVyQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMTgxODY2LCJyb2xlIjoiYXBwcm92ZXIiLCJ1c2VyX2lkIjo4fQ.yGBEbqvTvrgnbfUYnb9rUjePk0q5EbukiibZyTTqc2A",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "// [\n//     {\n//         \"issue_id\": 1,\n//         \"isbn\": \"101-20-20-02\",\n//         \"reader_id\": 7,\n//         \"issue_approver_id\": 8,\n//         \"issue_status\": \"Issued\",\n//         \"issue_date\": \"2025-03-05T18:03:47.129652+05:30\",\n//         \"expected_return_date\": \"2025-03-14\"\n//     }\n// ]\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/issues",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"issues"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "TEST",
+			"item": [
+				{
+					"name": "Access Admin Page",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJleHAiOjE3NDEwNjk4MzcsInJvbGUiOiJ1c2VyIn0.3UR2g_MuBi9-okIgcFK43rEJTqEOLRGdKo5NVb6kA48",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/admin",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"admin"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Access User Page",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJleHAiOjE3NDEwNzAwNzYsInJvbGUiOiJ1c2VyIn0.8qx2JXgwq2UEXPHiu9gHst1jpMgehQKW3UUnL3JDHOg",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/user",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Public Index Page (No Auth Needed)",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
