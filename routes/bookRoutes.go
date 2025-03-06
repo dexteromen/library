@@ -21,9 +21,9 @@ func bookRoutes(router *gin.Engine) {
 	bookGroup := router.Group("/")
 	bookGroup.Use(middlewares.AuthMiddleware())
 	{
-		bookGroup.POST("/book", middlewares.RoleMiddleware("owner"), controllers.CreateBook)           // Create Book
-		bookGroup.PUT("/book/:id", middlewares.RoleMiddleware("owner"), controllers.UpdateBookByID)    // Update Book
-		bookGroup.DELETE("/book/:id", middlewares.RoleMiddleware("owner"), controllers.DeleteBookByID) // Delete Book
+		bookGroup.POST("/book", middlewares.RoleMiddleware("admin"), controllers.CreateBook)           // Create Book
+		bookGroup.PUT("/book/:id", middlewares.RoleMiddleware("admin"), controllers.UpdateBookByID)    // Update Book
+		bookGroup.DELETE("/book/:id", middlewares.RoleMiddleware("admin"), controllers.DeleteBookByID) // Delete Book
 	}
 
 }

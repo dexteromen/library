@@ -11,27 +11,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// // Create Issue
-// func CreateIssue(c *gin.Context) {
-// 	var issue models.IssueRegistery
-// 	if err := c.ShouldBindJSON(&issue); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	issue.IssueDate = time.Now()
-
-// 	if err := config.DB.Create(&issue).Error; err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusCreated, issue)
-// }
-
 func CreateIssue(c *gin.Context) {
 	var issue models.IssueRegistery
-	
+
 	// Bind JSON directly to the struct
 	if err := c.ShouldBindJSON(&issue); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -40,7 +22,7 @@ func CreateIssue(c *gin.Context) {
 
 	// Parse Expected Return Date from JSON
 	layout := "2006-01-02"
-	parsedDate, err := time.Parse(layout, issue.ExpectedReturnDate) 
+	parsedDate, err := time.Parse(layout, issue.ExpectedReturnDate)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid date format. Use YYYY-MM-DD"})
 		return
@@ -57,7 +39,6 @@ func CreateIssue(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, issue)
 }
-
 
 // Return Book
 func ReturnBook(c *gin.Context) {
@@ -101,3 +82,21 @@ func GetIssues(c *gin.Context) {
 	config.DB.Find(&issues)
 	c.JSON(http.StatusOK, issues)
 }
+
+// // Create Issue
+// func CreateIssue(c *gin.Context) {
+// 	var issue models.IssueRegistery
+// 	if err := c.ShouldBindJSON(&issue); err != nil {
+// 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	issue.IssueDate = time.Now()
+
+// 	if err := config.DB.Create(&issue).Error; err != nil {
+// 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	c.JSON(http.StatusCreated, issue)
+// }
