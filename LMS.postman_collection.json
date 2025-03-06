@@ -19,7 +19,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\n//   \"name\": \"Admin User\",\n//   \"email\": \"admin@example.com\",\n//   \"contact_number\": \"1234567890\",\n//   \"password\": \"Admin@123\",\n//   \"role\": \"admin\",\n//   \"lib_id\": 1\n// }\n// {\n//   \"name\": \"Regular User\",\n//   \"email\": \"user@example.com\",\n//   \"contact_number\": \"1234567890\",\n//   \"password\": \"User@123\",\n//   \"role\": \"user\",\n//   \"lib_id\": 1\n// }\n// {\n//   \"name\": \"Approver User\",\n//   \"email\": \"approver@example.com\",\n//   \"contact_number\": \"1234567890\",\n//   \"password\": \"Approver@123\",\n//   \"role\": \"approver\",\n//   \"lib_id\": 1\n// }\n{\n  \"name\": \"User A\",\n  \"email\": \"user_a@example.com\",\n  \"contact_number\": \"1234567890\",\n  \"password\": \"Usera@123\",\n  \"role\": \"user\",\n  \"lib_id\": 1\n}",
+							"raw": "//Creating 1 Admin\n// {\n//   \"name\": \"admin\",\n//   \"email\": \"admin@example.com\",\n//   \"contact_number\": \"1234567800\",\n//   \"password\": \"Admin@123\",\n//   \"role\": \"admin\"\n// } \n\n//Creating Readers only\n// {\n//   \"name\": \"Himanshu\",\n//   \"email\": \"himanshu@example.com\",\n//   \"contact_number\": \"1234567890\",\n//   \"password\": \"Himanshu@123\"\n// }\n\n// {\n//   \"name\": \"reader a\",\n//   \"email\": \"reader_a@example.com\",\n//   \"contact_number\": \"1234567891\",\n//   \"password\": \"Reader@123\"\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -84,7 +84,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"User A Updated\",\n  \"email\": \"user_a@example.com\",\n  \"contact_number\": \"1234567890\",\n  \"password\": \"Usera@123\",\n  \"role\": \"user\",\n  \"lib_id\": 1\n}",
+							"raw": "{\n    \"name\": \"Reader\",\n    \"email\": \"reader@example.com\",\n    \"contact_number\": \"1234567890\",\n    \"password\": \"Reader@123\",\n    \"role\": \"reader\",\n    \"lib_id\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -92,7 +92,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/5",
+							"raw": "http://localhost:8080/user/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -100,7 +100,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"5"
+								"2"
 							]
 						}
 					},
@@ -127,7 +127,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/9",
+							"raw": "http://localhost:8080/user/1",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -135,7 +135,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"9"
+								"1"
 							]
 						}
 					},
@@ -159,7 +159,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/user/9",
+							"raw": "http://localhost:8080/user/5",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -167,7 +167,7 @@
 							"port": "8080",
 							"path": [
 								"user",
-								"9"
+								"5"
 							]
 						}
 					},
@@ -183,7 +183,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Admin@123\"\n}\n\n// {\n//   \"email\": \"user@example.com\",\n//   \"password\": \"User@123\"\n// }\n\n// {\n//   \"email\": \"approver@example.com\",\n//   \"password\": \"Approver@123\"\n// }\n\n",
+							"raw": "// SINGLE ADMINS\n{\n  \"email\": \"admin@example.com\",\n  \"password\": \"Admin@123\"\n}\n\n// // READER -> OWNER\n// {\n//   \"email\": \"himanshu@example.com\",\n//   \"password\": \"Himanshu@123\"\n// }\n\n// //READER\n// {\n//   \"email\": \"reader_a@example.com\",\n//   \"password\": \"Reader@123\"\n// }\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -214,7 +214,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMTgzNDE2LCJyb2xlIjoiYWRtaW4iLCJ1c2VyX2lkIjo2fQ.yXEZ9Rl5cbtT4oxRVSU0yRTAvAni-GVEnYH5W5i0r7g",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlYWRlcl9hQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjY5Mjc5LCJyb2xlIjoicmVhZGVyIiwidXNlcl9pZCI6NH0.u8ZMwbf-VIgP_NZfGmQQFddQISimu5LLEM5Clkeq1GM",
 								"type": "text"
 							}
 						],
@@ -239,7 +239,60 @@
 							]
 						}
 					},
-					"response": []
+					"response": [
+						{
+							"name": "signout",
+							"originalRequest": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlYWRlcl9hQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjY5Mjc5LCJyb2xlIjoicmVhZGVyIiwidXNlcl9pZCI6NH0.u8ZMwbf-VIgP_NZfGmQQFddQISimu5LLEM5Clkeq1GM",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/signout",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"signout"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 12:54:56 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "81"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"statusCode\": 200,\n    \"message\": \"User logged out successfully !!\"\n}"
+						}
+					]
 				}
 			]
 		},
@@ -247,24 +300,19 @@
 			"name": "2. Library",
 			"item": [
 				{
-					"name": "Create a Library",
+					"name": "Get Library",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
-						"method": "POST",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDg3NDY0LCJyb2xlIjoiYWRtaW4ifQ.EtK-iWeHf4v_GUSPHuib_cBvxkLeLAGr2JDmDJPlklk",
-								"description": "admin role only ",
-								"type": "text",
-								"disabled": true
-							}
-						],
+						"method": "GET",
+						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"name\": \"Library 5\"\n}\n",
+							"raw": "",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -286,19 +334,23 @@
 					"response": []
 				},
 				{
-					"name": "Get Library",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
+					"name": "Create a Library",
 					"request": {
 						"auth": {
 							"type": "noauth"
 						},
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhpbWFuc2h1QGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjY3NjQyLCJyb2xlIjoicmVhZGVyIiwidXNlcl9pZCI6MX0.d9KTL1aHaD-GM0SQ62NOmawKpuO6JB_IuAH21hj8QhQ",
+								"description": "admin role only ",
+								"type": "text"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": "",
+							"raw": "{\n  \"name\": \"Library 1\"\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -403,7 +455,88 @@
 			"name": "3. Books",
 			"item": [
 				{
-					"name": "Create a Book (Admin Only)",
+					"name": "Get All Books",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/books",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Get All Books",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/books",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"books"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Date",
+									"value": "Thu, 06 Mar 2025 12:41:49 GMT"
+								},
+								{
+									"key": "Content-Length",
+									"value": "1978"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"status\": \"success\",\n    \"statusCode\": 200,\n    \"message\": \"Books retrieved successfully\",\n    \"data\": [\n        {\n            \"book_id\": 1,\n            \"isbn\": \"101-20-20-02\",\n            \"lib_id\": 1,\n            \"title\": \"Go Programming 23\",\n            \"authors\": \"John Doe\",\n            \"publisher\": \"Tech Books\",\n            \"version\": \"1st\",\n            \"total_copies\": 10,\n            \"available_copies\": 10\n        },\n        {\n            \"book_id\": 2,\n            \"isbn\": \"102-21-21-03\",\n            \"lib_id\": 1,\n            \"title\": \"Advanced Python Programming\",\n            \"authors\": \"Jane Smith\",\n            \"publisher\": \"Code Masters\",\n            \"version\": \"2nd\",\n            \"total_copies\": 8,\n            \"available_copies\": 8\n        },\n        {\n            \"book_id\": 3,\n            \"isbn\": \"103-22-22-04\",\n            \"lib_id\": 1,\n            \"title\": \"JavaScript Essentials\",\n            \"authors\": \"Mark Johnson\",\n            \"publisher\": \"Web Dev Press\",\n            \"version\": \"3rd\",\n            \"total_copies\": 15,\n            \"available_copies\": 15\n        },\n        {\n            \"book_id\": 4,\n            \"isbn\": \"104-23-23-05\",\n            \"lib_id\": 1,\n            \"title\": \"Introduction to Machine Learning\",\n            \"authors\": \"Emily Davis\",\n            \"publisher\": \"AI Books\",\n            \"version\": \"1st\",\n            \"total_copies\": 12,\n            \"available_copies\": 12\n        },\n        {\n            \"book_id\": 5,\n            \"isbn\": \"105-24-24-06\",\n            \"lib_id\": 1,\n            \"title\": \"Database Management Systems\",\n            \"authors\": \"Chris Miller\",\n            \"publisher\": \"Tech Insights\",\n            \"version\": \"4th\",\n            \"total_copies\": 10,\n            \"available_copies\": 10\n        },\n        {\n            \"book_id\": 6,\n            \"isbn\": \"106-25-25-07\",\n            \"lib_id\": 1,\n            \"title\": \"Full Stack Web Development\",\n            \"authors\": \"Lisa Brown\",\n            \"publisher\": \"Code Academy\",\n            \"version\": \"5th\",\n            \"total_copies\": 10,\n            \"available_copies\": 10\n        },\n        {\n            \"book_id\": 7,\n            \"isbn\": \"107-26-26-08\",\n            \"lib_id\": 1,\n            \"title\": \"Data Science with R\",\n            \"authors\": \"Oliver Green\",\n            \"publisher\": \"Data Insights\",\n            \"version\": \"2nd\",\n            \"total_copies\": 10,\n            \"available_copies\": 10\n        },\n        {\n            \"book_id\": 8,\n            \"isbn\": \"108-27-27-09\",\n            \"lib_id\": 1,\n            \"title\": \"Cloud Computing Fundamentals\",\n            \"authors\": \"Sophia White\",\n            \"publisher\": \"Cloud Press\",\n            \"version\": \"1st\",\n            \"total_copies\": 10,\n            \"available_copies\": 10\n        },\n        {\n            \"book_id\": 9,\n            \"isbn\": \"109-28-28-10\",\n            \"lib_id\": 1,\n            \"title\": \"Blockchain Technology\",\n            \"authors\": \"Daniel Black\",\n            \"publisher\": \"Tech Innovations\",\n            \"version\": \"2nd\",\n            \"total_copies\": 5,\n            \"available_copies\": 5\n        },\n        {\n            \"book_id\": 10,\n            \"isbn\": \"110-29-29-11\",\n            \"lib_id\": 1,\n            \"title\": \"Artificial Intelligence 101\",\n            \"authors\": \"Grace Scott\",\n            \"publisher\": \"AI Publishers\",\n            \"version\": \"1st\",\n            \"total_copies\": 5,\n            \"available_copies\": 5\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "Create a Book (Owner Only)",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -412,14 +545,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDkwOTIyLCJyb2xlIjoiYWRtaW4ifQ._Q06SiBf21HX4QC398FH72XgutC5y9LdEkDJ1uufOAA",
-								"type": "text",
-								"disabled": true
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImhpbWFuc2h1QGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjY4MjQxLCJyb2xlIjoib3duZXIiLCJ1c2VyX2lkIjoxfQ.Xs2vqZx8jdQKtC_lm7-D0sZgpbJbTXnHSkE2s6bKLZY",
+								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "// {\n//   \"isbn\": \"101-20-20-02\",\n//   \"lib_id\": 1,\n//   \"title\": \"Go Programming 23\",\n//   \"authors\": \"John Doe\",\n//   \"publisher\": \"Tech Books\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 10,\n//   \"available_copies\": 10\n// }\n// {\n//   \"isbn\": \"102-21-21-03\",\n//   \"lib_id\": 1,\n//   \"title\": \"Advanced Python Programming\",\n//   \"authors\": \"Jane Smith\",\n//   \"publisher\": \"Code Masters\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 8,\n//   \"available_copies\": 5\n// }\n// {\n//   \"isbn\": \"103-22-22-04\",\n//   \"lib_id\": 2,\n//   \"title\": \"JavaScript Essentials\",\n//   \"authors\": \"Mark Johnson\",\n//   \"publisher\": \"Web Dev Press\",\n//   \"version\": \"3rd\",\n//   \"total_copies\": 15,\n//   \"available_copies\": 12\n// }\n// {\n//   \"isbn\": \"104-23-23-05\",\n//   \"lib_id\": 2,\n//   \"title\": \"Introduction to Machine Learning\",\n//   \"authors\": \"Emily Davis\",\n//   \"publisher\": \"AI Books\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 12,\n//   \"available_copies\": 8\n// }\n// {\n//   \"isbn\": \"105-24-24-06\",\n//   \"lib_id\": 3,\n//   \"title\": \"Database Management Systems\",\n//   \"authors\": \"Chris Miller\",\n//   \"publisher\": \"Tech Insights\",\n//   \"version\": \"4th\",\n//   \"total_copies\": 20,\n//   \"available_copies\": 18\n// }\n// {\n//   \"isbn\": \"106-25-25-07\",\n//   \"lib_id\": 3,\n//   \"title\": \"Full Stack Web Development\",\n//   \"authors\": \"Lisa Brown\",\n//   \"publisher\": \"Code Academy\",\n//   \"version\": \"5th\",\n//   \"total_copies\": 25,\n//   \"available_copies\": 22\n// }\n// {\n//   \"isbn\": \"107-26-26-08\",\n//   \"lib_id\": 1,\n//   \"title\": \"Data Science with R\",\n//   \"authors\": \"Oliver Green\",\n//   \"publisher\": \"Data Insights\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 18,\n//   \"available_copies\": 15\n// }\n// {\n//   \"isbn\": \"108-27-27-09\",\n//   \"lib_id\": 2,\n//   \"title\": \"Cloud Computing Fundamentals\",\n//   \"authors\": \"Sophia White\",\n//   \"publisher\": \"Cloud Press\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 30,\n//   \"available_copies\": 25\n// }\n// {\n//   \"isbn\": \"109-28-28-10\",\n//   \"lib_id\": 3,\n//   \"title\": \"Blockchain Technology\",\n//   \"authors\": \"Daniel Black\",\n//   \"publisher\": \"Tech Innovations\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 5,\n//   \"available_copies\": 3\n// }\n{\n  \"isbn\": \"110-29-29-11\",\n  \"lib_id\": 2,\n  \"title\": \"Artificial Intelligence 101\",\n  \"authors\": \"Grace Scott\",\n  \"publisher\": \"AI Publishers\",\n  \"version\": \"1st\",\n  \"total_copies\": 12,\n  \"available_copies\": 10\n}\n",
+							"raw": "// {\n//   \"isbn\": \"101-20-20-02\",\n//   \"title\": \"Go Programming 23\",\n//   \"authors\": \"John Doe\",\n//   \"publisher\": \"Tech Books\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 2,\n//   \"available_copies\": 2\n// }\n// {\n//   \"isbn\": \"102-21-21-03\",\n//   \"title\": \"Advanced Python Programming\",\n//   \"authors\": \"Jane Smith\",\n//   \"publisher\": \"Code Masters\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 8,\n//   \"available_copies\": 8\n// }\n// {\n//   \"isbn\": \"103-22-22-04\",\n//   \"title\": \"JavaScript Essentials\",\n//   \"authors\": \"Mark Johnson\",\n//   \"publisher\": \"Web Dev Press\",\n//   \"version\": \"3rd\",\n//   \"total_copies\": 15,\n//   \"available_copies\": 15\n// }\n// {\n//   \"isbn\": \"104-23-23-05\",\n//   \"title\": \"Introduction to Machine Learning\",\n//   \"authors\": \"Emily Davis\",\n//   \"publisher\": \"AI Books\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 12,\n//   \"available_copies\": 12\n// }\n// {\n//   \"isbn\": \"105-24-24-06\",\n//   \"title\": \"Database Management Systems\",\n//   \"authors\": \"Chris Miller\",\n//   \"publisher\": \"Tech Insights\",\n//   \"version\": \"4th\",\n//   \"total_copies\": 10,\n//   \"available_copies\": 10\n// }\n// {\n//   \"isbn\": \"106-25-25-07\",\n//   \"title\": \"Full Stack Web Development\",\n//   \"authors\": \"Lisa Brown\",\n//   \"publisher\": \"Code Academy\",\n//   \"version\": \"5th\",\n//   \"total_copies\": 10,\n//   \"available_copies\": 10\n// }\n// {\n//   \"isbn\": \"107-26-26-08\",\n//   \"title\": \"Data Science with R\",\n//   \"authors\": \"Oliver Green\",\n//   \"publisher\": \"Data Insights\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 10,\n//   \"available_copies\": 10\n// }\n// {\n//   \"isbn\": \"108-27-27-09\",\n//   \"title\": \"Cloud Computing Fundamentals\",\n//   \"authors\": \"Sophia White\",\n//   \"publisher\": \"Cloud Press\",\n//   \"version\": \"1st\",\n//   \"total_copies\": 10,\n//   \"available_copies\": 10\n// }\n// {\n//   \"isbn\": \"109-28-28-10\",\n//   \"title\": \"Blockchain Technology\",\n//   \"authors\": \"Daniel Black\",\n//   \"publisher\": \"Tech Innovations\",\n//   \"version\": \"2nd\",\n//   \"total_copies\": 5,\n//   \"available_copies\": 5\n// }\n{\n  \"isbn\": \"110-29-29-11\",\n  \"title\": \"Artificial Intelligence 101\",\n  \"authors\": \"Grace Scott\",\n  \"publisher\": \"AI Publishers\",\n  \"version\": \"1st\",\n  \"total_copies\": 5,\n  \"available_copies\": 5\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -435,6 +567,117 @@
 							"port": "8080",
 							"path": [
 								"book"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books By Id",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"8"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a Book (Admin & Owner Only)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjcwMTE3LCJyb2xlIjoiYWRtaW4iLCJ1c2VyX2lkIjo2fQ.GrA5qaFOrfCgT390vMkPEnfxWXk8FO7O8jZ96p8CrM4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/9",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"9"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a Book (Owner Only)",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjUzOTU1LCJyb2xlIjoiYWRtaW4iLCJ1c2VyX2lkIjoxfQ.8jrP7obTKNThwuRUacBaR6m-2d3TQFHWJdTdZLIIOFQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"isbn\": \"110-29-29-11\",\n    \"lib_id\": 2,\n    \"title\": \"Artificial Intelligence 101\",\n    \"authors\": \"Grace Scott\",\n    \"publisher\": \"AI Publishers\",\n    \"version\": \"1st\",\n    \"total_copies\": 12,\n    \"available_copies\": 9\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/book/11",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"book",
+								"11"
 							]
 						}
 					},
@@ -480,167 +723,6 @@
 						}
 					},
 					"response": []
-				},
-				{
-					"name": "Delete a Book (Admin Only)",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "DELETE",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDkxMDQ2LCJyb2xlIjoiYWRtaW4ifQ.Na9m0mfAiAchjHvNs88Sr6g_ZizKj52l9eQcORI3jq8",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/book/15d2a84c-0958-44b5-872a-f045b9bd0786",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"book",
-								"15d2a84c-0958-44b5-872a-f045b9bd0786"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Update a Book (Admin Only)",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDkxMzAzLCJyb2xlIjoiYWRtaW4ifQ.KUNGixyX3nJBPdcTmvyGLnauOilgcXX36Xv8qLL0KOo",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n  \"isbn\": \"1003\",\n  \"lib_id\": 1,\n  \"title\": \"Go Programming newly update\",\n  \"authors\": \"John Doe update\",\n  \"publisher\": \"Tech Books update\",\n  \"version\": \"1st update\",\n  \"total_copies\": 20,\n  \"available_copies\": 20\n}\n",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/book/15d2a84c-0958-44b5-872a-f045b9bd0786",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"book",
-								"15d2a84c-0958-44b5-872a-f045b9bd0786"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Books",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDgxNzY0LCJyb2xlIjoiYWRtaW4ifQ.zm9XcA_Y_eBRjvC5YENvVdMz8QoDNSz5YQpyQq_F1yg",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/books",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"books"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Get All Books By Id",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMDgxNzY0LCJyb2xlIjoiYWRtaW4ifQ.zm9XcA_Y_eBRjvC5YENvVdMz8QoDNSz5YQpyQq_F1yg",
-								"type": "text",
-								"disabled": true
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/book/3",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"book",
-								"3"
-							]
-						}
-					},
-					"response": []
 				}
 			]
 		},
@@ -660,13 +742,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDExNzgzMjMsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6N30.2ciPxgXt9KH8Y_FpNZvYNDWBijYAjpCjbsHyCTUsTqU",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjc0NDQwLCJyb2xlIjoiYWRtaW4iLCJ1c2VyX2lkIjo2fQ.t4TR6jYDP6J15mhKExROS0kjhFKSCxzPf9Me-PyNHfc",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "\n",
+							"raw": "// {\n//     \"req_id\": 1,\n//     \"book_id\": 1,\n//     \"reader_id\": 2,\n//     \"request_date\": \"2025-03-06T15:16:01.517537+05:30\",\n//     \"request_type\": \"Borrow\"\n// }\n// {\n//     \"req_id\": 1,\n//     \"book_id\": 1,\n//     \"reader_id\": 2,\n//     \"request_date\": \"2025-03-06T15:16:01.517537+05:30\",\n//     \"approval_date\": \"2025-03-06T15:18:17.643584+05:30\",\n//     \"approver_id\": 1,\n//     \"request_type\": \"Borrow\"\n// }",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -689,7 +771,7 @@
 					"response": []
 				},
 				{
-					"name": "Requests",
+					"name": "Requests By Reader",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -698,13 +780,13 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InVzZXJAZXhhbXBsZS5jb20iLCJleHAiOjE3NDExNzgzMjMsInJvbGUiOiJ1c2VyIiwidXNlcl9pZCI6N30.2ciPxgXt9KH8Y_FpNZvYNDWBijYAjpCjbsHyCTUsTqU",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InJlYWRlcl9hQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjc0MDk2LCJyb2xlIjoicmVhZGVyIiwidXNlcl9pZCI6NH0.KzJn8NBdkxvEIhBvBO8G-wWjcc0PZrRbw3wLVdXY5nY",
 								"type": "text"
 							}
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"book_id\": 1,\n  \"reader_id\": 7,\n  \"request_type\": \"Borrow\"\n}\n",
+							"raw": "{\n  \"book_id\": 2\n}\n",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -726,7 +808,7 @@
 					"response": []
 				},
 				{
-					"name": "Approve",
+					"name": "Approve By Admin",
 					"request": {
 						"auth": {
 							"type": "noauth"
@@ -735,7 +817,7 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFwcHJvdmVyQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMTc4NDk2LCJyb2xlIjoiYXBwcm92ZXIiLCJ1c2VyX2lkIjo4fQ.uJgHfeHzK989rENDEGKERxNw921DZfteZSJrHjYtxGQ",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQGV4YW1wbGUuY29tIiwiZXhwIjoxNzQxMjU4MDg0LCJyb2xlIjoiYWRtaW4iLCJ1c2VyX2lkIjoxfQ.cm356kgLuKVbDit0D3l6DyrPpX1_dayzIZHYtOHehBU",
 								"type": "text"
 							}
 						],
@@ -880,125 +962,6 @@
 							"port": "8080",
 							"path": [
 								"issues"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "TEST",
-			"item": [
-				{
-					"name": "Access Admin Page",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJleHAiOjE3NDEwNjk4MzcsInJvbGUiOiJ1c2VyIn0.3UR2g_MuBi9-okIgcFK43rEJTqEOLRGdKo5NVb6kA48",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/admin",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"admin"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Access User Page",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImpvaG5AZXhhbXBsZS5jb20iLCJleHAiOjE3NDEwNzAwNzYsInJvbGUiOiJ1c2VyIn0.8qx2JXgwq2UEXPHiu9gHst1jpMgehQKW3UUnL3JDHOg",
-								"type": "text"
-							}
-						],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"user"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "Public Index Page (No Auth Needed)",
-					"protocolProfileBehavior": {
-						"disableBodyPruning": true
-					},
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "GET",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								""
 							]
 						}
 					},
