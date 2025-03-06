@@ -67,6 +67,17 @@ func SignUp(c *gin.Context) {
 	}
 	// fmt.Println("Password:", user.Password, "Valid:", isValidPassword(user.Password))
 
+	if user.Role == "admin" {
+		var existingAdmin models.User
+		if err := config.DB.First(&existingAdmin, "role = ?", "admin").Error; err == nil {
+			utils.RespondJSON(c, http.StatusBadRequest, "Cannot create more than one admin", nil)
+			return
+		} else if err != gorm.ErrRecordNotFound {
+			utils.RespondJSON(c, http.StatusInternalServerError, "Failed to fetch users", nil)
+			return
+		}
+	}
+
 	// Validate Name
 	if !isValidName(user.Name) {
 		// c.JSON(http.StatusBadRequest, gin.H{"error": "Name must contain only letters and spaces"})
@@ -241,6 +252,7 @@ func GetUsers(c *gin.Context) {
 	}
 	if len(users) <= 0 {
 		utils.RespondJSON(c, http.StatusOK, "No users found in datatbase !!", nil)
+		return
 	}
 	// c.JSON(http.StatusOK, users)
 	utils.RespondJSON(c, http.StatusOK, "All users retrived !!", gin.H{"User": users})

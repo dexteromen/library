@@ -17,11 +17,29 @@ func CreateLibrary(c *gin.Context) {
 	}
 
 	if err := config.DB.Create(&library).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create library", nil)
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create library", err.Error())
 		return
 	}
 
-	utils.RespondJSON(c, http.StatusCreated, "Library created successfully", library)
+	//find user by id for Updating user lib_id and Role  // reader -> owner
+	var user models.User
+	if err := config.DB.First(&user, c.GetUint("user_id")).Error; err != nil {
+		utils.RespondJSON(c, http.StatusNotFound, "User not found", nil)
+		return
+	}
+
+	user.LibID = library.ID
+	user.Role = "owner"
+
+	if err := config.DB.Save(&user).Error; err != nil {
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update user", nil)
+		return
+	}
+
+	//Sending response
+	data := gin.H{"library": library, "Owner Of Library": user.Name, "Role": user.Role}
+
+	utils.RespondJSON(c, http.StatusCreated, "Library created successfully", data)
 }
 
 func GetLibraries(c *gin.Context) {

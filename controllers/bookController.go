@@ -11,7 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Admin: Manage Books
+// Owner: Create Books
 func CreateBook(c *gin.Context) {
 	var book models.BookInventory
 	if err := c.ShouldBindJSON(&book); err != nil {
@@ -19,13 +19,21 @@ func CreateBook(c *gin.Context) {
 		return
 	}
 
+	//find user by id
+	var user models.User
+	if err := config.DB.First(&user, c.GetUint("user_id")).Error; err != nil {
+		utils.RespondJSON(c, http.StatusNotFound, "User not found For Getting LibID", nil)
+		return
+	}
+
+	//the user should be owner to create book
+	//update user lib_id of the book
+	book.LibID = user.LibID
 	if err := config.DB.Create(&book).Error; err != nil {
-		// utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create book", nil)
 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create book", nil)
 		return
 	}
 
-	// utils.RespondJSON(c, http.StatusCreated, "Book created successfully", book)
 	utils.RespondJSON(c, http.StatusCreated, "Book created successfully", book)
 }
 
