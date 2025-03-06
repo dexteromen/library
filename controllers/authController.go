@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"fmt"
+	// "fmt"
 	"library/config"
 	"library/models"
 	"library/utils"
@@ -57,85 +57,56 @@ func SignUp(c *gin.Context) {
 	// }
 
 	if err := c.ShouldBindJSON(&user); err != nil {
-		fmt.Println()
-		fmt.Println("Binding Error:", err)
-		fmt.Println()
+		// fmt.Println()
+		// fmt.Println("Binding Error:", err)
+		// fmt.Println()
 		// fmt.Println("Received JSON:", c.Request.Body) // Debugging output
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()}) // Show the actual error
+		// c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()}) // Show the actual error
+		utils.RespondJSON(c, http.StatusBadRequest, "Invalid input", gin.H{"error": err.Error()})
 		return
 	}
 	// fmt.Println("Password:", user.Password, "Valid:", isValidPassword(user.Password))
 
 	// Validate Name
 	if !isValidName(user.Name) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Name must contain only letters and spaces"})
+		// c.JSON(http.StatusBadRequest, gin.H{"error": "Name must contain only letters and spaces"})
+		utils.RespondJSON(c, http.StatusBadRequest, "User can not be created", gin.H{"error": "Name must contain only letters and spaces"})
 		return
 	}
 
 	// Validate Email
 	if !isValidEmail(user.Email) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email format"})
+		// c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email format"})
+		utils.RespondJSON(c, http.StatusBadRequest, "User can not be created", gin.H{"error": "Invalid email format"})
 		return
 	}
 
 	// Validate Password Strength
 	if !isValidPassword(user.Password) {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character"})
+		// c.JSON(http.StatusBadRequest, gin.H{"error": "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character"})
+		utils.RespondJSON(c, http.StatusBadRequest, "User can not be created", gin.H{"error": "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character"})
 		return
 	}
 
 	// Hash password
 	hashedPassword, err := utils.HashPassword(user.Password)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to hash password", gin.H{"error": err.Error()})
 		return
 	}
 	user.Password = hashedPassword
 
 	// Save to DB
 	if err := config.DB.Create(&user).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user"})
+		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user :-" + err.Error()})
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create user", gin.H{"error": err.Error()})
 		return
 	}
 
-	c.JSON(http.StatusCreated, gin.H{"message": "User created successfully"})
+	// c.JSON(http.StatusCreated, gin.H{"message": "User created successfully"})
+	utils.RespondJSON(c, http.StatusCreated, "User created successfully", gin.H{"user": user})
 }
-
-// // SignIn updates to store session
-// func SignIn(c *gin.Context) {
-// 	var credentials models.User
-// 	if err := c.ShouldBindJSON(&credentials); err != nil {
-// 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
-// 		return
-// 	}
-
-// 	var user models.User
-// 	if err := config.DB.Where("email = ?", credentials.Email).First(&user).Error; err != nil {
-// 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email"})
-// 		return
-// 	}
-
-// 	if !utils.CheckPasswordHash(credentials.Password, user.Password) {
-// 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
-// 		return
-// 	}
-
-// 	token, err := utils.GenerateJWT(user.Email, user.Role)
-// 	if err != nil {
-// 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
-// 		return
-// 	}
-
-// 	session := models.Session{
-// 		UserID:    user.ID,
-// 		Token:     token,
-// 		ExpiresAt: time.Now().Add(time.Hour * 1),
-// 		IsActive:  true,
-// 	}
-// 	config.DB.Create(&session)
-
-// 	c.JSON(http.StatusOK, gin.H{"token": token, "expiry time": session.ExpiresAt, "message": "User logged-in"})
-// }
 
 // SignIn updates to store session
 type SignInCredentials struct {
@@ -146,27 +117,31 @@ type SignInCredentials struct {
 func SignIn(c *gin.Context) {
 	var credentials SignInCredentials
 	if err := c.ShouldBindJSON(&credentials); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		// c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
+		utils.RespondJSON(c, http.StatusBadRequest, "Invalid input", err.Error())
 		return
 	}
 
 	// Check if user exists in DB by email
 	var user models.User
 	if err := config.DB.Where("email = ?", credentials.Email).First(&user).Error; err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email"})
+		// c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email"})
+		utils.RespondJSON(c, http.StatusUnauthorized, "Invalid email", nil)
 		return
 	}
 
 	// Validate password
 	if !utils.CheckPasswordHash(credentials.Password, user.Password) {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
+		// c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
+		utils.RespondJSON(c, http.StatusUnauthorized, "Invalid password", nil)
 		return
 	}
 
 	// Generate JWT Token
 	token, err := utils.GenerateJWT(user.ID, user.Email, user.Role)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to generate token", nil)
 		return
 	}
 
@@ -189,29 +164,47 @@ func SignIn(c *gin.Context) {
 
 	// Store the new session in the database
 	if err := config.DB.Create(&session).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create session"})
+		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create session"})
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create session", nil)
 		return
 	}
 
 	// Send response with token and session expiry
-	c.JSON(http.StatusOK, gin.H{
-		"token":       token,
-		"expiry_time": session.ExpiresAt,
-		"message":     "User logged-in successfully",
-	})
+	// c.JSON(http.StatusOK, gin.H{
+	// 	"token":       token,
+	// 	"expiry_time": session.ExpiresAt,
+	// 	"message":     "User logged-in successfully",
+	// })
+
+	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt})
 }
 
 // Logout handler
 func SignOut(c *gin.Context) {
-	token := c.GetHeader("Authorization")[7:]
+	authorizationHeader := c.GetHeader("Authorization")
 
-	if token == "" {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "No token provided"})
+	// Check if the Authorization header is empty or too short
+	if len(authorizationHeader) < 8 || authorizationHeader[:7] != "Bearer " {
+		utils.RespondJSON(c, http.StatusUnauthorized, "No token provided !!", nil)
 		return
 	}
 
-	config.DB.Model(&models.Session{}).Where("token = ?", token).Update("is_active", false)
-	c.JSON(http.StatusOK, gin.H{"message": "User logged out successfully"})
+	token := authorizationHeader[7:] // Extract the token
+
+	// Check if the token is actually empty
+	if token == "" {
+		utils.RespondJSON(c, http.StatusUnauthorized, "No token provided !!", nil)
+		return
+	}
+
+	// Update session status in the database
+	result := config.DB.Model(&models.Session{}).Where("token = ?", token).Update("is_active", false)
+	if result.Error != nil {
+		utils.RespondJSON(c, http.StatusInternalServerError, "Database error while logging out", nil)
+		return
+	}
+
+	utils.RespondJSON(c, http.StatusOK, "User logged out successfully !!", nil)
 }
 
 /*
@@ -242,31 +235,40 @@ func SignOut(c *gin.Context) {
 func GetUsers(c *gin.Context) {
 	var users []models.User
 	if err := config.DB.Find(&users).Error; err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
+		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to fetch users", nil)
 		return
 	}
-	c.JSON(http.StatusOK, users)
+	if len(users) <= 0 {
+		utils.RespondJSON(c, http.StatusOK, "No users found in datatbase !!", nil)
+	}
+	// c.JSON(http.StatusOK, users)
+	utils.RespondJSON(c, http.StatusOK, "All users retrived !!", gin.H{"User": users})
 }
 
 // GetUserById handles GET requests to fetch a user by ID
 func GetUserById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		// c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
+		utils.RespondJSON(c, http.StatusBadRequest, "Error: Invalid user ID", nil)
 		return
 	}
 
 	var user models.User
 	if err := config.DB.First(&user, id).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+			// c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
+			utils.RespondJSON(c, http.StatusNotFound, "Error: User not found", nil)
 		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch user"})
+			// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch user"})
+			utils.RespondJSON(c, http.StatusInternalServerError, "Error: Failed to fetch user", nil)
 		}
 		return
 	}
 
-	c.JSON(http.StatusOK, user)
+	// c.JSON(http.StatusOK, user)
+	utils.RespondJSON(c, http.StatusOK, "User retrived !!", gin.H{"User": user})
 }
 
 // UpdateUserById handles PUT requests to update a user by ID
