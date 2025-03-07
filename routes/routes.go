@@ -44,11 +44,11 @@ func Routes(router *gin.Engine) {
 	requestAndIssuesGroup := router.Group("/")
 	requestAndIssuesGroup.Use(middlewares.AuthMiddleware())
 	{
-		requestAndIssuesGroup.GET("/requests", controllers.GetRequests)                                                             // Get all requests
-		requestAndIssuesGroup.GET("/issues", controllers.GetIssues)                                                                 // Get all issues
-		requestAndIssuesGroup.POST("/request", middlewares.RoleMiddleware("reader"), controllers.CreateRequest)                     // Create Request
-		requestAndIssuesGroup.PUT("/approveAndIssued/:id", middlewares.RoleMiddleware("admin"), controllers.ApproveAndIssueRequest) // Approve Request and Issue Book
-		requestAndIssuesGroup.PUT("/return/:id", middlewares.RoleMiddleware("reader"), controllers.ReturnBook)                      // Return book by isbn
+		requestAndIssuesGroup.GET("/requests", controllers.GetRequests)                                                          // Get all requests
+		requestAndIssuesGroup.GET("/issues", controllers.GetIssues)                                                              // Get all issues
+		requestAndIssuesGroup.POST("/request", middlewares.RoleMiddleware("reader"), controllers.CreateRequest)                  // Create Request
+		requestAndIssuesGroup.PUT("/approve-issue/:id", middlewares.RoleMiddleware("admin"), controllers.ApproveAndIssueRequest) // Approve Request and Issue Book
+		requestAndIssuesGroup.PUT("/return/:id", middlewares.RoleMiddleware("reader"), controllers.ReturnBook)                   // Return book by isbn
 		// requestAndIssuesGroup.PUT("/approve/:id", middlewares.RoleMiddleware("admin"), controllers.ApproveRequest)
 	}
 }
