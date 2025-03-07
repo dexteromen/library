@@ -29,7 +29,7 @@ func Routes(router *gin.Engine) {
 	}
 
 	// Book Routes
-	router.GET("/search", controllers.SearchBooks)   // Search Books by ISBN, Title, Authors, Publisher
+	router.GET("/search", controllers.SearchBooks)   // Search Books by Title, Authors, Publisher
 	router.GET("/books", controllers.GetBooks)       // Get All Books
 	router.GET("/book/:id", controllers.GetBookByID) // Get Book By ID
 	bookGroup := router.Group("/")
