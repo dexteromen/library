@@ -42,3 +42,32 @@ func ConnectDB() {
 
 	fmt.Println("Database connected successfully.")
 }
+
+func LoadEnvVariablesTest() {
+	err := godotenv.Load(".env.test")
+	if err != nil {
+		log.Fatal("Error loading .env.test file")
+	}
+}
+
+func ConnectDBTest() {
+	var err error
+	dsn := os.Getenv("DB_URL_TEST")
+	DB, err = gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
+	if err != nil {
+		log.Fatal("Failed to connect to test database!")
+	}
+
+	// Auto migrate tables
+	DB.AutoMigrate(
+		&models.User{},
+		&models.Session{},
+		&models.Library{},
+		&models.BookInventory{},
+		&models.RequestEvent{},
+		&models.IssueRegistery{},
+	)
+
+	fmt.Println("Test database connected successfully.")
+}
