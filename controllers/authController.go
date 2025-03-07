@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	// "fmt"
 	"library/config"
 	"library/models"
 	"library/utils"
@@ -169,7 +168,7 @@ func SignIn(c *gin.Context) {
 	session = models.Session{
 		UserID:    user.ID,
 		Token:     token,
-		ExpiresAt: time.Now().Add(time.Hour * 1), // Session expiry time
+		ExpiresAt: time.Now().Add(time.Hour * 24), // Session expiry time
 		IsActive:  true,
 	}
 
@@ -217,30 +216,6 @@ func SignOut(c *gin.Context) {
 
 	utils.RespondJSON(c, http.StatusOK, "User logged out successfully !!", nil)
 }
-
-/*
-// // AdminIndex - Restricted route for admin users
-// func AdminIndex(c *gin.Context) {
-// 	role, exists := c.Get("role")
-// 	if !exists || role != "admin" {
-// 		c.JSON(http.StatusForbidden, gin.H{"error": "Not authorized"})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusOK, gin.H{"message": "Welcome, Admin!"})
-// }
-
-// // UserIndex - Restricted route for regular users
-// func UserIndex(c *gin.Context) {
-// 	role, exists := c.Get("role")
-// 	if !exists || role != "user" {
-// 		c.JSON(http.StatusForbidden, gin.H{"error": "Not authorized"})
-// 		return
-// 	}
-
-// 	c.JSON(http.StatusOK, gin.H{"message": "Welcome, User!"})
-// }
-*/
 
 // GetUsers handles GET requests to fetch all users
 func GetUsers(c *gin.Context) {

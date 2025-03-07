@@ -48,7 +48,7 @@ func GetBookByID(c *gin.Context) {
 	var book models.BookInventory
 	bookID := c.Param("id")
 
-	if err := config.DB.First(&book, "book_id = ?", bookID).Error; err != nil {
+	if err := config.DB.First(&book, "isbn = ?", bookID).Error; err != nil {
 		utils.RespondJSON(c, http.StatusNotFound, "Book not found", nil)
 		return
 	}
@@ -62,7 +62,7 @@ func UpdateBookByID(c *gin.Context) {
 	bookID := c.Param("id")
 
 	// Check if the book exists
-	if err := config.DB.First(&book, "book_id = ?", bookID).Error; err != nil {
+	if err := config.DB.First(&book, "isbn = ?", bookID).Error; err != nil {
 		utils.RespondJSON(c, http.StatusNotFound, "Book not found", nil)
 		return
 	}
@@ -92,7 +92,7 @@ func DeleteBookByID(c *gin.Context) {
 	bookID := c.Param("id")
 
 	// Check if the book exists
-	if err := config.DB.First(&book, "book_id = ?", bookID).Error; err != nil {
+	if err := config.DB.First(&book, "isbn = ?", bookID).Error; err != nil {
 		utils.RespondJSON(c, http.StatusNotFound, "Book not found", nil)
 		return
 	}
