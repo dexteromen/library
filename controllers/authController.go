@@ -47,7 +47,17 @@ func isValidEmail(email string) bool {
 	return regexp.MustCompile(pattern).MatchString(email)
 }
 
-// Signup user
+// SignUp user
+// @Summary Register a new user
+// @Description Creates a new user with role-based restrictions.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param user body models.User true "User Data"
+// @Success 201 {object} gin.H "User created successfully"
+// @Failure 400 {object} gin.H "Invalid input"
+// @Failure 500 {object} gin.H "Failed to create user"
+// @Router /signup [post]
 func SignUp(c *gin.Context) {
 	var user models.User
 
@@ -108,6 +118,18 @@ type SignInCredentials struct {
 	Password string `json:"password"`
 }
 
+// SignIn user
+// @Summary User login
+// @Description Authenticates a user and returns a JWT token.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Param credentials body SignInCredentials true "User Credentials"
+// @Success 200 {object} gin.H "User logged-in successfully"
+// @Failure 400 {object} gin.H "Invalid input"
+// @Failure 401 {object} gin.H "Invalid email or password"
+// @Failure 500 {object} gin.H "Failed to generate token"
+// @Router /signin [post]
 func SignIn(c *gin.Context) {
 	var credentials SignInCredentials
 	if err := c.ShouldBindJSON(&credentials); err != nil {
@@ -161,7 +183,17 @@ func SignIn(c *gin.Context) {
 	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt})
 }
 
-// Logout handler
+// SignOut user
+// @Summary User logout
+// @Description Invalidates the current session token.
+// @Tags Auth
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} gin.H "User logged out successfully"
+// @Failure 401 {object} gin.H "No token provided"
+// @Failure 500 {object} gin.H "Database error while logging out"
+// @Router /signout [post]
 func SignOut(c *gin.Context) {
 	authorizationHeader := c.GetHeader("Authorization")
 
@@ -190,6 +222,15 @@ func SignOut(c *gin.Context) {
 }
 
 // GetUsers handles GET requests to fetch all users
+// GetUsers retrieves all users
+// @Summary Get all users
+// @Description Retrieves a list of all users
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Success 200 {object} gin.H "All users retrieved"
+// @Failure 500 {object} gin.H "Failed to fetch users"
+// @Router /users [get]
 func GetUsers(c *gin.Context) {
 	var users []models.User
 	if err := config.DB.Find(&users).Error; err != nil {
@@ -204,6 +245,18 @@ func GetUsers(c *gin.Context) {
 }
 
 // GetUserById handles GET requests to fetch a user by ID
+// GetUserById retrieves a user by ID
+// @Summary Get user by ID
+// @Description Retrieves a user by their unique ID
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Success 200 {object} gin.H "User retrieved successfully"
+// @Failure 400 {object} gin.H "Invalid user ID"
+// @Failure 404 {object} gin.H "User not found"
+// @Failure 500 {object} gin.H "Failed to fetch user"
+// @Router /users/{id} [get]
 func GetUserById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -225,6 +278,19 @@ func GetUserById(c *gin.Context) {
 }
 
 // UpdateUserById handles PUT requests to update a user by ID
+// UpdateUserById updates user information
+// @Summary Update user by ID
+// @Description Updates the details of an existing user
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Param user body models.User true "Updated user data"
+// @Success 200 {object} gin.H "User updated successfully"
+// @Failure 400 {object} gin.H "Invalid input"
+// @Failure 404 {object} gin.H "User not found"
+// @Failure 500 {object} gin.H "Failed to update user"
+// @Router /users/{id} [put]
 func UpdateUserById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
@@ -291,6 +357,17 @@ func UpdateUserById(c *gin.Context) {
 }
 
 // DeleteUserById handles DELETE requests to delete a user by ID
+// DeleteUserById deletes a user by ID
+// @Summary Delete user by ID
+// @Description Deletes an existing user from the database
+// @Tags Users
+// @Accept json
+// @Produce json
+// @Param id path int true "User ID"
+// @Success 200 {object} gin.H "User deleted successfully"
+// @Failure 400 {object} gin.H "Invalid user ID"
+// @Failure 500 {object} gin.H "Failed to delete user"
+// @Router /users/{id} [delete]
 func DeleteUserById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
