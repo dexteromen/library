@@ -115,13 +115,13 @@ func SearchBooks(c *gin.Context) {
 	query := config.DB
 
 	if title != "" {
-		query = query.Where("title LIKE ?", "%"+title+"%")
+		query = query.Where("title ILIKE ?", "%"+title+"%")
 	}
 	if author != "" {
-		query = query.Where("authors LIKE ?", "%"+author+"%")
+		query = query.Where("authors ILIKE ?", "%"+author+"%")
 	}
 	if publisher != "" {
-		query = query.Where("publisher LIKE ?", "%"+publisher+"%")
+		query = query.Where("publisher ILIKE ?", "%"+publisher+"%")
 	}
 
 	query.Find(&books)
