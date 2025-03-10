@@ -144,6 +144,20 @@ func TestDeleteBookByID(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
+
+	// Test case: Book not found
+	req, _ = http.NewRequest(http.MethodDelete, "/books/123456", nil)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusNotFound, w.Code)
+
+	// Test case: Invalid book ID
+	req, _ = http.NewRequest(http.MethodDelete, "/books/invalid", nil)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusNotFound, w.Code)
 }
 
 func TestSearchBooks(t *testing.T) {
@@ -154,6 +168,18 @@ func TestSearchBooks(t *testing.T) {
 
 	req, _ := http.NewRequest(http.MethodGet, "/books/search?title=Book", nil)
 	w := httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	req, _ = http.NewRequest(http.MethodGet, "/books/search?authors=Author A", nil)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusOK, w.Code)
+
+	req, _ = http.NewRequest(http.MethodGet, "/books/search?publisher=Pub2", nil)
+	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)

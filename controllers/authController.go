@@ -50,21 +50,11 @@ func isValidEmail(email string) bool {
 // Signup user
 func SignUp(c *gin.Context) {
 	var user models.User
-	// if err := c.ShouldBindJSON(&user); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
-	// 	return
-	// }
 
 	if err := c.ShouldBindJSON(&user); err != nil {
-		// fmt.Println()
-		// fmt.Println("Binding Error:", err)
-		// fmt.Println()
-		// fmt.Println("Received JSON:", c.Request.Body) // Debugging output
-		// c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()}) // Show the actual error
 		utils.RespondJSON(c, http.StatusBadRequest, "Invalid input", gin.H{"error": err.Error()})
 		return
 	}
-	// fmt.Println("Password:", user.Password, "Valid:", isValidPassword(user.Password))
 
 	if user.Role == "admin" {
 		var existingAdmin models.User
@@ -79,21 +69,18 @@ func SignUp(c *gin.Context) {
 
 	// Validate Name
 	if !isValidName(user.Name) {
-		// c.JSON(http.StatusBadRequest, gin.H{"error": "Name must contain only letters and spaces"})
 		utils.RespondJSON(c, http.StatusBadRequest, "User can not be created", gin.H{"error": "Name must contain only letters and spaces"})
 		return
 	}
 
 	// Validate Email
 	if !isValidEmail(user.Email) {
-		// c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email format"})
 		utils.RespondJSON(c, http.StatusBadRequest, "User can not be created", gin.H{"error": "Invalid email format"})
 		return
 	}
 
 	// Validate Password Strength
 	if !isValidPassword(user.Password) {
-		// c.JSON(http.StatusBadRequest, gin.H{"error": "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character"})
 		utils.RespondJSON(c, http.StatusBadRequest, "User can not be created", gin.H{"error": "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character"})
 		return
 	}
@@ -101,7 +88,6 @@ func SignUp(c *gin.Context) {
 	// Hash password
 	hashedPassword, err := utils.HashPassword(user.Password)
 	if err != nil {
-		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to hash password"})
 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to hash password", gin.H{"error": err.Error()})
 		return
 	}
@@ -109,12 +95,10 @@ func SignUp(c *gin.Context) {
 
 	// Save to DB
 	if err := config.DB.Create(&user).Error; err != nil {
-		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create user :-" + err.Error()})
 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create user", gin.H{"error": err.Error()})
 		return
 	}
 
-	// c.JSON(http.StatusCreated, gin.H{"message": "User created successfully"})
 	utils.RespondJSON(c, http.StatusCreated, "User created successfully", gin.H{"user": user})
 }
 
@@ -127,7 +111,6 @@ type SignInCredentials struct {
 func SignIn(c *gin.Context) {
 	var credentials SignInCredentials
 	if err := c.ShouldBindJSON(&credentials); err != nil {
-		// c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid input"})
 		utils.RespondJSON(c, http.StatusBadRequest, "Invalid input", err.Error())
 		return
 	}
@@ -135,14 +118,12 @@ func SignIn(c *gin.Context) {
 	// Check if user exists in DB by email
 	var user models.User
 	if err := config.DB.Where("email = ?", credentials.Email).First(&user).Error; err != nil {
-		// c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email"})
 		utils.RespondJSON(c, http.StatusUnauthorized, "Invalid email", nil)
 		return
 	}
 
 	// Validate password
 	if !utils.CheckPasswordHash(credentials.Password, user.Password) {
-		// c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
 		utils.RespondJSON(c, http.StatusUnauthorized, "Invalid password", nil)
 		return
 	}
@@ -150,7 +131,6 @@ func SignIn(c *gin.Context) {
 	// Generate JWT Token
 	token, err := utils.GenerateJWT(user.ID, user.Email, user.Role)
 	if err != nil {
-		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to generate token", nil)
 		return
 	}
@@ -174,17 +154,9 @@ func SignIn(c *gin.Context) {
 
 	// Store the new session in the database
 	if err := config.DB.Create(&session).Error; err != nil {
-		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create session"})
 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create session", nil)
 		return
 	}
-
-	// Send response with token and session expiry
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"token":       token,
-	// 	"expiry_time": session.ExpiresAt,
-	// 	"message":     "User logged-in successfully",
-	// })
 
 	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt})
 }
@@ -221,7 +193,6 @@ func SignOut(c *gin.Context) {
 func GetUsers(c *gin.Context) {
 	var users []models.User
 	if err := config.DB.Find(&users).Error; err != nil {
-		// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch users"})
 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to fetch users", nil)
 		return
 	}
@@ -229,7 +200,6 @@ func GetUsers(c *gin.Context) {
 		utils.RespondJSON(c, http.StatusOK, "No users found in datatbase !!", nil)
 		return
 	}
-	// c.JSON(http.StatusOK, users)
 	utils.RespondJSON(c, http.StatusOK, "All users retrived !!", gin.H{"User": users})
 }
 
@@ -237,7 +207,6 @@ func GetUsers(c *gin.Context) {
 func GetUserById(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
-		// c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid user ID"})
 		utils.RespondJSON(c, http.StatusBadRequest, "Error: Invalid user ID", nil)
 		return
 	}
@@ -245,16 +214,13 @@ func GetUserById(c *gin.Context) {
 	var user models.User
 	if err := config.DB.First(&user, id).Error; err != nil {
 		if err == gorm.ErrRecordNotFound {
-			// c.JSON(http.StatusNotFound, gin.H{"error": "User not found"})
 			utils.RespondJSON(c, http.StatusNotFound, "Error: User not found", nil)
 		} else {
-			// c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch user"})
 			utils.RespondJSON(c, http.StatusInternalServerError, "Error: Failed to fetch user", nil)
 		}
 		return
 	}
 
-	// c.JSON(http.StatusOK, user)
 	utils.RespondJSON(c, http.StatusOK, "User retrived !!", gin.H{"User": user})
 }
 
