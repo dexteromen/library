@@ -63,7 +63,6 @@ func ConnectDBTest() {
 		&models.RequestEvent{},
 		&models.IssueRegistery{},
 	)
-
 	fmt.Println("Test database connected successfully.")
 }
 

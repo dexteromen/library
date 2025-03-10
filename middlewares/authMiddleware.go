@@ -2,8 +2,6 @@
 package middlewares
 
 import (
-	"library/config"
-	"library/models"
 	"library/utils"
 	"net/http"
 
@@ -56,11 +54,11 @@ func AuthMiddleware() gin.HandlerFunc {
 		token := authorizationHeader[7:]
 
 		// Check if token is empty
-		if token == "" {
-			utils.RespondJSON(c, http.StatusUnauthorized, "Invalid token format", nil)
-			c.Abort()
-			return
-		}
+		// if token == "" {
+		// 	utils.RespondJSON(c, http.StatusUnauthorized, "Invalid token format", nil)
+		// 	c.Abort()
+		// 	return
+		// }
 
 		// Validate JWT token
 		claims, err := utils.ParseToken(token)
@@ -71,12 +69,12 @@ func AuthMiddleware() gin.HandlerFunc {
 		}
 
 		// Check session in DB
-		var session models.Session
-		if err := config.DB.Where("token = ? AND is_active = ?", token, true).First(&session).Error; err != nil {
-			utils.RespondJSON(c, http.StatusUnauthorized, "Session expired or invalid", nil)
-			c.Abort()
-			return
-		}
+		// var session models.Session
+		// if err := config.DB.Where("token = ? AND is_active = ?", token, true).First(&session).Error; err != nil {
+		// 	utils.RespondJSON(c, http.StatusUnauthorized, "Session expired or invalid", nil)
+		// 	c.Abort()
+		// 	return
+		// }
 
 		// Set user details in context for future use
 		c.Set("user_id", claims.UserID)

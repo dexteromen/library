@@ -18,7 +18,7 @@ type User struct {
 // Library Table
 type Library struct {
 	ID   uint   `gorm:"primaryKey" json:"id"`
-	Name string `gorm:"unique" json:"name"`
+	Name string `gorm:"unique" json:"name" binding:"required"`
 }
 
 type BookInventory struct {
@@ -36,7 +36,7 @@ type BookInventory struct {
 // Request Table
 type RequestEvent struct {
 	ReqID        uint       `gorm:"primaryKey;autoIncrement" json:"req_id"`
-	ISBN         string     `gorm:"not null" json:"isbn"`
+	ISBN         string     `gorm:"not null" json:"isbn" binding:"required"`
 	ReaderID     uint       `gorm:"not null" json:"reader_id"`
 	RequestDate  string     `gorm:"autoCreateTime" json:"request_date"`
 	ApprovalDate *time.Time `json:"approval_date,omitempty"`

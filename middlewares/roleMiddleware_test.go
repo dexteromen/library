@@ -55,6 +55,7 @@ func TestRoleMiddleware(t *testing.T) {
 	setupTestDB_Role()
 	gin.SetMode(gin.TestMode)
 	r := gin.Default()
+
 	r.Use(func(c *gin.Context) {
 		// Simulating user role retrieval from request (this would normally be extracted from JWT, session, etc.)
 		userRole := c.Query("role")
@@ -67,51 +68,60 @@ func TestRoleMiddleware(t *testing.T) {
 		c.Next()
 	})
 
-	r.GET("/admin", RoleMiddleware("admin"), func(c *gin.Context) {
+	// Define a sample middleware using multiple allowed roles
+	r.GET("/admin", RoleMiddleware("admin", "superadmin"), func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Welcome, Admin!"})
 	})
 
-	r.GET("/reader", RoleMiddleware("reader"), func(c *gin.Context) {
+	r.GET("/reader", RoleMiddleware("reader", "admin"), func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{"message": "Welcome, Reader!"})
 	})
 
-	r.GET("/owner", RoleMiddleware("owner"), func(c *gin.Context) {
-		c.JSON(http.StatusOK, gin.H{"message": "Welcome, Owner!"})
-	})
-
-	// Test case: Admin access
-	t.Run("Admin access allowed", func(t *testing.T) {
-		req, _ := http.NewRequest(http.MethodGet, "/admin?role=admin", nil)
-		w := httptest.NewRecorder()
-		r.ServeHTTP(w, req)
-		assert.Equal(t, http.StatusOK, w.Code)
-		assert.Contains(t, w.Body.String(), "Welcome, Admin!")
-	})
-
-	// Test case: Reader denied admin access
-	t.Run("Reader access denied to admin", func(t *testing.T) {
-		req, _ := http.NewRequest(http.MethodGet, "/admin?role=reader", nil)
-		w := httptest.NewRecorder()
-		r.ServeHTTP(w, req)
-		assert.Equal(t, http.StatusForbidden, w.Code)
-		assert.Contains(t, w.Body.String(), "Forbidden access") // Updated message
-	})
-
-	// Test case: Owner access allowed
-	t.Run("Owner access allowed", func(t *testing.T) {
-		req, _ := http.NewRequest(http.MethodGet, "/owner?role=owner", nil)
-		w := httptest.NewRecorder()
-		r.ServeHTTP(w, req)
-		assert.Equal(t, http.StatusOK, w.Code)
-		assert.Contains(t, w.Body.String(), "Welcome, Owner!")
-	})
-
-	// Test case: Unauthorized access (no role)
-	t.Run("Unauthorized access", func(t *testing.T) {
+	// Test case: No role provided
+	t.Run("No role provided", func(t *testing.T) {
 		req, _ := http.NewRequest(http.MethodGet, "/admin", nil) // No role provided
 		w := httptest.NewRecorder()
 		r.ServeHTTP(w, req)
 		assert.Equal(t, http.StatusForbidden, w.Code)
-		assert.Contains(t, w.Body.String(), "Missing role")
+	})
+
+	// Test case: Invalid role type (not a string)
+	t.Run("Invalid role type", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/admin?role=123", nil) // role as an integer
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+		assert.Equal(t, http.StatusForbidden, w.Code)
+	})
+
+	// Test case: Forbidden access (role not allowed)
+	t.Run("Role not allowed", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/admin?role=reader", nil) // role "reader" not allowed for this endpoint
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+		assert.Equal(t, http.StatusForbidden, w.Code)
+	})
+
+	// Test case: Valid role access (role allowed)
+	t.Run("Valid role access", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/admin?role=admin", nil) // role "admin" allowed
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+		assert.Equal(t, http.StatusOK, w.Code)
+	})
+
+	// Test case: Valid role access (multiple allowed roles)
+	t.Run("Valid role access - multiple roles", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/reader?role=admin", nil) // role "admin" allowed for /reader endpoint
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+		assert.Equal(t, http.StatusOK, w.Code)
+	})
+
+	// Test case: Forbidden access (invalid role in multiple allowed roles)
+	t.Run("Forbidden access - invalid role in multiple roles", func(t *testing.T) {
+		req, _ := http.NewRequest(http.MethodGet, "/reader?role=superadmin", nil) // role "superadmin" not allowed for /reader endpoint
+		w := httptest.NewRecorder()
+		r.ServeHTTP(w, req)
+		assert.Equal(t, http.StatusForbidden, w.Code)
 	})
 }

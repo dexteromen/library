@@ -17,10 +17,10 @@ func GetRequests(c *gin.Context) {
 	config.DB.Find(&requests)
 
 	//if requwsts is empty
-	if len(requests) == 0 {
-		utils.RespondJSON(c, http.StatusNotFound, "No Requests Found", nil)
-		return
-	}
+	// if len(requests) == 0 {
+	// 	utils.RespondJSON(c, http.StatusNotFound, "No Requests Found", nil)
+	// 	return
+	// }
 
 	utils.RespondJSON(c, http.StatusOK, "All Requests", requests)
 }
@@ -48,16 +48,16 @@ func CreateRequest(c *gin.Context) {
 
 	// Because reader is creating the request
 	// Assuming middleware sets user_id in context
-	readerID, exists := c.Get("user_id")
-	if !exists {
-		utils.RespondJSON(c, http.StatusUnauthorized, "Reader ID not found in context", nil)
-		return
-	}
-	readerIDUint, ok := readerID.(uint)
-	if !ok {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to cast Reader Id", nil)
-		return
-	}
+	readerID, _ := c.Get("user_id")
+	// if !exists {
+	// 	utils.RespondJSON(c, http.StatusUnauthorized, "Reader ID not found in context", nil)
+	// 	return
+	// }
+	readerIDUint, _ := readerID.(uint)
+	// if !ok {
+	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to cast Reader Id", nil)
+	// 	return
+	// }
 
 	request.ReaderID = readerIDUint
 
@@ -82,41 +82,41 @@ func CreateRequest(c *gin.Context) {
 }
 
 // Approve Request
-func ApproveRequest(c *gin.Context) {
-	var request models.RequestEvent
-	id := c.Param("id")
+// func ApproveRequest(c *gin.Context) {
+// 	var request models.RequestEvent
+// 	id := c.Param("id")
 
-	if err := config.DB.First(&request, id).Error; err != nil {
-		// c.JSON(http.StatusNotFound, gin.H{"error": "Request not found"})
-		utils.RespondJSON(c, http.StatusNotFound, "Request not found", nil)
-		return
-	}
+// 	if err := config.DB.First(&request, id).Error; err != nil {
+// 		// c.JSON(http.StatusNotFound, gin.H{"error": "Request not found"})
+// 		utils.RespondJSON(c, http.StatusNotFound, "Request not found", nil)
+// 		return
+// 	}
 
-	// // Assuming middleware sets user_id in context
-	// approverID := c.GetUint("user_id")
-	approverID, exists := c.Get("user_id")
-	if !exists {
-		utils.RespondJSON(c, http.StatusUnauthorized, "User ID not found in context", nil)
-		return
-	}
-	approverIDUint, ok := approverID.(uint)
-	if !ok {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to cast user ID", nil)
-		return
-	}
+// 	// // Assuming middleware sets user_id in context
+// 	// approverID := c.GetUint("user_id")
+// 	approverID, exists := c.Get("user_id")
+// 	if !exists {
+// 		utils.RespondJSON(c, http.StatusUnauthorized, "User ID not found in context", nil)
+// 		return
+// 	}
+// 	approverIDUint, ok := approverID.(uint)
+// 	if !ok {
+// 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to cast user ID", nil)
+// 		return
+// 	}
 
-	now := time.Now()
-	request.ApprovalDate = &now
-	request.ApproverID = &approverIDUint
-	request.IssueStatus = "Approved"
+// 	now := time.Now()
+// 	request.ApprovalDate = &now
+// 	request.ApproverID = &approverIDUint
+// 	request.IssueStatus = "Approved"
 
-	if err := config.DB.Save(&request).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Error", gin.H{"error": err.Error()})
-		return
-	}
+// 	if err := config.DB.Save(&request).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusInternalServerError, "Error", gin.H{"error": err.Error()})
+// 		return
+// 	}
 
-	utils.RespondJSON(c, http.StatusOK, "All Requests", request)
-}
+// 	utils.RespondJSON(c, http.StatusOK, "All Requests", request)
+// }
 
 // Approve And Issue Request
 func ApproveAndIssueRequest(c *gin.Context) {

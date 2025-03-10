@@ -74,6 +74,19 @@ func TestCreateLibrary(t *testing.T) {
 		assert.True(t, ok, "Response data should be a valid map")
 		assert.Equal(t, testUser.Name, ownerData["Owner Of Library"])
 	})
+
+	t.Run("Invalid input", func(t *testing.T) {
+		libraryData := map[string]string{"name1": "Unique Library"}
+		jsonData, _ := json.Marshal(libraryData)
+
+		req, _ := http.NewRequest("POST", "/library", bytes.NewBuffer(jsonData))
+		req.Header.Set("Content-Type", "application/json")
+		recorder := httptest.NewRecorder()
+		router.ServeHTTP(recorder, req)
+
+		// Assertions
+		assert.Equal(t, http.StatusBadRequest, recorder.Code)
+	})
 }
 
 func TestGetLibraries(t *testing.T) {
