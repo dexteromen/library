@@ -67,6 +67,13 @@ func TestCreateBook(t *testing.T) {
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 	assert.Equal(t, http.StatusCreated, w.Code)
+
+	// Test case 4: Failed to create book (duplicate ISBN)
+	req, _ = http.NewRequest(http.MethodPost, "/books", bytes.NewBuffer(jsonBook))
+	req.Header.Set("Content-Type", "application/json")
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
 }
 
 func setupTestDB_Book() {
@@ -114,6 +121,12 @@ func TestGetBookByID(t *testing.T) {
 	r.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
+
+	req, _ = http.NewRequest(http.MethodGet, "/books/1234", nil)
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusNotFound, w.Code)
 }
 
 func TestUpdateBookByID(t *testing.T) {
@@ -125,12 +138,37 @@ func TestUpdateBookByID(t *testing.T) {
 	updateData := map[string]interface{}{"title": "Updated Title"}
 	jsonData, _ := json.Marshal(updateData)
 
+	updateDataB := map[string]interface{}{"": "Updated Title"}
+	jsonDataB, _ := json.Marshal(updateDataB)
+
 	req, _ := http.NewRequest(http.MethodPut, "/books/123456", bytes.NewBuffer(jsonData))
 	req.Header.Set("Content-Type", "application/json")
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
 
 	assert.Equal(t, http.StatusOK, w.Code)
+
+	req, _ = http.NewRequest(http.MethodPut, "/books/1234", bytes.NewBuffer(jsonData))
+	req.Header.Set("Content-Type", "application/json")
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusNotFound, w.Code)
+
+	req, _ = http.NewRequest(http.MethodPut, "/books/123456", bytes.NewBuffer(jsonDataB))
+	req.Header.Set("Content-Type", "application/json")
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusInternalServerError, w.Code)
+
+	req, _ = http.NewRequest(http.MethodPut, "/books/123456", bytes.NewBuffer(nil))
+	req.Header.Set("Content-Type", "application/json")
+	w = httptest.NewRecorder()
+	r.ServeHTTP(w, req)
+
+	assert.Equal(t, http.StatusBadRequest, w.Code)
+
 }
 
 func TestDeleteBookByID(t *testing.T) {
@@ -142,21 +180,18 @@ func TestDeleteBookByID(t *testing.T) {
 	req, _ := http.NewRequest(http.MethodDelete, "/books/123456", nil)
 	w := httptest.NewRecorder()
 	r.ServeHTTP(w, req)
-
 	assert.Equal(t, http.StatusOK, w.Code)
 
 	// Test case: Book not found
 	req, _ = http.NewRequest(http.MethodDelete, "/books/123456", nil)
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
-
 	assert.Equal(t, http.StatusNotFound, w.Code)
 
 	// Test case: Invalid book ID
 	req, _ = http.NewRequest(http.MethodDelete, "/books/invalid", nil)
 	w = httptest.NewRecorder()
 	r.ServeHTTP(w, req)
-
 	assert.Equal(t, http.StatusNotFound, w.Code)
 }
 
