@@ -11,7 +11,15 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Get All Requests
+// GetRequests godoc
+// @Summary Get all requests
+// @Description Retrieve a list of all requests
+// @Tags requests
+// @Accept  json
+// @Produce  json
+// @Success 200   {object}  map[string]interface{}  "All requests retrieved successfully"
+// @Failure 500   {object}  map[string]interface{}  "Failed to fetch requests"
+// @Router /requests [get]
 func GetRequests(c *gin.Context) {
 	var requests []models.RequestEvent
 	config.DB.Find(&requests)
@@ -25,7 +33,19 @@ func GetRequests(c *gin.Context) {
 	utils.RespondJSON(c, http.StatusOK, "All Requests", requests)
 }
 
-// Create Request
+// CreateRequest godoc
+// @Summary Create a new request
+// @Description Create a new request for a book
+// @Tags requests
+// @Accept  json
+// @Produce  json
+// @Param   request  body      models.RequestEvent  true  "Request data"
+// @Success 201   {object}  map[string]interface{}  "Request created successfully"
+// @Failure 400   {object}  map[string]interface{}  "Cannot Bind JSON Data"
+// @Failure 404   {object}  map[string]interface{}  "Book not found"
+// @Failure 409   {object}  map[string]interface{}  "Request already exists or Book is not available"
+// @Failure 500   {object}  map[string]interface{}  "Cannot create request"
+// @Router /request [post]
 func CreateRequest(c *gin.Context) {
 	var request models.RequestEvent
 	if err := c.ShouldBindJSON(&request); err != nil {
@@ -120,7 +140,18 @@ func CreateRequest(c *gin.Context) {
 // 	utils.RespondJSON(c, http.StatusOK, "All Requests", request)
 // }
 
-// Approve And Issue Request
+// ApproveAndIssueRequest godoc
+// @Summary Approve and issue a book request
+// @Description Approve a book request and issue the book to the user
+// @Tags requests
+// @Accept  json
+// @Produce  json
+// @Param   id     path      string  true  "Request ID"
+// @Success 200   {object}  map[string]interface{}  "Book issued and approved successfully"
+// @Failure 404   {object}  map[string]interface{}  "Request not found"
+// @Failure 409   {object}  map[string]interface{}  "No available copies for this book"
+// @Failure 500   {object}  map[string]interface{}  "Failed to update book inventory or issue book"
+// @Router /approve-issue/{id} [put]
 func ApproveAndIssueRequest(c *gin.Context) {
 	var request models.RequestEvent
 	id := c.Param("id")

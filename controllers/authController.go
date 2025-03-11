@@ -47,7 +47,17 @@ func isValidPassword(password string) bool {
 // 	return regexp.MustCompile(pattern).MatchString(email)
 // }
 
-// Signup user
+// SignUp godoc
+// @Summary Sign up a new user
+// @Description Create a new user account
+// @Tags auth
+// @Accept  json
+// @Produce  json
+// @Param   user  body      models.User  true  "User data"
+// @Success 201   {object}  map[string]interface{}  "User created successfully"
+// @Failure 400   {object}  map[string]interface{}  "Invalid input"
+// @Failure 500   {object}  map[string]interface{}  "Failed to create user"
+// @Router /signup [post]
 func SignUp(c *gin.Context) {
 	var user models.User
 
@@ -102,6 +112,18 @@ type SignInCredentials struct {
 	Password string `json:"password" binding:"required"`
 }
 
+// SignIn godoc
+// @Summary Sign in a user
+// @Description Authenticate a user and return a JWT token
+// @Tags auth
+// @Accept  json
+// @Produce  json
+// @Param   credentials  body      SignInCredentials  true  "User credentials"
+// @Success 200   {object}  map[string]interface{}  "User logged-in successfully"
+// @Failure 400   {object}  map[string]interface{}  "Invalid input"
+// @Failure 401   {object}  map[string]interface{}  "Invalid email or password"
+// @Failure 500   {object}  map[string]interface{}  "Failed to create session"
+// @Router /signin [post]
 func SignIn(c *gin.Context) {
 	var credentials SignInCredentials
 	if err := c.ShouldBindJSON(&credentials); err != nil {
@@ -157,7 +179,17 @@ func SignIn(c *gin.Context) {
 	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt})
 }
 
-// Logout handler
+// SignOut godoc
+// @Summary Sign out a user
+// @Description Invalidate the user's session token
+// @Tags auth
+// @Accept  json
+// @Produce  json
+// @Param   Authorization  header    string  true  "Bearer token"
+// @Success 200   {object}  map[string]interface{}  "User logged out successfully"
+// @Failure 401   {object}  map[string]interface{}  "No token provided"
+// @Failure 500   {object}  map[string]interface{}  "Database error while logging out"
+// @Router /signout [post]
 func SignOut(c *gin.Context) {
 	authorizationHeader := c.GetHeader("Authorization")
 
@@ -187,7 +219,15 @@ func SignOut(c *gin.Context) {
 	utils.RespondJSON(c, http.StatusOK, "User logged out successfully !!", nil)
 }
 
-// GetUsers handles GET requests to fetch all users
+// GetUsers godoc
+// @Summary Get all users
+// @Description Retrieve a list of all users
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Success 200   {object}  map[string]interface{}  "All users retrieved"
+// @Failure 500   {object}  map[string]interface{}  "Failed to fetch users"
+// @Router /users [get]
 func GetUsers(c *gin.Context) {
 	var users []models.User
 	config.DB.Find(&users)
@@ -202,7 +242,18 @@ func GetUsers(c *gin.Context) {
 	utils.RespondJSON(c, http.StatusOK, "All users retrived !!", gin.H{"User": users})
 }
 
-// GetUserById handles GET requests to fetch a user by ID
+// GetUserById godoc
+// @Summary Get a user by ID
+// @Description Retrieve a user by their ID
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param   id     path      int     true  "User ID"
+// @Success 200   {object}  map[string]interface{}  "User retrieved successfully"
+// @Failure 400   {object}  map[string]interface{}  "Invalid user ID"
+// @Failure 404   {object}  map[string]interface{}  "User not found"
+// @Failure 500   {object}  map[string]interface{}  "Failed to fetch user"
+// @Router /user/{id} [get]
 func GetUserById(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	// if err != nil {
@@ -291,7 +342,17 @@ func GetUserById(c *gin.Context) {
 // 	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully", "user": user})
 // }
 
-// DeleteUserById handles DELETE requests to delete a user by ID
+// DeleteUserById godoc
+// @Summary Delete a user by ID
+// @Description Delete a user by their ID
+// @Tags users
+// @Accept  json
+// @Produce  json
+// @Param   id     path      int     true  "User ID"
+// @Success 200   {object}  map[string]interface{}  "User deleted successfully"
+// @Failure 400   {object}  map[string]interface{}  "Invalid user ID"
+// @Failure 500   {object}  map[string]interface{}  "Failed to delete user"
+// @Router /user/{id} [delete]
 func DeleteUserById(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	// if err != nil {

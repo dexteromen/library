@@ -11,14 +11,21 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// Get All Issues
+// GetIssues godoc
+// @Summary Get all issues
+// @Description Retrieve a list of all issues
+// @Tags issues
+// @Accept  json
+// @Produce  json
+// @Success 200   {object}  map[string]interface{}  "All issues retrieved successfully"
+// @Failure 500   {object}  map[string]interface{}  "Failed to fetch issues"
+// @Router /issues [get]
 func GetIssues(c *gin.Context) {
 	var issues []models.IssueRegistery
 	config.DB.Find(&issues)
 	utils.RespondJSON(c, http.StatusOK, "All Issues Retrieved.", issues)
 }
 
-// Issue Book
 func IssueBook(c *gin.Context) {
 	var request models.RequestEvent
 	id := c.Param("id")
@@ -83,6 +90,20 @@ func IssueBook(c *gin.Context) {
 }
 
 // Return Book by isbn and reader_id from isuue_registery
+
+// ReturnBook godoc
+// @Summary Return a book
+// @Description Return a book by ISBN and reader ID from issue registry
+// @Tags issues
+// @Accept  json
+// @Produce  json
+// @Param   id     path      string  true  "Book ISBN"
+// @Success 200   {object}  map[string]interface{}  "Book returned successfully"
+// @Failure 404   {object}  map[string]interface{}  "Issue record not found"
+// @Failure 409   {object}  map[string]interface{}  "Book already returned"
+// @Failure 401   {object}  map[string]interface{}  "User ID not found in context"
+// @Failure 500   {object}  map[string]interface{}  "Failed to update issue record or book inventory"
+// @Router /return/{id} [put]
 func ReturnBook(c *gin.Context) {
 	id := c.Param("id")
 

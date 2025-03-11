@@ -9,6 +9,18 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// CreateLibrary godoc
+// @Summary Create a new library
+// @Description Create a new library and update the user's role to owner
+// @Tags library
+// @Accept  json
+// @Produce  json
+// @Param   library  body      models.Library  true  "Library data"
+// @Success 201   {object}  map[string]interface{}  "Library created successfully"
+// @Failure 400   {object}  map[string]interface{}  "Invalid input"
+// @Failure 404   {object}  map[string]interface{}  "User not found"
+// @Failure 500   {object}  map[string]interface{}  "Failed to create library"
+// @Router /library [post]
 func CreateLibrary(c *gin.Context) {
 	var library models.Library
 	if err := c.ShouldBindJSON(&library); err != nil {
@@ -43,6 +55,15 @@ func CreateLibrary(c *gin.Context) {
 	utils.RespondJSON(c, http.StatusCreated, "Library created successfully", data)
 }
 
+// GetLibraries godoc
+// @Summary Get all libraries
+// @Description Retrieve a list of all libraries
+// @Tags library
+// @Accept  json
+// @Produce  json
+// @Success 200   {object}  map[string]interface{}  "Libraries fetched successfully"
+// @Failure 500   {object}  map[string]interface{}  "Failed to fetch libraries"
+// @Router /library [get]
 func GetLibraries(c *gin.Context) {
 	var libraries []models.Library
 	config.DB.Find(&libraries)
