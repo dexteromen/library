@@ -150,10 +150,6 @@ func DeleteBookByID(c *gin.Context) {
 
 	// Delete book
 	config.DB.Delete(&book)
-	// if err := config.DB.Delete(&book).Error; err != nil {
-	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to delete book", nil)
-	// 	return
-	// }
 
 	utils.RespondJSON(c, http.StatusOK, "Book deleted successfully", nil)
 }
@@ -189,14 +185,6 @@ func SearchBooks(c *gin.Context) {
 	}
 
 	query.Find(&books)
-
-	// for i, book := range books {
-	// 	if book.AvailableCopies > 0 {
-	// 		books[i].Status = "Available"
-	// 	} else {
-	// 		books[i].Status = "Not available, expected by " + book.ExpectedReturnDate.Format("2006-01-02")
-	// 	}
-	// }
 
 	utils.RespondJSON(c, http.StatusOK, "Books retrieved successfully", books)
 }

@@ -80,12 +80,6 @@ func SignUp(c *gin.Context) {
 		return
 	}
 
-	// Validate Email
-	// if !isValidEmail(user.Email) {
-	// 	utils.RespondJSON(c, http.StatusBadRequest, "User can not be created", gin.H{"error": "Invalid email format"})
-	// 	return
-	// }
-
 	// Validate Password Strength
 	if !isValidPassword(user.Password) {
 		utils.RespondJSON(c, http.StatusBadRequest, "User can not be created", gin.H{"error": "Password must be at least 8 characters long, contain one uppercase letter, one number, and one special character"})
@@ -95,13 +89,8 @@ func SignUp(c *gin.Context) {
 	// Hash password
 	hashedPassword, _ := utils.HashPassword(user.Password)
 	user.Password = hashedPassword
-
+	user.Email = strings.ToLower(user.Email)
 	config.DB.Create(&user)
-	// // Save to DB
-	// if err := config.DB.Create(&user).Error; err != nil {
-	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create user", gin.H{"error": err.Error()})
-	// 	return
-	// }
 
 	utils.RespondJSON(c, http.StatusCreated, "User created successfully", gin.H{"user": user})
 }
@@ -155,11 +144,6 @@ func SignIn(c *gin.Context) {
 	var session models.Session
 	// Check if there is an existing active session
 	config.DB.Where("user_id = ? AND is_active = ?", user.ID, true)
-	// if err := config.DB.Where("user_id = ? AND is_active = ?", user.ID, true).First(&session).Error; err == nil {
-	// 	// If a session exists, invalidate it first (or update)
-	// 	session.IsActive = false
-	// 	config.DB.Save(&session)
-	// }
 
 	// Create new session for the user
 	session = models.Session{
@@ -171,11 +155,6 @@ func SignIn(c *gin.Context) {
 
 	// Store the new session in the database
 	config.DB.Create(&session)
-	// if err := config.DB.Create(&session).Error; err != nil {
-	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create session", nil)
-	// 	return
-	// }
-
 	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt})
 }
 
@@ -193,28 +172,10 @@ func SignIn(c *gin.Context) {
 func SignOut(c *gin.Context) {
 	authorizationHeader := c.GetHeader("Authorization")
 
-	// Check if the Authorization header is empty or too short
-	// if len(authorizationHeader) < 8 || authorizationHeader[:7] != "Bearer " {
-	// 	utils.RespondJSON(c, http.StatusUnauthorized, "No token provided !!", nil)
-	// 	return
-	// }
-
 	token := authorizationHeader[7:] // Extract the token
-
-	// Check if the token is actually empty
-	// if token == "" {
-	// 	utils.RespondJSON(c, http.StatusUnauthorized, "No token provided !!", nil)
-	// 	return
-	// }
 
 	// Update session status in the database
 	config.DB.Model(&models.Session{}).Where("token = ?", token).Update("is_active", false)
-
-	// result := config.DB.Model(&models.Session{}).Where("token = ?", token).Update("is_active", false)
-	// if result.Error != nil {
-	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Database error while logging out", nil)
-	// 	return
-	// }
 
 	utils.RespondJSON(c, http.StatusOK, "User logged out successfully !!", nil)
 }
@@ -231,14 +192,6 @@ func SignOut(c *gin.Context) {
 func GetUsers(c *gin.Context) {
 	var users []models.User
 	config.DB.Find(&users)
-	// if err := config.DB.Find(&users).Error; err != nil {
-	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to fetch users", nil)
-	// 	return
-	// }
-	// if len(users) <= 0 {
-	// 	utils.RespondJSON(c, http.StatusOK, "No users found in datatbase !!", nil)
-	// 	return
-	// }
 	utils.RespondJSON(c, http.StatusOK, "All users retrived !!", gin.H{"User": users})
 }
 
@@ -256,24 +209,14 @@ func GetUsers(c *gin.Context) {
 // @Router /user/{id} [get]
 func GetUserById(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	// if err != nil {
-	// 	utils.RespondJSON(c, http.StatusBadRequest, "Error: Invalid user ID", nil)
-	// 	return
-	// }
 
 	var user models.User
 	config.DB.First(&user, id)
-	// if err := config.DB.First(&user, id).Error; err != nil {
-	// 	if err == gorm.ErrRecordNotFound {
-	// 		utils.RespondJSON(c, http.StatusNotFound, "Error: User not found", nil)
-	// 	} else {
-	// 		utils.RespondJSON(c, http.StatusInternalServerError, "Error: Failed to fetch user", nil)
-	// 	}
-	// 	return
-	// }
 
 	utils.RespondJSON(c, http.StatusOK, "User retrived !!", gin.H{"User": user})
 }
+
+/*
 
 // // UpdateUserById handles PUT requests to update a user by ID
 // func UpdateUserById(c *gin.Context) {
@@ -341,6 +284,8 @@ func GetUserById(c *gin.Context) {
 
 // 	c.JSON(http.StatusOK, gin.H{"message": "User updated successfully", "user": user})
 // }
+
+*/
 
 // DeleteUserById godoc
 // @Summary Delete a user by ID

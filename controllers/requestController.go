@@ -24,12 +24,6 @@ func GetRequests(c *gin.Context) {
 	var requests []models.RequestEvent
 	config.DB.Find(&requests)
 
-	//if requwsts is empty
-	// if len(requests) == 0 {
-	// 	utils.RespondJSON(c, http.StatusNotFound, "No Requests Found", nil)
-	// 	return
-	// }
-
 	utils.RespondJSON(c, http.StatusOK, "All Requests", requests)
 }
 
@@ -69,15 +63,7 @@ func CreateRequest(c *gin.Context) {
 	// Because reader is creating the request
 	// Assuming middleware sets user_id in context
 	readerID, _ := c.Get("user_id")
-	// if !exists {
-	// 	utils.RespondJSON(c, http.StatusUnauthorized, "Reader ID not found in context", nil)
-	// 	return
-	// }
 	readerIDUint, _ := readerID.(uint)
-	// if !ok {
-	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to cast Reader Id", nil)
-	// 	return
-	// }
 
 	request.ReaderID = readerIDUint
 
@@ -94,15 +80,10 @@ func CreateRequest(c *gin.Context) {
 	request.IssueStatus = "Pending"
 
 	config.DB.Create(&request)
-
-	// if err := config.DB.Create(&request).Error; err != nil {
-	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Cannot create request", gin.H{"error": err.Error()})
-	// 	return
-	// }
-
 	utils.RespondJSON(c, http.StatusCreated, "Request Created", request)
 }
 
+/*
 // Approve Request
 // func ApproveRequest(c *gin.Context) {
 // 	var request models.RequestEvent
@@ -139,6 +120,7 @@ func CreateRequest(c *gin.Context) {
 
 // 	utils.RespondJSON(c, http.StatusOK, "All Requests", request)
 // }
+*/
 
 // ApproveAndIssueRequest godoc
 // @Summary Approve and issue a book request

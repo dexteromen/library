@@ -13,9 +13,8 @@ func Routes(router *gin.Engine) {
 	router.POST("/signin", controllers.SignIn)   // Login User
 	router.POST("/signout", controllers.SignOut) // Logout User
 
-	router.GET("/users", controllers.GetUsers)       // Get all Users
-	router.GET("/user/:id", controllers.GetUserById) // Get User By ID
-	// router.PUT("/user/:id", controllers.UpdateUserById)    // Update User By ID
+	router.GET("/users", controllers.GetUsers)             // Get all Users
+	router.GET("/user/:id", controllers.GetUserById)       // Get User By ID
 	router.DELETE("/user/:id", controllers.DeleteUserById) // Delete User By ID
 
 	// Library Routes
@@ -24,8 +23,6 @@ func Routes(router *gin.Engine) {
 	libraryGroup.Use(middlewares.AuthMiddleware())
 	{
 		libraryGroup.POST("/library", controllers.CreateLibrary) // Create Library
-		// libraryGroup.PUT("/library/:id", middlewares.RoleMiddleware("owner"), controllers.UpdateLibrary)             // Update Library
-		// libraryGroup.DELETE("/library/:id", middlewares.RoleMiddleware("owner", "admin"), controllers.DeleteLibrary) // Delete Library
 	}
 
 	// Book Routes
@@ -49,6 +46,5 @@ func Routes(router *gin.Engine) {
 		requestAndIssuesGroup.POST("/request", middlewares.RoleMiddleware("reader"), controllers.CreateRequest)                  // Create Request
 		requestAndIssuesGroup.PUT("/approve-issue/:id", middlewares.RoleMiddleware("admin"), controllers.ApproveAndIssueRequest) // Approve Request and Issue Book
 		requestAndIssuesGroup.PUT("/return/:id", middlewares.RoleMiddleware("reader"), controllers.ReturnBook)                   // Return book by isbn
-		// requestAndIssuesGroup.PUT("/approve/:id", middlewares.RoleMiddleware("admin"), controllers.ApproveRequest)
 	}
 }

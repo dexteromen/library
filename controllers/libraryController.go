@@ -46,10 +46,6 @@ func CreateLibrary(c *gin.Context) {
 	user.Role = "owner"
 
 	config.DB.Save(&user)
-	// if err := config.DB.Save(&user).Error; err != nil {
-	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update user", nil)
-	// 	return
-	// }
 
 	//Sending response
 	data := gin.H{"library": library, "Owner Of Library": user.Name, "Role": user.Role}
@@ -72,6 +68,7 @@ func GetLibraries(c *gin.Context) {
 	utils.RespondJSON(c, http.StatusOK, "Libraries fetched successfully", libraries)
 }
 
+/*
 // func UpdateLibrary(c *gin.Context) {
 // 	var library models.Library
 // 	libraryID := c.Param("id")
@@ -110,3 +107,4 @@ func GetLibraries(c *gin.Context) {
 
 // 	utils.RespondJSON(c, http.StatusOK, "Library deleted successfully", nil)
 // }
+*/
