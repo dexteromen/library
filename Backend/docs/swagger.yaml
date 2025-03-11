@@ -1,0 +1,705 @@
+definitions:
+  controllers.SignInCredentials:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
+    required:
+    - email
+    - password
+    type: object
+  models.BookInventory:
+    properties:
+      authors:
+        type: string
+      available_copies:
+        type: integer
+      book_id:
+        type: integer
+      isbn:
+        type: string
+      lib_id:
+        type: integer
+      publisher:
+        type: string
+      title:
+        type: string
+      total_copies:
+        type: integer
+      version:
+        type: string
+    type: object
+  models.Library:
+    properties:
+      id:
+        type: integer
+      name:
+        type: string
+    required:
+    - name
+    type: object
+  models.RequestEvent:
+    properties:
+      approval_date:
+        type: string
+      approver_id:
+        type: integer
+      isbn:
+        type: string
+      issue_status:
+        description: e.g., "Issued and Approved"
+        type: string
+      reader_id:
+        type: integer
+      req_id:
+        type: integer
+      request_date:
+        type: string
+      request_type:
+        description: e.g., "Borrow", "Return"
+        type: string
+    required:
+    - isbn
+    type: object
+  models.User:
+    properties:
+      contact_number:
+        type: string
+      email:
+        type: string
+      id:
+        type: integer
+      lib_id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+      role:
+        type: string
+    required:
+    - contact_number
+    - email
+    - name
+    - password
+    type: object
+info:
+  contact: {}
+paths:
+  /approve-issue/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Approve a book request and issue the book to the user
+      parameters:
+      - description: Request ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book issued and approved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Request not found
+          schema:
+            additionalProperties: true
+            type: object
+        "409":
+          description: No available copies for this book
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to update book inventory or issue book
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Approve and issue a book request
+      tags:
+      - requests
+  /book:
+    post:
+      consumes:
+      - application/json
+      description: Create a new book in the library
+      parameters:
+      - description: Book data
+        in: body
+        name: book
+        required: true
+        schema:
+          $ref: '#/definitions/models.BookInventory'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Book created successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: User not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to create book
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new book
+      tags:
+      - books
+  /book/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a book by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Book not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to delete book
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a book by ID
+      tags:
+      - books
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a book by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Book not found
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get a book by ID
+      tags:
+      - books
+    put:
+      consumes:
+      - application/json
+      description: Update a book's details by its ID
+      parameters:
+      - description: Book ID
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Updated book data
+        in: body
+        name: book
+        required: true
+        schema:
+          additionalProperties: true
+          type: object
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book updated successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Book not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to update book
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Update a book by ID
+      tags:
+      - books
+  /books:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all books
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Books retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to fetch books
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all books
+      tags:
+      - books
+  /issues:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all issues
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: All issues retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to fetch issues
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all issues
+      tags:
+      - issues
+  /library:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all libraries
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Libraries fetched successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to fetch libraries
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all libraries
+      tags:
+      - library
+    post:
+      consumes:
+      - application/json
+      description: Create a new library and update the user's role to owner
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      - description: Library data
+        in: body
+        name: library
+        required: true
+        schema:
+          $ref: '#/definitions/models.Library'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Library created successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: User not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to create library
+          schema:
+            additionalProperties: true
+            type: object
+      security:
+      - BearerAuth: []
+      summary: Create a new library
+      tags:
+      - library
+  /request:
+    post:
+      consumes:
+      - application/json
+      description: Create a new request for a book
+      parameters:
+      - description: Request data
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/models.RequestEvent'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Request created successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Cannot Bind JSON Data
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Book not found
+          schema:
+            additionalProperties: true
+            type: object
+        "409":
+          description: Request already exists or Book is not available
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Cannot create request
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Create a new request
+      tags:
+      - requests
+  /requests:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all requests
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: All requests retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to fetch requests
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all requests
+      tags:
+      - requests
+  /return/{id}:
+    put:
+      consumes:
+      - application/json
+      description: Return a book by ISBN and reader ID from issue registry
+      parameters:
+      - description: Book ISBN
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Book returned successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: User ID not found in context
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: Issue record not found
+          schema:
+            additionalProperties: true
+            type: object
+        "409":
+          description: Book already returned
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to update issue record or book inventory
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Return a book
+      tags:
+      - issues
+  /search:
+    get:
+      consumes:
+      - application/json
+      description: Search books by title, author, or publisher
+      parameters:
+      - description: Book title
+        in: query
+        name: title
+        type: string
+      - description: Book authors
+        in: query
+        name: authors
+        type: string
+      - description: Book publisher
+        in: query
+        name: publisher
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Books retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to fetch books
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Search books
+      tags:
+      - books
+  /signin:
+    post:
+      consumes:
+      - application/json
+      description: Authenticate a user and return a JWT token
+      parameters:
+      - description: User credentials
+        in: body
+        name: credentials
+        required: true
+        schema:
+          $ref: '#/definitions/controllers.SignInCredentials'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User logged-in successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: Invalid email or password
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to create session
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Sign in a user
+      tags:
+      - auth
+  /signout:
+    post:
+      consumes:
+      - application/json
+      description: Invalidate the user's session token
+      parameters:
+      - description: Bearer token
+        in: header
+        name: Authorization
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User logged out successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "401":
+          description: No token provided
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Database error while logging out
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Sign out a user
+      tags:
+      - auth
+  /signup:
+    post:
+      consumes:
+      - application/json
+      description: Create a new user account
+      parameters:
+      - description: User data
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: User created successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid input
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to create user
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Sign up a new user
+      tags:
+      - auth
+  /user/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a user by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User deleted successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid user ID
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to delete user
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Delete a user by ID
+      tags:
+      - users
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a user by their ID
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: User retrieved successfully
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Invalid user ID
+          schema:
+            additionalProperties: true
+            type: object
+        "404":
+          description: User not found
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to fetch user
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get a user by ID
+      tags:
+      - users
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Retrieve a list of all users
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: All users retrieved
+          schema:
+            additionalProperties: true
+            type: object
+        "500":
+          description: Failed to fetch users
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Get all users
+      tags:
+      - users
+swagger: "2.0"
