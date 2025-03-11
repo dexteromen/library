@@ -15,7 +15,7 @@ func Routes(router *gin.Engine) {
 
 	router.GET("/users", controllers.GetUsers)             // Get all Users
 	router.GET("/user/:id", controllers.GetUserById)       // Get User By ID
-	router.PUT("/user/:id", controllers.UpdateUserById)    // Update User By ID
+	// router.PUT("/user/:id", controllers.UpdateUserById)    // Update User By ID
 	router.DELETE("/user/:id", controllers.DeleteUserById) // Delete User By ID
 
 	// Library Routes
@@ -24,8 +24,8 @@ func Routes(router *gin.Engine) {
 	libraryGroup.Use(middlewares.AuthMiddleware())
 	{
 		libraryGroup.POST("/library/", controllers.CreateLibrary)                                                    // Create Library
-		libraryGroup.PUT("/library/:id", middlewares.RoleMiddleware("owner"), controllers.UpdateLibrary)             // Update Library
-		libraryGroup.DELETE("/library/:id", middlewares.RoleMiddleware("owner", "admin"), controllers.DeleteLibrary) // Delete Library
+		// libraryGroup.PUT("/library/:id", middlewares.RoleMiddleware("owner"), controllers.UpdateLibrary)             // Update Library
+		// libraryGroup.DELETE("/library/:id", middlewares.RoleMiddleware("owner", "admin"), controllers.DeleteLibrary) // Delete Library
 	}
 
 	// Book Routes

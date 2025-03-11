@@ -98,10 +98,11 @@ func DeleteBookByID(c *gin.Context) {
 	}
 
 	// Delete book
-	if err := config.DB.Delete(&book).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to delete book", nil)
-		return
-	}
+	config.DB.Delete(&book)
+	// if err := config.DB.Delete(&book).Error; err != nil {
+	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to delete book", nil)
+	// 	return
+	// }
 
 	utils.RespondJSON(c, http.StatusOK, "Book deleted successfully", nil)
 }

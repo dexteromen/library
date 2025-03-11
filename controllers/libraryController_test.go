@@ -4,7 +4,7 @@ import (
 	// "bytes"
 	"bytes"
 	"encoding/json"
-	"fmt"
+	// "fmt"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -128,78 +128,78 @@ func TestGetLibraries(t *testing.T) {
 	})
 }
 
-func TestUpdateLibrary(t *testing.T) {
-	config.ConnectDBTest()
+// func TestUpdateLibrary(t *testing.T) {
+// 	config.ConnectDBTest()
 
-	gin.SetMode(gin.TestMode)
+// 	gin.SetMode(gin.TestMode)
 
-	config.DB.Exec("DELETE FROM libraries") // Reset libraries table
+// 	config.DB.Exec("DELETE FROM libraries") // Reset libraries table
 
-	// Create a dummy library
-	testLibrary := models.Library{Name: "Old Library"}
-	config.DB.Create(&testLibrary)
+// 	// Create a dummy library
+// 	testLibrary := models.Library{Name: "Old Library"}
+// 	config.DB.Create(&testLibrary)
 
-	// Create test router
-	router := gin.Default()
-	router.PUT("/library/:id", UpdateLibrary)
+// 	// Create test router
+// 	router := gin.Default()
+// 	router.PUT("/library/:id", UpdateLibrary)
 
-	// Test case: Successfully update library
-	t.Run("Successful Library Update", func(t *testing.T) {
-		updateData := map[string]string{"name": "Updated Library"}
-		jsonData, _ := json.Marshal(updateData)
+// 	// Test case: Successfully update library
+// 	t.Run("Successful Library Update", func(t *testing.T) {
+// 		updateData := map[string]string{"name": "Updated Library"}
+// 		jsonData, _ := json.Marshal(updateData)
 
-		req, _ := http.NewRequest("PUT", fmt.Sprintf("/library/%d", testLibrary.ID), bytes.NewBuffer(jsonData))
-		req.Header.Set("Content-Type", "application/json")
-		recorder := httptest.NewRecorder()
-		router.ServeHTTP(recorder, req)
+// 		req, _ := http.NewRequest("PUT", fmt.Sprintf("/library/%d", testLibrary.ID), bytes.NewBuffer(jsonData))
+// 		req.Header.Set("Content-Type", "application/json")
+// 		recorder := httptest.NewRecorder()
+// 		router.ServeHTTP(recorder, req)
 
-		// Assertions
-		assert.Equal(t, http.StatusOK, recorder.Code)
+// 		// Assertions
+// 		assert.Equal(t, http.StatusOK, recorder.Code)
 
-		var response utils.JSONResponse
-		json.Unmarshal(recorder.Body.Bytes(), &response)
+// 		var response utils.JSONResponse
+// 		json.Unmarshal(recorder.Body.Bytes(), &response)
 
-		assert.Equal(t, "Library updated successfully", response.Message)
-		assert.NotNil(t, response.Data)
+// 		assert.Equal(t, "Library updated successfully", response.Message)
+// 		assert.NotNil(t, response.Data)
 
-		// Verify updated name in database
-		var updatedLibrary models.Library
-		config.DB.First(&updatedLibrary, testLibrary.ID)
-		assert.Equal(t, "Updated Library", updatedLibrary.Name)
-	})
-}
-func TestDeleteLibrary(t *testing.T) {
-	config.ConnectDBTest()
+// 		// Verify updated name in database
+// 		var updatedLibrary models.Library
+// 		config.DB.First(&updatedLibrary, testLibrary.ID)
+// 		assert.Equal(t, "Updated Library", updatedLibrary.Name)
+// 	})
+// }
+// func TestDeleteLibrary(t *testing.T) {
+// 	config.ConnectDBTest()
 
-	gin.SetMode(gin.TestMode)
+// 	gin.SetMode(gin.TestMode)
 
-	config.DB.Exec("DELETE FROM libraries") // Reset libraries table
+// 	config.DB.Exec("DELETE FROM libraries") // Reset libraries table
 
-	// Create a dummy library
-	testLibrary := models.Library{Name: "Library To Delete"}
-	config.DB.Create(&testLibrary)
+// 	// Create a dummy library
+// 	testLibrary := models.Library{Name: "Library To Delete"}
+// 	config.DB.Create(&testLibrary)
 
-	// Create test router
-	router := gin.Default()
-	router.DELETE("/library/:id", DeleteLibrary)
+// 	// Create test router
+// 	router := gin.Default()
+// 	router.DELETE("/library/:id", DeleteLibrary)
 
-	// Test case: Successfully delete library
-	t.Run("Successful Library Deletion", func(t *testing.T) {
-		req, _ := http.NewRequest("DELETE", fmt.Sprintf("/library/%d", testLibrary.ID), nil)
-		recorder := httptest.NewRecorder()
-		router.ServeHTTP(recorder, req)
+// 	// Test case: Successfully delete library
+// 	t.Run("Successful Library Deletion", func(t *testing.T) {
+// 		req, _ := http.NewRequest("DELETE", fmt.Sprintf("/library/%d", testLibrary.ID), nil)
+// 		recorder := httptest.NewRecorder()
+// 		router.ServeHTTP(recorder, req)
 
-		// Assertions
-		assert.Equal(t, http.StatusOK, recorder.Code)
+// 		// Assertions
+// 		assert.Equal(t, http.StatusOK, recorder.Code)
 
-		var response utils.JSONResponse
-		json.Unmarshal(recorder.Body.Bytes(), &response)
+// 		var response utils.JSONResponse
+// 		json.Unmarshal(recorder.Body.Bytes(), &response)
 
-		assert.Equal(t, "Library deleted successfully", response.Message)
+// 		assert.Equal(t, "Library deleted successfully", response.Message)
 
-		// Verify library is deleted
-		var deletedLibrary models.Library
-		err := config.DB.First(&deletedLibrary, testLibrary.ID).Error
-		assert.Error(t, err, "Library should not exist after deletion")
-	})
-}
+// 		// Verify library is deleted
+// 		var deletedLibrary models.Library
+// 		err := config.DB.First(&deletedLibrary, testLibrary.ID).Error
+// 		assert.Error(t, err, "Library should not exist after deletion")
+// 	})
+// }

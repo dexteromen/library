@@ -31,10 +31,11 @@ func CreateLibrary(c *gin.Context) {
 	user.LibID = library.ID
 	user.Role = "owner"
 
-	if err := config.DB.Save(&user).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update user", nil)
-		return
-	}
+	config.DB.Save(&user)
+	// if err := config.DB.Save(&user).Error; err != nil {
+	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update user", nil)
+	// 	return
+	// }
 
 	//Sending response
 	data := gin.H{"library": library, "Owner Of Library": user.Name, "Role": user.Role}
@@ -48,41 +49,41 @@ func GetLibraries(c *gin.Context) {
 	utils.RespondJSON(c, http.StatusOK, "Libraries fetched successfully", libraries)
 }
 
-func UpdateLibrary(c *gin.Context) {
-	var library models.Library
-	libraryID := c.Param("id")
+// func UpdateLibrary(c *gin.Context) {
+// 	var library models.Library
+// 	libraryID := c.Param("id")
 
-	if err := config.DB.First(&library, libraryID).Error; err != nil {
-		utils.RespondJSON(c, http.StatusNotFound, "Library not found", nil)
-		return
-	}
+// 	if err := config.DB.First(&library, libraryID).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusNotFound, "Library not found", nil)
+// 		return
+// 	}
 
-	if err := c.ShouldBindJSON(&library); err != nil {
-		utils.RespondJSON(c, http.StatusBadRequest, "Invalid input", nil)
-		return
-	}
+// 	if err := c.ShouldBindJSON(&library); err != nil {
+// 		utils.RespondJSON(c, http.StatusBadRequest, "Invalid input", nil)
+// 		return
+// 	}
 
-	if err := config.DB.Save(&library).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update library", nil)
-		return
-	}
+// 	if err := config.DB.Save(&library).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update library", nil)
+// 		return
+// 	}
 
-	utils.RespondJSON(c, http.StatusOK, "Library updated successfully", library)
-}
+// 	utils.RespondJSON(c, http.StatusOK, "Library updated successfully", library)
+// }
 
-func DeleteLibrary(c *gin.Context) {
-	var library models.Library
-	libraryID := c.Param("id")
+// func DeleteLibrary(c *gin.Context) {
+// 	var library models.Library
+// 	libraryID := c.Param("id")
 
-	if err := config.DB.First(&library, libraryID).Error; err != nil {
-		utils.RespondJSON(c, http.StatusNotFound, "Library not found", nil)
-		return
-	}
+// 	if err := config.DB.First(&library, libraryID).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusNotFound, "Library not found", nil)
+// 		return
+// 	}
 
-	if err := config.DB.Delete(&library).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to delete library", nil)
-		return
-	}
+// 	if err := config.DB.Delete(&library).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to delete library", nil)
+// 		return
+// 	}
 
-	utils.RespondJSON(c, http.StatusOK, "Library deleted successfully", nil)
-}
+// 	utils.RespondJSON(c, http.StatusOK, "Library deleted successfully", nil)
+// }

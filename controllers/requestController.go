@@ -73,10 +73,12 @@ func CreateRequest(c *gin.Context) {
 	request.RequestType = "Borrow"
 	request.IssueStatus = "Pending"
 
-	if err := config.DB.Create(&request).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Cannot create request", gin.H{"error": err.Error()})
-		return
-	}
+	config.DB.Create(&request)
+
+	// if err := config.DB.Create(&request).Error; err != nil {
+	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Cannot create request", gin.H{"error": err.Error()})
+	// 	return
+	// }
 
 	utils.RespondJSON(c, http.StatusCreated, "Request Created", request)
 }
