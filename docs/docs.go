@@ -365,6 +365,11 @@ const docTemplate = `{
                 }
             },
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "Create a new library and update the user's role to owner",
                 "consumes": [
                     "application/json"
@@ -377,6 +382,13 @@ const docTemplate = `{
                 ],
                 "summary": "Create a new library",
                 "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "name": "Authorization",
+                        "in": "header",
+                        "required": true
+                    },
                     {
                         "description": "Library data",
                         "name": "library",

@@ -15,12 +15,14 @@ import (
 // @Tags library
 // @Accept  json
 // @Produce  json
+// @Param Authorization header string true "Bearer token"
 // @Param   library  body      models.Library  true  "Library data"
 // @Success 201   {object}  map[string]interface{}  "Library created successfully"
 // @Failure 400   {object}  map[string]interface{}  "Invalid input"
 // @Failure 404   {object}  map[string]interface{}  "User not found"
 // @Failure 500   {object}  map[string]interface{}  "Failed to create library"
 // @Router /library [post]
+// @Security BearerAuth
 func CreateLibrary(c *gin.Context) {
 	var library models.Library
 	if err := c.ShouldBindJSON(&library); err != nil {
