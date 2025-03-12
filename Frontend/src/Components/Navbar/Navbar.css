@@ -6,7 +6,23 @@
 	justify-content: space-between;
 	background-color: white;
 }
-.nav-bar .logo {
+.logo-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-around;
+}
+
+.logo-wrapper .image {
+	margin-right: 0.5em;
+	margin-top: 0.5em;
+	margin-left: 0.5em;
+}
+
+.logo-wrapper img {
+	height: 2em;
+	width: 2em;
+}
+.logo-name {
 	font-size: 20px;
 }
 .nav-bar .links {
@@ -14,9 +30,9 @@
 	list-style-type: none;
 	text-decoration-style: none;
 	display: flex;
+	align-items: center;
 	justify-content: space-between;
 	font-size: 1.2rem;
-	text-decoration: none;
 }
 .nav-bar .links a {
 	color: red;
@@ -24,5 +40,7 @@
 }
 
 .nav-bar .profile {
+	display: flex;
+	align-items: center;
 	font-size: 20px;
 }

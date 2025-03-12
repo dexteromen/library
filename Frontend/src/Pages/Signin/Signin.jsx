@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Signin.css";
+import Navbar from "../../Components/Navbar/Navbar";
 
 function Signin() {
 	const [email, setEmail] = useState("");
@@ -36,27 +37,31 @@ function Signin() {
 
 	return (
 		<>
+			<Navbar />
 			<div className="wrapper-signin">
 				<form className="form" onSubmit={handleSubmit}>
-					<div className="field-div">
-						<label>Email:</label>
-						<input
-							type="email"
-							value={email}
-							onChange={(e) => setEmail(e.target.value)}
-						/>
-						{errors.email && <p>{errors.email}</p>}
+					<div className="form-wrapper">
+						<div className="form-name">LOGIN</div>
+						<div className="field-div">
+							<label>Email:</label>
+							<input
+								type="email"
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+							/>
+							{errors.email && <p>{errors.email}</p>}
+						</div>
+						<div className="field-div">
+							<label>Password:</label>
+							<input
+								type="password"
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+							/>
+							{errors.password && <p>{errors.password}</p>}
+						</div>
+						<button type="submit">Sign In</button>
 					</div>
-					<div className="field-div">
-						<label>Password:</label>
-						<input
-							type="password"
-							value={password}
-							onChange={(e) => setPassword(e.target.value)}
-						/>
-						{errors.password && <p>{errors.password}</p>}
-					</div>
-					<button type="submit">Sign In</button>
 				</form>
 			</div>
 		</>

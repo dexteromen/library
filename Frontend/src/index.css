@@ -13,12 +13,20 @@
   -moz-osx-font-smoothing: grayscale;
 } */
 
-body {
+* {
 	margin: 0;
 	padding: 0;
-	/* display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh; */
+	box-sizing: border-box;
+	font-family: "Montserrat", sans-serif;
+}
+
+body {
 	background-color: rgb(231, 231, 231);
+	/* background: #626cd6; */
+	/* width: 100%;
+	min-height: 100vh;
+	padding: 0 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center; */
 }

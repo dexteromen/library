@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "./Signup.css";
+import Navbar from "../../Components/Navbar/Navbar";
 
 function Signup() {
 	const [formData, setFormData] = useState({
@@ -44,6 +44,7 @@ function Signup() {
 
 	return (
 		<>
+			<Navbar />
 			<div className="wrapper-signup">
 				<form className="form" onSubmit={handleSubmit}>
 					<div className="field-div">

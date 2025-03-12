@@ -2,11 +2,16 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 100vh;
+	/* height: 100vh; */
+	height: calc(100vh - 90px);
 }
 
 .form {
-	max-width: 400px;
+	justify-content: center;
+	width: 30vw;
+	height: 50vh;
+
+	/* max-width: 800px; */
 	margin: 0 auto;
 	padding: 20px;
 	border: 1px solid #ccc;
@@ -14,7 +19,20 @@
 	background-color: #f9f9f9;
 }
 
+.form-wrapper {
+	height: 100%;
+	place-content: center;
+	justify-items: center;
+}
+
+.form-name {
+	font-weight: bold;
+	font-size: 1.7em;
+	margin-bottom: 20px;
+}
+
 .field-div {
+	width: 100%;
 	margin-bottom: 15px;
 }
 

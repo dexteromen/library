@@ -1,20 +1,42 @@
 import React from "react";
+import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
+import logo from "/public/library.svg";
 
 export default function Navbar() {
+	const navigate = useNavigate();
 	return (
 		<>
 			<div className="nav-bar">
-				<div className="logo">logo</div>
+				<div className="logo-wrapper">
+					<div className="image">
+						<Link to="/">
+							<img src={logo} alt="Logo" />
+						</Link>
+					</div>
+					<div className="logo-name">Library Management System</div>
+				</div>
 				<div className="links">
-					<a href="#">Home</a>
-					<a href="#">Libraries</a>
-					<a href="#">About</a>
+					<NavLink to="/" activeClassName="active">
+						Home
+					</NavLink>
+					<Link to="/">Libraries</Link>
+					<Link to="/">About</Link>
 				</div>
 				<div className="profile">
-					profile
-					<button className="btn-login">Login</button>
-					<button className="btn-signup">Signup</button>
+					profile-image
+					<button
+						className="btn-login"
+						onClick={() => navigate("/signin")}
+					>
+						Signin
+					</button>
+					<button
+						className="btn-signup"
+						onClick={() => navigate("/signup")}
+					>
+						Signup
+					</button>
 				</div>
 			</div>
 		</>

@@ -7,7 +7,6 @@ export default function Home() {
 	return (
 		<>
 			<Navbar />
-			<div>Home</div>
 			<div className="book-cards">
 				<Card bookImage="Book Image 1" desc="Description 1" />
 				<Card />
