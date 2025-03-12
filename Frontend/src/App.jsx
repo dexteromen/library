@@ -1,17 +1,18 @@
 import "./App.css";
-import Home from "./Pages/Home";
-import Navbar from "./Components/Navbar";
+import Home from "./Pages/Home/Home";
+import Signin from "./Pages/Signin/Signin";
+import Signup from "./Pages/Signup/Signup";
 
 function App() {
-  return (
-    <>
-      <div>
-        <Navbar />
-        <h1>Hello</h1>
-        <Home />
-      </div>
-    </>
-  );
+	return (
+		<>
+			<div>
+				{/* <Home /> */}
+				<Signup />
+				<Signin />
+			</div>
+		</>
+	);
 }
 
 export default App;

@@ -1,0 +1,5 @@
+.book-cards {
+	display: flex;
+	flex-wrap: wrap;
+	place-content: center;
+}

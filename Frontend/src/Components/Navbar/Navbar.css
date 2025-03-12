@@ -1,0 +1,28 @@
+.nav-bar {
+	/* width: 100%; */
+	padding: 10px 10px 10px 10px;
+	margin: 0px 0px 0px 0px;
+	display: flex;
+	justify-content: space-between;
+	background-color: white;
+}
+.nav-bar .logo {
+	font-size: 20px;
+}
+.nav-bar .links {
+	width: 20%;
+	list-style-type: none;
+	text-decoration-style: none;
+	display: flex;
+	justify-content: space-between;
+	font-size: 1.2rem;
+	text-decoration: none;
+}
+.nav-bar .links a {
+	color: red;
+	text-decoration: none;
+}
+
+.nav-bar .profile {
+	font-size: 20px;
+}
