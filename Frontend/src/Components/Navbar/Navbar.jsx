@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import logo from "/public/library.svg";
+import logo from "/library.svg"; //in public folder
 
 export default function Navbar() {
 	const navigate = useNavigate();
