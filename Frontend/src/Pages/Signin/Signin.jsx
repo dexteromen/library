@@ -38,31 +38,60 @@ function Signin() {
 	return (
 		<>
 			<Navbar />
-			<div className="wrapper-signin">
-				<form className="form" onSubmit={handleSubmit}>
-					<div className="form-wrapper">
-						<div className="form-name">LOGIN</div>
-						<div className="field-div">
-							<label>Email:</label>
+			<div className="form-wrapper">
+				<div className="login_form">
+					<form action="#" onSubmit={handleSubmit}>
+						<h1>LOGIN</h1>
+						{/* <div className="login_option">
+						<div className="option">
+							<a href="#">
+								<img src="/google.png" alt="Google" />
+								<span>Google</span>
+							</a>
+						</div>
+						<div className="option">
+							<a href="#">
+								<img src="/apple.png" alt="Apple" />
+								<span>Apple</span>
+							</a>
+						</div>
+					</div> */}
+						{/* <p className="separator">
+						<span>or</span>
+					</p> */}
+						<div className="input_box">
+							<label>Email</label>
 							<input
 								type="email"
+								id="email"
 								value={email}
+								placeholder="Enter email address"
 								onChange={(e) => setEmail(e.target.value)}
+								required
 							/>
 							{errors.email && <p>{errors.email}</p>}
 						</div>
-						<div className="field-div">
-							<label>Password:</label>
+						<div className="input_box">
+							<div className="password_title">
+								<label>Password</label>
+								<a href="#">Forgot Password?</a>
+							</div>
 							<input
 								type="password"
+								id="password"
 								value={password}
+								placeholder="Enter your password"
 								onChange={(e) => setPassword(e.target.value)}
+								required
 							/>
 							{errors.password && <p>{errors.password}</p>}
 						</div>
-						<button type="submit">Sign In</button>
-					</div>
-				</form>
+						<button type="submit">Log In</button>
+						<p className="sign_up">
+							Don't have an account? <a href="#">Sign up</a>
+						</p>
+					</form>
+				</div>
 			</div>
 		</>
 	);

@@ -14,25 +14,27 @@ export default function Navbar() {
 							<img src={logo} alt="Logo" />
 						</Link>
 					</div>
-					<div className="logo-name">Library Management System</div>
+					<div className="logo-name">XenonLibrary</div>
 				</div>
 				<div className="links">
-					<NavLink to="/" activeClassName="active">
-						Home
-					</NavLink>
+					<NavLink to="/">Home</NavLink>
 					<Link to="/">Libraries</Link>
 					<Link to="/">About</Link>
 				</div>
 				<div className="profile">
-					profile-image
+					<img
+						src="https://avatar.iran.liara.run/public/boy"
+						alt="profile-image"
+					/>
 					<button
-						className="btn-login"
+						// className="btn-login"
+						className="button-38"
 						onClick={() => navigate("/signin")}
 					>
 						Signin
 					</button>
 					<button
-						className="btn-signup"
+						className="button-38"
 						onClick={() => navigate("/signup")}
 					>
 						Signup
