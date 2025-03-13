@@ -19,6 +19,7 @@ body {
 
 :root {
 	--navbar-height: 65px; /* Adjust the value as needed */
+	--bg-color: rgb(231, 231, 231);
 }
 
 .form-wrapper {
@@ -32,7 +33,7 @@ body {
 
 	padding: 0 10px;
 	display: flex;
-	background: #626cd6;
+	background: var(--bg-color);
 	justify-content: center;
 	align-items: center;
 }

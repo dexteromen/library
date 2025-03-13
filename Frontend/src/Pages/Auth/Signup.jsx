@@ -1,10 +1,13 @@
 import React, { useState } from "react";
-import "./Signup.css";
+import { Link } from "react-router-dom";
+import "./Auth.css";
 import Navbar from "../../Components/Navbar/Navbar";
 
 function Signup() {
 	const [formData, setFormData] = useState({
-		username: "",
+		// username: "",
+		name: "",
+		contact_number: "",
 		email: "",
 		password: "",
 		confirmPassword: "",
@@ -21,7 +24,11 @@ function Signup() {
 
 	const validate = () => {
 		let tempErrors = {};
-		if (!formData.username) tempErrors.username = "Username is required";
+		// if (!formData.username) tempErrors.username = "Username is required";
+		if (!formData.name) tempErrors.name = "Name is required";
+		if (formData.contact_number.length != 10)
+			tempErrors.contact_number =
+				"Contact number is required only 10 digits";
 		if (!formData.email) tempErrors.email = "Email is required";
 		if (!/\S+@\S+\.\S+/.test(formData.email))
 			tempErrors.email = "Email is invalid";
@@ -42,43 +49,38 @@ function Signup() {
 			console.log(formData);
 		}
 	};
-
 	return (
 		<>
 			<Navbar />
 			<div className="form-wrapper">
 				<div className="login_form">
-					<form className="form" action="#" onSubmit={handleSubmit}>
+					<form className="form" onSubmit={handleSubmit}>
 						<h1>SIGNUP</h1>
-						{/* <div className="login_option">
-						<div className="option">
-							<a href="#">
-								<img src="/google.png" alt="Google" />
-								<span>Google</span>
-							</a>
-						</div>
-						<div className="option">
-							<a href="#">
-								<img src="/apple.png" alt="Apple" />
-								<span>Apple</span>
-							</a>
-						</div>
-						</div> */}
-						{/* <div>
-							<p className="separator">
-							<span>or</span>
-							</p>
-						</div> */}
 						<div className="input_box">
-							<label>Username</label>
+							<label>Name</label>
 							<input
 								type="text"
-								name="username"
-								value={formData.username}
-								placeholder="Enter username"
+								name="name"
+								value={formData.name}
+								placeholder="Enter name"
 								onChange={handleChange}
+								required
 							/>
-							{errors.username && <p>{errors.username}</p>}
+							{errors.name && <p>{errors.name}</p>}
+						</div>
+						<div className="input_box">
+							<label>Contact Number</label>
+							<input
+								type="text"
+								name="contact_number"
+								value={formData.contact_number}
+								placeholder="Enter contact number"
+								onChange={handleChange}
+								required
+							/>
+							{errors.contact_number && (
+								<p>{errors.contact_number}</p>
+							)}
 						</div>
 						<div className="input_box">
 							<label>Email</label>
@@ -118,9 +120,10 @@ function Signup() {
 								<p>{errors.confirmPassword}</p>
 							)}
 						</div>
-						<button type="submit">Sign Up</button>
+						<button type="submit">SIGNUP</button>
 						<p className="log_in">
-							Already have an account? <a href="#">Log In</a>
+							Already have an account?{" "}
+							<Link to="/login">LOGIN</Link>
 						</p>
 					</form>
 				</div>

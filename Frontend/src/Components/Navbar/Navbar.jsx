@@ -5,6 +5,8 @@ import logo from "/library.svg"; //in public folder
 
 export default function Navbar() {
 	const navigate = useNavigate();
+	// const isLoggedIn = true;
+	const isLoggedIn = false;
 	return (
 		<>
 			<div className="nav-bar">
@@ -22,23 +24,37 @@ export default function Navbar() {
 					<Link to="/">About</Link>
 				</div>
 				<div className="profile">
-					<img
-						src="https://avatar.iran.liara.run/public/boy"
-						alt="profile-image"
-					/>
-					<button
-						// className="btn-login"
-						className="button-38"
-						onClick={() => navigate("/signin")}
-					>
-						Signin
-					</button>
-					<button
-						className="button-38"
-						onClick={() => navigate("/signup")}
-					>
-						Signup
-					</button>
+					{isLoggedIn ? (
+						<>
+							<img
+								src="https://avatar.iran.liara.run/public/boy"
+								alt="profile-image"
+							/>
+							<button
+								// className="btn-login"
+								className="button-38"
+								onClick={() => navigate("/temp")}
+							>
+								LOGOUT
+							</button>
+						</>
+					) : (
+						<>
+							<button
+								// className="btn-login"
+								className="button-38"
+								onClick={() => navigate("/login")}
+							>
+								LOGIN
+							</button>
+							<button
+								className="button-38"
+								onClick={() => navigate("/signup")}
+							>
+								SIGNUP
+							</button>
+						</>
+					)}
 				</div>
 			</div>
 		</>

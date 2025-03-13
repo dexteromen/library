@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+	--font-name: "Montserrat", sans-serif;
+}
+
 .nav-bar {
 	/* width: 100%; */
 	padding: 10px 10px 10px 10px;
@@ -24,6 +30,7 @@
 }
 .logo-name {
 	font-size: 20px;
+	font-family: var(--font-name);
 }
 .nav-bar .links {
 	width: 20%;
@@ -35,8 +42,10 @@
 	font-size: 1.2rem;
 }
 .nav-bar .links a {
-	color: red;
+	color: black;
 	text-decoration: none;
+	font-family: var(--font-name);
+	text-transform: uppercase;
 }
 
 .nav-bar .profile {
