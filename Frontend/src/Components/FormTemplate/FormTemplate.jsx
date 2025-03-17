@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./FormTemplate.css"
+import "./FormTemplate.css";
 
-function FormTemplate({ title, fields, onSubmit, linkText, linkTo, linkValue, validate }) {
+function FormTemplate({
+	title,
+	fields,
+	onSubmit,
+	linkText,
+	linkTo,
+	linkValue,
+	validate,
+}) {
 	const [formData, setFormData] = useState(
-		fields.reduce((acc, field) => ({ ...acc, [field.name]: "" }), {})
+		fields.reduce(
+			(acc, field) => ({
+				...acc,
+				[field.name]: "",
+			}),
+			{}
+		)
 	);
 	const [errors, setErrors] = useState({});
 
@@ -43,7 +57,9 @@ function FormTemplate({ title, fields, onSubmit, linkText, linkTo, linkValue, va
 									required={field.required}
 								/>
 								{errors[field.name] && (
-									<p className="errors">{errors[field.name]}</p>
+									<p className="errors">
+										{errors[field.name]}
+									</p>
 								)}
 							</div>
 						))}

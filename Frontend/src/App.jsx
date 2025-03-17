@@ -13,6 +13,7 @@ import CreateBook from "./Pages/CreateBook/CreateBook";
 import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
 import Login from "./Pages/Login_Signup/Login";
 import Signup from "./Pages/Login_Signup/Signup";
+import CreateLibrary from "./Pages/CreateLibrary/CreateLibrary";
 
 function App() {
 	return (
@@ -28,6 +29,10 @@ function App() {
 						<Route path="/login" element={<Login />} />
 						<Route path="/create-book" element={<CreateBook />} />
 						<Route path="/dashboard" element={<AdminDashboard />} />
+						<Route
+							path="/create-library"
+							element={<CreateLibrary />}
+						/>
 						<Route path="*" element={<Navigate to="/" replace />} />
 					</Routes>
 				</Router>

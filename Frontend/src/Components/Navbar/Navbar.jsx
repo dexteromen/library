@@ -16,11 +16,11 @@ export default function Navbar() {
 							<img src={logo} alt="Logo" />
 						</Link>
 					</div>
-					<div className="logo-name">Library</div>
+					<div className="logo-name">Z-Lib</div>
 				</div>
 				<div className="links">
 					<NavLink to="/">Home</NavLink>
-					<Link to="/libraries">Libraries</Link>
+					<Link to="/books">Books</Link>
 					<Link to="/create-book"> Create Books</Link>
 					<Link to="/temp">About</Link>
 					<Link to="/dashboard">dashborad</Link>

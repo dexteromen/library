@@ -1,10 +1,35 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+	--font-family: "Montserrat", sans-serif;
+	--navbar-height: 65px; /* Adjust the value as needed */
+	--bg-color-gray-old: rgb(231, 231, 231);
+
+	--bg-color-black: #222831;
+	--bg-color-dark-gray: #393e46;
+	--bg-color-yellow: #ffd369;
+	--bg-color-gray: #eeeeee;
+	--bg-color-white: #fff;
+}
+
+.dashboard-wrapper {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background: var(--bg-color-white);
+	font-family: var(--font-family);
+	min-height: calc(100vh - var(--navbar-height));
+	width: 100%;
+}
+
 .admin-dashboard {
 	padding: 20px;
 	font-family: Arial, sans-serif;
 }
 
 .admin-dashboard__title {
-	text-align: left;
+	text-align: center;
 	margin-bottom: 20px;
 }
 

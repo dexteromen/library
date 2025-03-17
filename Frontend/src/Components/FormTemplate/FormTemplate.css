@@ -65,8 +65,13 @@
 	font-weight: 500;
 }
 
+.templete-form .input_box {
+	line-height: 50%;
+}
+
 .templete-form .input_box label {
-	display: block;
+	/* display: block; */
+	visibility: hidden;
 	text-transform: uppercase;
 	font-weight: 600;
 	margin-bottom: 1px;
@@ -76,7 +81,7 @@
 /* Input field styling */
 .templete-form .input_box input {
 	width: 100%;
-	height: 40px;
+	height: 50px;
 	border: 1px solid #dadaf2;
 	border-radius: 10px;
 	outline: none;
@@ -87,6 +92,14 @@
 	margin-bottom: 10px;
 	transition: 0.2s ease;
 }
+
+.templete-form .input_box input::placeholder {
+	color: rgb(231, 88, 88);
+	text-transform: uppercase;
+	font-size: small;
+	font-weight: 600;
+}
+
 .templete-form .input_box input:focus {
 	/* border-color: #626cd6; */
 	border-color: var(--bg-color-yellow);

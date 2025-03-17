@@ -1,11 +1,84 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 
 :root {
-	--font-name: "Montserrat", sans-serif;
+	--font-family: "Montserrat", sans-serif;
+	--navbar-height: 65px; /* Adjust the value as needed */
+	--bg-color-gray-old: rgb(231, 231, 231);
+
+	--bg-color-black: #222831;
+	--bg-color-dark-gray: #393e46;
+	--bg-color-yellow: #ffd369;
+	--bg-color-gray: #eeeeee;
+	--bg-color-white: #fff;
+}
+
+.home-wrapper {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background: var(--bg-color-white);
+	font-family: var(--font-family);
+	min-height: calc(100vh - var(--navbar-height));
+	width: 100%;
+}
+
+.logo-centered {
+	height: 50%;
+	width: 50%;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	margin: 0 auto;
+}
+
+.logo-centered img {
+	max-width: 100%;
+	height: auto;
+	background-repeat: no-repeat;
+	background-size: contain;
+}
+
+.search-box {
+	/* Center Elements */
+	margin: auto;
+	width: min-content;
+
+	/* adjustments */
+	padding-bottom: 20px;
+	display: flex;
+}
+
+.search-box input {
+	height: 30px;
+	width: 300px;
+
+	border: 2px solid #dadaf2;
+	border-radius: 10px;
+	padding: 10px 10px 10px 10px;
+	/* background: var(--bg-color-gray); */
+	/* font-size: 17px; */
+	/* padding: 0px 20px; */
+	/* margin-bottom: 10px; */
+	border-color: var(--bg-color-dark-gray);
+
+	margin-left: 10px;
+	margin-top: 0px;
+}
+
+.search-box input::placeholder {
+	color: var(--bg-color-black);
+	text-align: center;
+	text-transform: uppercase;
+}
+
+.search-box .dropdown-filter {
+	/* padding: 10px; */
+	margin: 10px;
+	margin-top: 0px;
 }
 
 .book-cards {
-	font-family: var(--font-name);
+	font-family: var(--font-family);
 	display: flex;
 	flex-wrap: wrap;
 	place-content: center;

@@ -26,7 +26,7 @@ function CreateBook() {
 	const validate = () => {
 		const newErrors = {};
 		if (!formData.isbn) newErrors.isbn = "ISBN is required";
-		if (!formData.libid) newErrors.libid = "Library Id is required";
+		if (!formData.libid) newErrors.libid = "Library Id is not provided";
 		if (formData.libid && formData.libid.length < 6)
 			newErrors.libid = "Library Id must be at least 6 characters long";
 		if (!formData.title) newErrors.title = "Title is required";
@@ -54,9 +54,10 @@ function CreateBook() {
 
 	return (
 		<>
-			{/* <Navbar /> */}
-			<div className="create-book-form-container">
-				<div className="create-book-form-parent">
+			<Navbar />
+			<div className="create-book-wrapper">
+				<div className="create-book-form-container">
+					<h1 className="create-book-title">Create Book</h1>
 					<form onSubmit={handleSubmit}>
 						<div className="form-group">
 							<label htmlFor="libid">Library Id</label>
@@ -179,9 +180,14 @@ function CreateBook() {
 								</span>
 							)}
 						</div>
-						<button className="book-submit-btn" type="submit">
+						{/* <button className="book-submit-btn" type="submit">
 							Submit
-						</button>
+						</button> */}
+						<div className="btn-submit">
+							<button className="button-59" type="submit">
+								Submit
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>
