@@ -5,8 +5,8 @@ import logo from "/library.svg"; //in public folder
 
 export default function Navbar() {
 	const navigate = useNavigate();
-	// const isLoggedIn = true;
-	const isLoggedIn = false;
+	const isLoggedIn = true;
+	// const isLoggedIn = false;
 	return (
 		<>
 			<div className="nav-bar">
@@ -16,12 +16,14 @@ export default function Navbar() {
 							<img src={logo} alt="Logo" />
 						</Link>
 					</div>
-					<div className="logo-name">XenonLibrary</div>
+					<div className="logo-name">Library</div>
 				</div>
 				<div className="links">
 					<NavLink to="/">Home</NavLink>
-					<Link to="/">Libraries</Link>
-					<Link to="/">About</Link>
+					<Link to="/libraries">Libraries</Link>
+					<Link to="/create-book"> Create Books</Link>
+					<Link to="/temp">About</Link>
+					<Link to="/dashboard">dashborad</Link>
 				</div>
 				<div className="profile">
 					{isLoggedIn ? (

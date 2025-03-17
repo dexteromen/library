@@ -9,6 +9,7 @@
 	padding: 10px 10px 10px 10px;
 	margin: 0px 0px 0px 0px;
 	display: flex;
+	/* flex:1; */
 	justify-content: space-between;
 	background-color: white;
 }
@@ -37,6 +38,7 @@
 	list-style-type: none;
 	text-decoration-style: none;
 	display: flex;
+	flex: 0.25;
 	align-items: center;
 	justify-content: space-between;
 	font-size: 1.2rem;
@@ -45,7 +47,7 @@
 	color: black;
 	text-decoration: none;
 	font-family: var(--font-name);
-	text-transform: uppercase;
+	/* text-transform: uppercase; */
 }
 
 .nav-bar .profile {

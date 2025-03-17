@@ -1,10 +1,30 @@
-.form-container {
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+	--navbar-height: 65px; /* Adjust the value as needed */
+	--bg-color-gray-old: rgb(231, 231, 231);
+
+	--bg-color-black: #222831;
+	--bg-color-dark-gray: #393e46;
+	--bg-color-yellow: #ffd369;
+	--bg-color-gray: #eeeeee;
+
+	--font-family: "Montserrat", sans-serif;
+}
+
+.create-book-form-container {
 	max-width: 600px;
 	margin: 0 auto;
 	padding: 20px;
 	background-color: #f9f9f9;
 	border-radius: 8px;
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.create-book-form-parent {
+	width: 100%;
+	/* display: flex;
+	flex-wrap: wrap; */
 }
 
 .form-group {

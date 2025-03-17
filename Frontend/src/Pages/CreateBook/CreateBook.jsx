@@ -1,69 +1,19 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import "./CreateBook.css";
 import Navbar from "../../Components/Navbar/Navbar";
 
 function CreateBook() {
-	const [formData, setFormData] = useState({});
+	const [formData, setFormData] = useState({
+		isbn: "",
+		libid: "",
+		title: "",
+		authors: "",
+		publisher: "",
+		version: "",
+		total_copies: "",
+		available_copies: "",
+	});
 	const [errors, setErrors] = useState({});
-
-	const fields = [
-		{
-			name: "isbn",
-			label: "ISBN",
-			type: "text",
-			placeholder: "Enter ISBN Number",
-			required: true,
-		},
-		{
-			name: "libid",
-			label: "Library Id",
-			type: "text",
-			placeholder: "Enter Library Id",
-			required: true,
-		},
-		{
-			name: "title",
-			label: "Title",
-			type: "text",
-			placeholder: "Enter Book Title",
-			required: true,
-		},
-		{
-			name: "authors",
-			label: "Author",
-			type: "text",
-			placeholder: "Enter Book Author",
-			required: true,
-		},
-		{
-			name: "publisher",
-			label: "Publisher",
-			type: "text",
-			placeholder: "Enter Book Publisher",
-			required: true,
-		},
-		{
-			name: "version",
-			label: "Version",
-			type: "text",
-			placeholder: "Enter Book Version",
-			required: true,
-		},
-		{
-			name: "total_copies",
-			label: "Total Copies",
-			type: "text",
-			placeholder: "Enter Total Copies",
-			required: true,
-		},
-		{
-			name: "available_copies",
-			label: "Available Copies",
-			type: "text",
-			placeholder: "Enter Available Copies",
-			required: true,
-		},
-	];
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -75,19 +25,18 @@ function CreateBook() {
 
 	const validate = () => {
 		const newErrors = {};
-		fields.forEach((field) => {
-			if (field.required && !formData[field.name]) {
-				newErrors[field.name] = `${field.label} is required`;
-			}
-			if (
-				field.name === "libid" &&
-				formData[field.name] &&
-				formData[field.name].length < 6
-			) {
-				newErrors[field.name] =
-					"Library Id must be at least 6 characters long";
-			}
-		});
+		if (!formData.isbn) newErrors.isbn = "ISBN is required";
+		if (!formData.libid) newErrors.libid = "Library Id is required";
+		if (formData.libid && formData.libid.length < 6)
+			newErrors.libid = "Library Id must be at least 6 characters long";
+		if (!formData.title) newErrors.title = "Title is required";
+		if (!formData.authors) newErrors.authors = "Author is required";
+		if (!formData.publisher) newErrors.publisher = "Publisher is required";
+		if (!formData.version) newErrors.version = "Version is required";
+		if (!formData.total_copies)
+			newErrors.total_copies = "Total Copies is required";
+		if (!formData.available_copies)
+			newErrors.available_copies = "Available Copies is required";
 		return newErrors;
 	};
 
@@ -105,31 +54,136 @@ function CreateBook() {
 
 	return (
 		<>
-			<Navbar />
-			<div className="form-container">
-				<form onSubmit={handleSubmit}>
-					{fields.map((field) => (
-						<div key={field.name} className="form-group">
-							<label htmlFor={field.name}>{field.label}</label>
+			{/* <Navbar /> */}
+			<div className="create-book-form-container">
+				<div className="create-book-form-parent">
+					<form onSubmit={handleSubmit}>
+						<div className="form-group">
+							<label htmlFor="libid">Library Id</label>
 							<input
-								type={field.type}
-								name={field.name}
-								id={field.name}
-								placeholder={field.placeholder}
-								required={field.required}
+								type="text"
+								name="libid"
+								id="libid"
+								placeholder="Enter Library Id"
+								value={formData.libid}
 								onChange={handleChange}
 							/>
-							{errors[field.name] && (
+							{errors.libid && (
+								<span className="error">{errors.libid}</span>
+							)}
+						</div>
+						<div className="form-group">
+							<label htmlFor="isbn">ISBN</label>
+							<input
+								type="text"
+								name="isbn"
+								id="isbn"
+								placeholder="Enter ISBN Number"
+								value={formData.isbn}
+								onChange={handleChange}
+							/>
+							{errors.isbn && (
+								<span className="error">{errors.isbn}</span>
+							)}
+						</div>
+
+						<div className="form-group">
+							<label htmlFor="title">Title</label>
+							<input
+								type="text"
+								name="title"
+								id="title"
+								placeholder="Enter Book Title"
+								value={formData.title}
+								onChange={handleChange}
+							/>
+							{errors.title && (
+								<span className="error">{errors.title}</span>
+							)}
+						</div>
+						<div className="form-group">
+							<label htmlFor="authors">Author</label>
+							<input
+								type="text"
+								name="authors"
+								id="authors"
+								placeholder="Enter Book Author"
+								value={formData.authors}
+								onChange={handleChange}
+							/>
+							{errors.authors && (
+								<span className="error">{errors.authors}</span>
+							)}
+						</div>
+						<div className="form-group">
+							<label htmlFor="publisher">Publisher</label>
+							<input
+								type="text"
+								name="publisher"
+								id="publisher"
+								placeholder="Enter Book Publisher"
+								value={formData.publisher}
+								onChange={handleChange}
+							/>
+							{errors.publisher && (
 								<span className="error">
-									{errors[field.name]}
+									{errors.publisher}
 								</span>
 							)}
 						</div>
-					))}
-					<button className="book-submit-btn" type="submit">
-						Submit
-					</button>
-				</form>
+						<div className="form-group">
+							<label htmlFor="version">Version</label>
+							<input
+								type="text"
+								name="version"
+								id="version"
+								placeholder="Enter Book Version"
+								value={formData.version}
+								onChange={handleChange}
+							/>
+							{errors.version && (
+								<span className="error">{errors.version}</span>
+							)}
+						</div>
+						<div className="form-group">
+							<label htmlFor="total_copies">Total Copies</label>
+							<input
+								type="text"
+								name="total_copies"
+								id="total_copies"
+								placeholder="Enter Total Copies"
+								value={formData.total_copies}
+								onChange={handleChange}
+							/>
+							{errors.total_copies && (
+								<span className="error">
+									{errors.total_copies}
+								</span>
+							)}
+						</div>
+						<div className="form-group">
+							<label htmlFor="available_copies">
+								Available Copies
+							</label>
+							<input
+								type="text"
+								name="available_copies"
+								id="available_copies"
+								placeholder="Enter Available Copies"
+								value={formData.available_copies}
+								onChange={handleChange}
+							/>
+							{errors.available_copies && (
+								<span className="error">
+									{errors.available_copies}
+								</span>
+							)}
+						</div>
+						<button className="book-submit-btn" type="submit">
+							Submit
+						</button>
+					</form>
+				</div>
 			</div>
 		</>
 	);
