@@ -1,8 +1,12 @@
 import React from "react";
 import FormTemplate from "../../Components/FormTemplate/FormTemplate";
 import Navbar from "../../Components/Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
+	const navigate = useNavigate();
+
 	const LoginFields = [
 		{
 			name: "email",
@@ -31,10 +35,26 @@ function Login() {
 		return tempErrors;
 	};
 
-	const handleSubmit = (formData) => {
-		console.log("Form submitted successfully");
-		console.log(formData);
+	const handleSubmit = async (formData) => {
+		// console.log(formData);
+		const URL = "http://localhost:8080/signin";
+		try {
+			const res = await axios.post(URL, {
+				email: formData.email,
+				password: formData.password,
+			});
+			const { token, expiry_time, user_id } = res.data.data;
+			localStorage.setItem("token", token);
+			localStorage.setItem("user_id", user_id);
+			// localStorage.setItem("expiry_time", expiry_time);
+			navigate("/");
+			console.log("User logged-in successfully !!");
+			// console.log(res.data);
+		} catch (error) {
+			console.log(error);
+		}
 	};
+
 	return (
 		<>
 			<div className="container-login">
@@ -47,6 +67,7 @@ function Login() {
 					linkText="Don't have an account?"
 					linkTo="/signup"
 					linkValue="SIGNUP"
+					roleSelector={false}
 				/>
 			</div>
 		</>

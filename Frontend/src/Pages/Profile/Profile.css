@@ -1,0 +1,17 @@
+.profile-wrapper {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	background: var(--bg-color-white);
+	font-family: var(--font-family);
+	min-height: calc(100vh - var(--navbar-height));
+	width: 100%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.profile-container{
+    
+}

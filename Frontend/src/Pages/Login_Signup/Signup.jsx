@@ -1,8 +1,12 @@
 import React from "react";
 import FormTemplate from "../../Components/FormTemplate/FormTemplate";
 import Navbar from "../../Components/Navbar/Navbar";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Signup() {
+	const navigate = useNavigate();
+
 	const SignupFields = [
 		{
 			name: "name",
@@ -57,9 +61,27 @@ function Signup() {
 		return tempErrors;
 	};
 
-	const handleSubmit = (formData) => {
+	const handleSubmit = async (formData) => {
 		console.log("Form submitted successfully");
-		console.log(formData);
+		// console.log(formData);
+
+		const URL = "http://localhost:8080/signup";
+		try {
+			const res = await axios.post(URL, {
+				name: formData.name,
+				email: formData.email,
+				contact_number: formData.contact_number,
+				password: formData.password,
+				role: formData.role,
+			});
+			// console.log("res---------------");
+			console.log(res);
+			navigate("/login");
+			console.log("User created successfully !!");
+		} catch (error) {
+			// console.log("error---------------");
+			console.log(error);
+		}
 	};
 	return (
 		<>
@@ -73,6 +95,7 @@ function Signup() {
 					linkText="Already have an account?"
 					linkTo="/login"
 					linkValue="LOGIN"
+					roleSelector={true}
 				/>
 			</div>
 		</>

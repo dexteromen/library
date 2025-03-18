@@ -39,42 +39,34 @@
 }
 
 .search-box {
-	/* Center Elements */
-	margin: auto;
-	width: min-content;
-
-	/* adjustments */
-	padding-bottom: 20px;
 	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 20px 0;
 }
 
-.search-box input {
-	height: 30px;
-	width: 300px;
-
-	border: 2px solid #dadaf2;
-	border-radius: 10px;
-	padding: 10px 10px 10px 10px;
-	/* background: var(--bg-color-gray); */
-	/* font-size: 17px; */
-	/* padding: 0px 20px; */
-	/* margin-bottom: 10px; */
-	border-color: var(--bg-color-dark-gray);
-
+.search-box input[type="text"] {
+	padding: 10px;
 	margin-left: 10px;
-	margin-top: 0px;
-}
-
-.search-box input::placeholder {
-	color: var(--bg-color-black);
-	text-align: center;
-	text-transform: uppercase;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	width: 200px;
 }
 
 .search-box .dropdown-filter {
-	/* padding: 10px; */
-	margin: 10px;
-	margin-top: 0px;
+	margin-left: 10px;
+}
+
+.search-box select {
+	padding: 10px;
+	border: 1px solid var(--bg-color-gray);
+	border-radius: 4px;
+}
+
+.search-box select option {
+	padding: 10px;
+	background-color: var(--bg-color-white);
+	color: var(--bg-color-black);
 }
 
 .book-cards {

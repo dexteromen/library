@@ -5,65 +5,57 @@
 }
 
 .nav-bar {
-	/* width: 100%; */
-	padding: 10px 10px 10px 10px;
-	margin: 0px 0px 0px 0px;
+	width: 100%;
+	padding: 10px;
+	margin: 0;
 	display: flex;
-	/* flex:1; */
 	justify-content: space-between;
 	background-color: white;
 }
+
 .logo-wrapper {
 	display: flex;
 	align-items: center;
-	justify-content: space-between;
 }
 
 .logo-wrapper .image {
-	margin-right: 0.5em;
-	margin-top: 0.5em;
-	margin-left: 0.5em;
+	margin: 0.5em;
 }
 
 .logo-wrapper img {
 	height: 2em;
 	width: 2em;
 }
+
 .logo-name {
 	font-size: 20px;
 	font-family: var(--font-name);
 }
+
 .nav-bar .links {
-	width: 20%;
 	list-style-type: none;
-	text-decoration-style: none;
 	display: flex;
-	flex: 0.25;
 	align-items: center;
 	justify-content: space-between;
 	font-size: 1.2rem;
 }
+
 .nav-bar .links a {
 	color: black;
 	text-decoration: none;
 	font-family: var(--font-name);
-	/* text-transform: uppercase; */
 }
 
 .nav-bar .profile {
 	display: flex;
 	align-items: center;
 	font-size: 20px;
-	justify-content: space-between;
 }
 
 .nav-bar .profile img {
 	height: 2em;
 	width: 2em;
-	margin-left: 0.5em;
-	margin-right: 0.5em;
-	margin-top: 0em;
-	margin-left: 0.5em;
+	margin: 0 0.5em;
 }
 
 /* BUTTON */
@@ -82,15 +74,11 @@
 	line-height: 1.25rem;
 	padding: 0.35rem 1rem;
 	text-align: center;
-	text-decoration: none #d1d5db solid;
-	text-decoration-thickness: auto;
+	text-decoration: none;
 	box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
 	cursor: pointer;
 	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
-
-	margin: 0.5em 0.5em 0.5em 0.5em;
+	margin: 0.5em;
 }
 
 .button-38:hover {
@@ -104,4 +92,41 @@
 
 .button-38:focus-visible {
 	box-shadow: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+	.nav-bar {
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.nav-bar .links {
+		width: 100%;
+		flex-direction: column;
+		align-items: center;
+	}
+
+	.nav-bar .links a {
+		margin: 5px 0;
+	}
+
+	.nav-bar .profile {
+		margin-top: 10px;
+	}
+}
+
+@media (max-width: 480px) {
+	.logo-name {
+		font-size: 16px;
+	}
+
+	.nav-bar .links {
+		font-size: 1rem;
+	}
+
+	.button-38 {
+		font-size: 0.75rem;
+		padding: 0.25rem 0.75rem;
+	}
 }

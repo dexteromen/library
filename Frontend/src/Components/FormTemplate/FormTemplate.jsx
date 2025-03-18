@@ -10,6 +10,7 @@ function FormTemplate({
 	linkTo,
 	linkValue,
 	validate,
+	roleSelector,
 }) {
 	const [formData, setFormData] = useState(
 		fields.reduce(
@@ -17,7 +18,7 @@ function FormTemplate({
 				...acc,
 				[field.name]: "",
 			}),
-			{}
+			{ role: "" }
 		)
 	);
 	const [errors, setErrors] = useState({});
@@ -63,6 +64,23 @@ function FormTemplate({
 								)}
 							</div>
 						))}
+						{roleSelector === true && (
+							<div className="role-selector">
+								<select
+									name="role"
+									value={formData.role || ""}
+									onChange={handleChange}
+									required
+								>
+									<option value="" disabled>
+										Select a role
+									</option>
+									<option value="reader">Reader</option>
+									<option value="admin">Admin</option>
+									{/* <option value="owner">Owner</option> */}
+								</select>
+							</div>
+						)}
 						<button type="submit">{title}</button>
 						<p className="link-to">
 							{linkText} <Link to={linkTo}>{linkValue}</Link>

@@ -143,3 +143,30 @@
 .templete-form button:hover {
 	background: #ffb444;
 }
+
+.role-selector {
+	/* margin-left: 10px; */
+	margin-bottom: 10px;
+	margin-top: 10px;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.role-selector select {
+	width: 100%;
+	padding: 15px;
+	color: #d82d2d;
+	text-transform: uppercase;
+	font-size: small;
+	font-weight: 800;
+	border: 1px solid var(--bg-color-gray);
+	border-radius: 10px;
+}
+
+.role-selector select option {
+	padding: 10px;
+	background-color: var(--bg-color-white);
+	color: var(--bg-color-black);
+}

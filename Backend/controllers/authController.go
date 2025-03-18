@@ -90,9 +90,22 @@ func SignUp(c *gin.Context) {
 	hashedPassword, _ := utils.HashPassword(user.Password)
 	user.Password = hashedPassword
 	user.Email = strings.ToLower(user.Email)
+
+	//Already in DB
+	var existingDetails models.User
+	if err := config.DB.First(&existingDetails, "email = ?", user.Email).Error; err == nil {
+		utils.RespondJSON(c, http.StatusBadRequest, "Email Already Exist !!", nil)
+		return
+	}
+	if err := config.DB.First(&existingDetails, "contact_number = ?", user.ContactNumber).Error; err == nil {
+		utils.RespondJSON(c, http.StatusBadRequest, "Contact Number Already Exists.", nil)
+		return
+	}
+
 	config.DB.Create(&user)
 
 	utils.RespondJSON(c, http.StatusCreated, "User created successfully", gin.H{"user": user})
+	// utils.RespondJSON(c, http.StatusCreated, "User created successfully", nil)
 }
 
 // SignIn updates to store session
@@ -155,7 +168,7 @@ func SignIn(c *gin.Context) {
 
 	// Store the new session in the database
 	config.DB.Create(&session)
-	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt})
+	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt, "user_id": user.ID})
 }
 
 // SignOut godoc
