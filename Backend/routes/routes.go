@@ -47,4 +47,11 @@ func Routes(router *gin.Engine) {
 		requestAndIssuesGroup.PUT("/approve-issue/:id", middlewares.RoleMiddleware("admin"), controllers.ApproveAndIssueRequest) // Approve Request and Issue Book
 		requestAndIssuesGroup.PUT("/return/:id", middlewares.RoleMiddleware("reader"), controllers.ReturnBook)                   // Return book by isbn
 	}
+
+	//Additional Routes
+	additionalGroup := router.Group("/")
+	additionalGroup.Use(middlewares.AuthMiddleware())
+	{
+		additionalGroup.GET("/profile", controllers.GetProfile) //Get Profile
+	}
 }

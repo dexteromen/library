@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./AdminDashboard.css";
 import Navbar from "../../Components/Navbar/Navbar";
+import { getUsers, getLibraries, getRequests, getIssues } from "../../API/API";
 
 function AdminDashboard() {
+	const navigate = useNavigate();
 	const [libraries, setLibraries] = useState([]);
 	const [bookRequests, setBookRequests] = useState([]);
 	const [issuedBooks, setIssuedBooks] = useState([]);
-	const [readers, setReaders] = useState([]);
+	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
 		// Dummy data for libraries
@@ -32,7 +35,7 @@ function AdminDashboard() {
 				],
 			},
 		];
-		setLibraries(dummyLibraries);
+		// setLibraries(dummyLibraries);
 
 		// Dummy data for book requests
 		const dummyBookRequests = [
@@ -58,14 +61,50 @@ function AdminDashboard() {
 		];
 		setIssuedBooks(dummyIssuedBooks);
 
-		// Dummy data for readers
-		const dummyReaders = [
-			{ id: 1, name: "Alice", email: "alice@example.com" },
-			{ id: 2, name: "Bob", email: "bob@example.com" },
-			{ id: 3, name: "Charlie", email: "charlie@example.com" },
-			{ id: 4, name: "David", email: "david@example.com" },
-		];
-		setReaders(dummyReaders);
+		const fetchUsers = async () => {
+			try {
+				const res = await getUsers();
+				const userDetails = res.data.data.User;
+				// console.log("User Details: ",userDetails);
+				setUsers(userDetails);
+			} catch (error) {
+				console.log("Error Fetching Users:", error);
+			}
+		};
+		fetchUsers();
+		const fetchLibrary = async () => {
+			try {
+				const res = await getLibraries();
+				const libraryDetails = res.data.data;
+				// console.log("Libraries: ",libraryDetails);
+				setLibraries(libraryDetails);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		fetchLibrary();
+		const fetchRequests = async () => {
+			try {
+				const res = await getRequests();
+				const bookRequestDetails = res.data.data;
+				console.log("Book Request: ", bookRequestDetails);
+				// setBookRequests(bookRequestDetails);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		// fetchRequests();
+		const fetchIssues = async () => {
+			try {
+				const res = await getIssues();
+				const issuesDetails = res.data.data;
+				console.log("Book Issued: ", issuesDetails);
+				// setIssuedBooks(issuesDetails);
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		// fetchIssues();
 	}, []);
 
 	const handleApproveRequest = (requestId) => {
@@ -102,14 +141,14 @@ function AdminDashboard() {
 									<h3 className="library__name">
 										{library.name}
 									</h3>
-									<p className="library__owner">
+									{/* <p className="library__owner">
 										Owner: {library.owner}
 									</p>
 									<p className="library__readers-count">
 										Number of Readers:{" "}
 										{library.readersCount}
-									</p>
-									<h4 className="library__books-title">
+									</p> */}
+									{/* <h4 className="library__books-title">
 										Books
 									</h4>
 									<ul className="library__books-list">
@@ -121,7 +160,7 @@ function AdminDashboard() {
 												{book.title}
 											</li>
 										))}
-									</ul>
+									</ul> */}
 								</div>
 							))}
 						</div>
@@ -165,14 +204,11 @@ function AdminDashboard() {
 						</div>
 
 						<div className="widget">
-							<h2 className="widget__title">Readers</h2>
-							<ul className="readers__list">
-								{readers.map((reader) => (
-									<li
-										key={reader.id}
-										className="readers__item"
-									>
-										{reader.name} ({reader.email})
+							<h2 className="widget__title">Users</h2>
+							<ul className="users__list">
+								{users.map((user) => (
+									<li key={user.id} className="users__item">
+										{user.name} ({user.email})
 									</li>
 								))}
 							</ul>

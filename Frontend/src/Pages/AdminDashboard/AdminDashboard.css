@@ -88,14 +88,14 @@
 
 .book-requests__list,
 .issued-books__list,
-.readers__list {
+.users__list {
 	list-style-type: none;
 	padding: 0;
 }
 
 .book-requests__item,
 .issued-books__item,
-.readers__item {
+.users__item {
 	background-color: #fff;
 	margin: 5px 0;
 	padding: 10px;

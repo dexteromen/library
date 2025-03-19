@@ -2,7 +2,7 @@ import React from "react";
 import FormTemplate from "../../Components/FormTemplate/FormTemplate";
 import Navbar from "../../Components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { signUp } from "../../API/API";
 
 function Signup() {
 	const navigate = useNavigate();
@@ -64,22 +64,19 @@ function Signup() {
 	const handleSubmit = async (formData) => {
 		console.log("Form submitted successfully");
 		// console.log(formData);
-
-		const URL = "http://localhost:8080/signup";
 		try {
-			const res = await axios.post(URL, {
+			const userData = {
 				name: formData.name,
 				email: formData.email,
 				contact_number: formData.contact_number,
 				password: formData.password,
 				role: formData.role,
-			});
-			// console.log("res---------------");
+			};
+			const res = await signUp(userData);
 			console.log(res);
 			navigate("/login");
 			console.log("User created successfully !!");
 		} catch (error) {
-			// console.log("error---------------");
 			console.log(error);
 		}
 	};

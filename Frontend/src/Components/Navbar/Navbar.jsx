@@ -2,48 +2,21 @@ import React, { useEffect, useState } from "react";
 import { NavLink, Link, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import logo from "/library.svg"; //in public folder
-import axios from "axios";
 
 export default function Navbar() {
 	const navigate = useNavigate();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [userRole, setUserRole] = useState("reader");
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
-		const id = localStorage.getItem("user_id");
-
-		//getting user role
-		if (id && token) {
-			axios
-				.get(`http://localhost:8080/user/${id}`)
-				.then((response) => {
-					const userData = response.data.data.User;
-					setUserRole(userData.role);
-					setIsLoggedIn(true);
-					localStorage.setItem("userRole", userRole);
-					// console.log(userRole);
-				})
-				.catch((error) => {
-					console.error(
-						"There was an error fetching the user data!",
-						error
-					);
-				});
+		if (token) {
+			setIsLoggedIn(true);
 		}
-		// else {
-		// 	console.error("No token found in localStorage");
-		// 	console.error("No user ID found in localStorage");
-		// }
 	}, []);
-	// [navigate]
-	// );
 
 	const handleLogout = () => {
 		localStorage.removeItem("token");
 		localStorage.removeItem("user_id");
-		localStorage.removeItem("userRole");
-		setUserRole("Logout");
 		setIsLoggedIn(false);
 		navigate("/login");
 	};
@@ -72,9 +45,7 @@ export default function Navbar() {
 					)}
 					{isLoggedIn && <Link to="/create-book">Create Book</Link>}
 					{isLoggedIn && <Link to="/dashboard">dashboard</Link>}
-					{isLoggedIn && userRole === "admin" && (
-						<Link to="/temp">Temp</Link>
-					)}
+					{isLoggedIn && <Link to="/temp">Temp</Link>}
 				</div>
 				<div className="profile">
 					{isLoggedIn ? (

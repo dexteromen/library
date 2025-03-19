@@ -2,6 +2,8 @@
 package middlewares
 
 import (
+	"library/config"
+	"library/models"
 	"library/utils"
 	"net/http"
 
@@ -80,6 +82,11 @@ func AuthMiddleware() gin.HandlerFunc {
 		c.Set("user_id", claims.UserID)
 		c.Set("email", claims.Email)
 		c.Set("role", claims.Role)
+
+		var currentUser models.User
+		config.DB.Model(&models.User{}).Where("email = ?", claims.Email).First(&currentUser)
+		c.Set("currentUser", currentUser)
+
 		c.Next()
 	}
 }
