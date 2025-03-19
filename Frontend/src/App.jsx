@@ -13,6 +13,7 @@ import Login from "./Pages/Login_Signup/Login";
 import Signup from "./Pages/Login_Signup/Signup";
 import CreateLibrary from "./Pages/CreateLibrary/CreateLibrary";
 import Profile from "./Pages/Profile/Profile";
+import ProtectedRoute from "./ProtectedRoute";
 
 function App() {
 	return (
@@ -24,12 +25,27 @@ function App() {
 						<Route path="/temp" element={<Temp />} />
 						<Route path="/signup" element={<Signup />} />
 						<Route path="/login" element={<Login />} />
-						<Route path="/profile" element={<Profile />} />
-						<Route path="/create-book" element={<CreateBook />} />
-						<Route path="/dashboard" element={<AdminDashboard />} />
+						<Route
+							path="/profile"
+							element={<ProtectedRoute element={<Profile />} />}
+						/>
+						<Route
+							path="/create-book"
+							element={
+								<ProtectedRoute element={<CreateBook />} />
+							}
+						/>
+						<Route
+							path="/dashboard"
+							element={
+								<ProtectedRoute element={<AdminDashboard />} />
+							}
+						/>
 						<Route
 							path="/create-library"
-							element={<CreateLibrary />}
+							element={
+								<ProtectedRoute element={<CreateLibrary />} />
+							}
 						/>
 						<Route path="*" element={<Navigate to="/" replace />} />
 					</Routes>
