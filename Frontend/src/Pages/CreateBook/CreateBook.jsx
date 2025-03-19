@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./CreateBook.css";
 import Navbar from "../../Components/Navbar/Navbar";
+import { createBook } from "../../API/API";
 
 function CreateBook() {
+	const dummyBook = {
+		isbn: "100-100-100-101",
+		title: "English Reader 2",
+		authors: "Reader 2",
+		publisher: "Reader 2",
+		version: "1st",
+		total_copies: 2,
+		available_copies: 0,
+	};
 	const [formData, setFormData] = useState({
 		isbn: "",
-		libid: "",
+		// libid: "",
 		title: "",
 		authors: "",
 		publisher: "",
@@ -14,6 +25,7 @@ function CreateBook() {
 		available_copies: "",
 	});
 	const [errors, setErrors] = useState({});
+	const [isSubmitting, setIsSubmitting] = useState(false);
 
 	const handleChange = (event) => {
 		const { name, value } = event.target;
@@ -26,9 +38,9 @@ function CreateBook() {
 	const validate = () => {
 		const newErrors = {};
 		if (!formData.isbn) newErrors.isbn = "ISBN is required";
-		if (!formData.libid) newErrors.libid = "Library Id is not provided";
-		if (formData.libid && formData.libid.length < 6)
-			newErrors.libid = "Library Id must be at least 6 characters long";
+		// if (!formData.libid) newErrors.libid = "Library Id is not provided";
+		// if (formData.libid && formData.libid.length < 6)
+		// 	newErrors.libid = "Library Id must be at least 6 characters long";
 		if (!formData.title) newErrors.title = "Title is required";
 		if (!formData.authors) newErrors.authors = "Author is required";
 		if (!formData.publisher) newErrors.publisher = "Publisher is required";
@@ -47,10 +59,29 @@ function CreateBook() {
 			setErrors(newErrors);
 		} else {
 			setErrors({});
+			setIsSubmitting(true);
 			console.log("Form submitted successfully");
 			console.log(formData);
 		}
 	};
+
+	useEffect(() => {
+		if (!isSubmitting) return;
+
+		async function fetchData() {
+			try {
+				const res = await createBook(formData);
+				console.log("Book Created Successfully");
+				console.log(res);
+				// navigate("/create-book");
+			} catch (error) {
+				console.log(error);
+			} finally {
+				setIsSubmitting(false);
+			}
+		}
+		fetchData();
+	}, [isSubmitting, formData]);
 
 	return (
 		<>
@@ -59,7 +90,7 @@ function CreateBook() {
 				<div className="create-book-form-container">
 					<h1 className="create-book-title">Create Book</h1>
 					<form onSubmit={handleSubmit}>
-						<div className="form-group">
+						{/* <div className="form-group">
 							<label htmlFor="libid">Library Id</label>
 							<input
 								type="text"
@@ -72,7 +103,7 @@ function CreateBook() {
 							{errors.libid && (
 								<span className="error">{errors.libid}</span>
 							)}
-						</div>
+						</div> */}
 						<div className="form-group">
 							<label htmlFor="isbn">ISBN</label>
 							<input

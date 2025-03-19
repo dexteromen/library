@@ -67,10 +67,23 @@ export const getBookById = async (id) => {
     return await axios.get(`${API_URL}/book/${id}`);
 };
 
-export const createBook = async (bookData) => {
-    var token = localStorage.getItem("token");
-    return await axios.post(`${API_URL}/book`, bookData);
-};
+// export const createBook = async (bookData) => {
+//     var token = localStorage.getItem("token");
+//     console.log(bookData)
+//     return await axios.post(`${API_URL}/book`, {
+//         "isbn": bookData.isbn,
+//         "title": bookData.title,
+//         "authors": bookData.authors,
+//         "publisher": bookData.publisher,
+//         "version": bookData.version,
+//         "total_copies": bookData.total_copies,
+//         "available_copies": bookData.available_copies,
+//     },{
+//         headers: {
+//             'Authorization':`Bearer ${token}`
+//         }
+//     });
+// };
 
 export const updateBookById = async (id, bookData) => {
     var token = localStorage.getItem("token");

@@ -30,12 +30,6 @@ function App() {
 							element={<ProtectedRoute element={<Profile />} />}
 						/>
 						<Route
-							path="/create-book"
-							element={
-								<ProtectedRoute element={<CreateBook />} />
-							}
-						/>
-						<Route
 							path="/dashboard"
 							element={
 								<ProtectedRoute element={<AdminDashboard />} />
@@ -45,6 +39,12 @@ function App() {
 							path="/create-library"
 							element={
 								<ProtectedRoute element={<CreateLibrary />} />
+							}
+						/>
+						<Route
+							path="/create-book"
+							element={
+								<ProtectedRoute element={<CreateBook />} />
 							}
 						/>
 						<Route path="*" element={<Navigate to="/" replace />} />
