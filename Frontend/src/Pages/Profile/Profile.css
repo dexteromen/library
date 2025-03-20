@@ -11,12 +11,27 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	flex-direction: column;
+	gap: 30px;
+
+	position: relative;
 }
 
 .top-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	border: 3px solid var(--bg-color-yellow);
+	border-radius: 20px;
+	padding: 20px;
+
 	.heading {
-		margin: 0 auto;
-		padding-left: 6em;
+		text-transform: uppercase;
+		font-weight: 700;
+		border-bottom: 3px solid var(--bg-color-dark-gray);
+		margin-bottom: 10px;
 	}
 }
 
@@ -42,7 +57,7 @@
 .d,
 .e {
 	text-transform: uppercase;
-	font-weight: 700;
+	font-weight: 600;
 }
 .a-value,
 .b-value,
@@ -50,6 +65,7 @@
 .d-value,
 .e-value {
 	font-weight: 400;
+	border: 1px solid var(--bg-color-yellow);
 }
 
 .a-value,

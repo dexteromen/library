@@ -53,5 +53,7 @@ func Routes(router *gin.Engine) {
 	additionalGroup.Use(middlewares.AuthMiddleware())
 	{
 		additionalGroup.GET("/profile", controllers.GetProfile) //Get Profile
+		additionalGroup.POST("/refresh-token", controllers.RefreshToken)
+		additionalGroup.GET("/profile-by-token", controllers.GetProfileByToken)
 	}
 }

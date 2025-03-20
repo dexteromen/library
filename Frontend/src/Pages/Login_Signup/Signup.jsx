@@ -3,6 +3,8 @@ import FormTemplate from "../../Components/FormTemplate/FormTemplate";
 import Navbar from "../../Components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { signUp } from "../../API/API";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function Signup() {
 	const navigate = useNavigate();
@@ -73,17 +75,20 @@ function Signup() {
 				role: formData.role,
 			};
 			const res = await signUp(userData);
-			console.log(res);
+			// console.log(res);
 			navigate("/login");
 			console.log("User created successfully !!");
 		} catch (error) {
-			console.log(error);
+			var err = error.response.data.error;
+			toast.error(err);
+			// console.log(error);
 		}
 	};
 	return (
 		<>
 			<div className="container-signup">
 				<Navbar />
+				<ToastContainer position="top-center" />
 				<FormTemplate
 					title="SIGNUP"
 					fields={SignupFields}

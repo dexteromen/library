@@ -32,21 +32,15 @@ export default function Navbar() {
 					</div>
 					<div className="logo-name">Z-Lib</div>
 				</div>
-				<div className="links">
+				{/* <div className="links">
 					<NavLink to="/">Home</NavLink>
-					{/* <Link to="/login">login</Link>
-					<Link to="/signup">signup</Link>
-					<Link to="/create-library">Create Library</Link>
-					<Link to="/create-book"> Create Book</Link>
-					<Link to="/dashboard">dashborad</Link>
-					<Link to="/temp">Temp</Link> */}
 					{isLoggedIn && (
 						<Link to="/create-library">Create Library</Link>
 					)}
 					{isLoggedIn && <Link to="/create-book">Create Book</Link>}
 					{isLoggedIn && <Link to="/dashboard">dashboard</Link>}
 					{isLoggedIn && <Link to="/temp">Temp</Link>}
-				</div>
+				</div> */}
 				<div className="profile">
 					{isLoggedIn ? (
 						<>

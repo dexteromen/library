@@ -4,3 +4,31 @@
   padding: 2rem;
   text-align: center;
 } */
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+:root {
+	--font-family: "Montserrat", sans-serif;
+	--navbar-height: 65px; /* Adjust the value as needed */
+	--bg-color-gray-old: rgb(231, 231, 231);
+
+	--bg-color-black: #222831;
+	--bg-color-dark-gray: #393e46;
+	--bg-color-yellow: #ffd369;
+	--bg-color-gray: #eeeeee;
+	--bg-color-white: #fff;
+}
+
+.child-back-btn {
+	position: absolute;
+	top: 0;
+	left: 0;
+	margin-left: 30px;
+	margin-top: 15px;
+	color: var(--bg-color-dark-gray);
+	text-decoration: none;
+
+	a:link {
+		color: var(--bg-color-dark-gray);
+	}
+}

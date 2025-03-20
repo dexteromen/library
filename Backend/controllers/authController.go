@@ -93,14 +93,27 @@ func SignUp(c *gin.Context) {
 
 	//Already in DB
 	var existingDetails models.User
-	if err := config.DB.First(&existingDetails, "email = ?", user.Email).Error; err == nil {
-		utils.RespondJSON(c, http.StatusBadRequest, "Email Already Exist !!", nil)
+	config.DB.Where("email = ?", user.Email).Find(&existingDetails)
+	if existingDetails.ID != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Email Already Exist."})
 		return
 	}
-	if err := config.DB.First(&existingDetails, "contact_number = ?", user.ContactNumber).Error; err == nil {
-		utils.RespondJSON(c, http.StatusBadRequest, "Contact Number Already Exists.", nil)
+	var existingDetails1 models.User
+	config.DB.Where("contact_number = ?", user.ContactNumber).Find(&existingDetails1)
+	if existingDetails1.ID != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Contact Number Already Exist."})
 		return
 	}
+	// if err := config.DB.Where("email = ?", user.Email).Find(&existingDetails).Error; err == nil {
+	// 	fmt.Println("Already ",existingDetails)
+	// 	utils.RespondJSON(c, http.StatusBadRequest, "Email Already Exist !!", nil)
+	// 	return
+	// }
+	// if err := config.DB.Where(&existingDetails, "contact_number = ?", user.ContactNumber).Error; err == nil {
+	// 	fmt.Println(existingDetails)
+	// 	utils.RespondJSON(c, http.StatusBadRequest, "Contact Number Already Exists.", nil)
+	// 	return
+	// }
 
 	config.DB.Create(&user)
 

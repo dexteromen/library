@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./CreateLibrary.css";
 import Navbar from "../../Components/Navbar/Navbar";
-import { createLibrary } from "../../API/API";
+import { createLibrary, refreshToken } from "../../API/API";
 
 function CreateLibrary() {
 	const navigate = useNavigate();
@@ -54,7 +54,7 @@ function CreateLibrary() {
 			try {
 				const res = await createLibrary(formData.library_name);
 				console.log("Library Created Successfully");
-				// console.log(res);
+				console.log(res);
 				navigate("/create-book");
 			} catch (error) {
 				console.log(error);
@@ -63,6 +63,17 @@ function CreateLibrary() {
 			}
 		}
 		fetchData();
+
+		const refresh = async () => {
+			try {
+				await refreshToken();
+				console.log("Token refreshed successfully");
+			} catch (error) {
+				console.error("Failed to refresh token:", error);
+			}
+		};
+
+		refresh();
 	}, [isSubmitting, formData]);
 
 	return (

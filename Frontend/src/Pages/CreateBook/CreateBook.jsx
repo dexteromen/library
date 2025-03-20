@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import "./CreateBook.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import { createBook } from "../../API/API";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function CreateBook() {
 	const dummyBook = {
@@ -61,7 +63,7 @@ function CreateBook() {
 			setErrors({});
 			setIsSubmitting(true);
 			console.log("Form submitted successfully");
-			console.log(formData);
+			// console.log(formData);
 		}
 	};
 
@@ -71,11 +73,14 @@ function CreateBook() {
 		async function fetchData() {
 			try {
 				const res = await createBook(formData);
-				console.log("Book Created Successfully");
-				console.log(res);
+				toast.success("Book Created Successfully");
+				// console.log("Book Created Successfully");
+				// console.log(res);
 				// navigate("/create-book");
 			} catch (error) {
-				console.log(error);
+				var err = error.response.data.data.Detail;
+				toast.error(err);
+				// console.log(err);
 			} finally {
 				setIsSubmitting(false);
 			}
@@ -87,6 +92,7 @@ function CreateBook() {
 		<>
 			<Navbar />
 			<div className="create-book-wrapper">
+				<ToastContainer position="top-center" />
 				<div className="create-book-form-container">
 					<h1 className="create-book-title">Create Book</h1>
 					<form onSubmit={handleSubmit}>
@@ -220,6 +226,11 @@ function CreateBook() {
 							</button>
 						</div>
 					</form>
+					<div className="multi-options">
+						<Link to="/home">
+							<button>Home</button>
+						</Link>
+					</div>
 				</div>
 			</div>
 		</>

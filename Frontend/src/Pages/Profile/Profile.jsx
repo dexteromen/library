@@ -2,6 +2,8 @@ import React, { use, useEffect, useState } from "react";
 import "./Profile.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import { getProfile } from "../../API/API";
+import { Link } from "react-router-dom";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
 
 function Profile() {
 	const [user, setUser] = useState({
@@ -59,6 +61,11 @@ function Profile() {
 							)}
 						</div>
 					</div>
+				</div>
+				<div className="child-back-btn">
+					<Link to="/home">
+						<MdOutlineKeyboardBackspace size={45} />
+					</Link>
 				</div>
 			</div>
 		</>

@@ -3,6 +3,9 @@ import FormTemplate from "../../Components/FormTemplate/FormTemplate";
 import Navbar from "../../Components/Navbar/Navbar";
 import { useNavigate } from "react-router-dom";
 import { signIn } from "../../API/API";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+// import { logout } from "../../Utils/authUtils";
 
 function Login() {
 	const navigate = useNavigate();
@@ -51,15 +54,22 @@ function Login() {
 			// localStorage.setItem("email", creadentials.email);
 			navigate("/");
 			console.log("User logged-in successfully !!");
+
+			// // Set token expiration time (e.g., 2 hours)
+            // const expirationTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+            // setTimeout(() => {
+            //     logout();
+            // }, expirationTime);
+
 		} catch (error) {
 			console.log(error);
 		}
 	};
-
 	return (
 		<>
 			<div className="container-login">
 				<Navbar />
+				<ToastContainer position="top-center" />
 				<FormTemplate
 					title="LOGIN"
 					fields={LoginFields}

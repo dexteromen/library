@@ -67,23 +67,23 @@ export const getBookById = async (id) => {
     return await axios.get(`${API_URL}/book/${id}`);
 };
 
-// export const createBook = async (bookData) => {
-//     var token = localStorage.getItem("token");
-//     console.log(bookData)
-//     return await axios.post(`${API_URL}/book`, {
-//         "isbn": bookData.isbn,
-//         "title": bookData.title,
-//         "authors": bookData.authors,
-//         "publisher": bookData.publisher,
-//         "version": bookData.version,
-//         "total_copies": bookData.total_copies,
-//         "available_copies": bookData.available_copies,
-//     },{
-//         headers: {
-//             'Authorization':`Bearer ${token}`
-//         }
-//     });
-// };
+export const createBook = async (bookData) => {
+    var token = localStorage.getItem("token");
+    // console.log(bookData)
+    return await axios.post(`${API_URL}/book`, {
+        "isbn": bookData.isbn,
+        "title": bookData.title,
+        "authors": bookData.authors,
+        "publisher": bookData.publisher,
+        "version": bookData.version,
+        "total_copies": parseInt(bookData.total_copies,10),
+        "available_copies": parseInt(bookData.available_copies,10),
+    } ,{
+        headers: {
+            'Authorization':`Bearer ${token}`
+        }
+    });
+};
 
 export const updateBookById = async (id, bookData) => {
     var token = localStorage.getItem("token");
@@ -140,4 +140,47 @@ export const getProfile = async () => {
             'Authorization':`Bearer ${token}`
         }
     });
+};
+
+export const getProfileByToken = async () => {
+    var token = localStorage.getItem("token");
+    return await axios.get(`${API_URL}/profile-by-token`,{
+        headers: {
+            'Authorization':`Bearer ${token}`
+        }
+    });
+};
+
+// export const refreshToken = async () => {
+//     var token = localStorage.getItem("token");
+//     const response =  await axios.post(`${API_URL}/refresh-token`,{}, {
+//         headers: {
+//             'Authorization':`Bearer ${token}`
+//         }
+//     });
+
+//     const newToken = response.data.token;
+//     localStorage.setItem("token", newToken);
+
+//     return response;
+// };
+
+export const refreshToken = async () => {
+    try {
+        var token = localStorage.getItem("token");
+        const response = await axios.post(`${API_URL}/refresh-token`, {}, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        const newToken = response.data.data.token;
+        console.log(newToken);
+        localStorage.setItem("token", newToken);
+
+        return response;
+    } catch (error) {
+        console.error("Error refreshing token:", error);
+        throw error;
+    }
 };

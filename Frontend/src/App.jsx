@@ -8,7 +8,7 @@ import {
 	Navigate,
 } from "react-router-dom";
 import CreateBook from "./Pages/CreateBook/CreateBook";
-import AdminDashboard from "./Pages/AdminDashboard/AdminDashboard";
+import AdminDashboard from "./Pages/Dashboard/AdminDashboard";
 import Login from "./Pages/Login_Signup/Login";
 import Signup from "./Pages/Login_Signup/Signup";
 import CreateLibrary from "./Pages/CreateLibrary/CreateLibrary";
