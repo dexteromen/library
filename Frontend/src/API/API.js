@@ -125,7 +125,11 @@ export const createRequest = async (requestData) => {
 
 export const approveAndIssueRequest = async (id) => {
     var token = localStorage.getItem("token");
-    return await axios.put(`${API_URL}/approve-issue/${id}`);
+    return await axios.put(`${API_URL}/approve-issue/${id}`,{},{
+        headers: {
+            'Authorization':`Bearer ${token}`
+        }
+    });
 };
 
 export const returnBook = async (id) => {
@@ -173,11 +177,6 @@ export const refreshToken = async () => {
                 'Authorization': `Bearer ${token}`
             }
         });
-
-        const newToken = response.data.data.token;
-        console.log(newToken);
-        localStorage.setItem("token", newToken);
-
         return response;
     } catch (error) {
         console.error("Error refreshing token:", error);

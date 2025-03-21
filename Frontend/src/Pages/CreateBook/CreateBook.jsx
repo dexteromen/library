@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "./CreateBook.css";
 import Navbar from "../../Components/Navbar/Navbar";
-import { createBook } from "../../API/API";
+import { createBook, refreshToken } from "../../API/API";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -69,7 +69,6 @@ function CreateBook() {
 
 	useEffect(() => {
 		if (!isSubmitting) return;
-
 		async function fetchData() {
 			try {
 				const res = await createBook(formData);
@@ -78,8 +77,9 @@ function CreateBook() {
 				// console.log(res);
 				// navigate("/create-book");
 			} catch (error) {
-				var err = error.response.data.data.Detail;
-				toast.error(err);
+				console.log(error);
+				// var err = error.response.data.data.Detail;
+				// toast.error(err);
 				// console.log(err);
 			} finally {
 				setIsSubmitting(false);
@@ -92,7 +92,17 @@ function CreateBook() {
 		<>
 			<Navbar />
 			<div className="create-book-wrapper">
-				<ToastContainer position="top-center" />
+				<ToastContainer
+					position="top-center"
+					autoClose={2000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
 				<div className="create-book-form-container">
 					<h1 className="create-book-title">Create Book</h1>
 					<form onSubmit={handleSubmit}>

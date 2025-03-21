@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import "./CreateLibrary.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import { createLibrary, refreshToken } from "../../API/API";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function CreateLibrary() {
 	const navigate = useNavigate();
@@ -55,31 +57,32 @@ function CreateLibrary() {
 				const res = await createLibrary(formData.library_name);
 				console.log("Library Created Successfully");
 				console.log(res);
-				navigate("/create-book");
+				const newToken = res.data.data.token;
+				localStorage.setItem("token", newToken);
+				toast.success("Library Created Successfully.");
+				// toast.success("Token Updated Successfully.");
+
+				setTimeout(() => {
+					navigate("/create-book");
+				}, 3000);
 			} catch (error) {
-				console.log(error);
+				var err = error.response.data.data;
+				toast.error(err);
+				// console.log(error.response.data.error);
+				var errMeassage = error.response.data.error;
+				toast.error(errMeassage);
 			} finally {
 				setIsSubmitting(false);
 			}
 		}
 		fetchData();
-
-		const refresh = async () => {
-			try {
-				await refreshToken();
-				console.log("Token refreshed successfully");
-			} catch (error) {
-				console.error("Failed to refresh token:", error);
-			}
-		};
-
-		refresh();
 	}, [isSubmitting, formData]);
 
 	return (
 		<>
 			<Navbar />
 			<div className="create-book-wrapper">
+				<ToastContainer position="top-center" />
 				<div className="create-book-form-container">
 					<h1 className="create-book-title">Create Library</h1>
 					<form onSubmit={handleSubmit}>

@@ -1,12 +1,17 @@
 package controllers
 
 import (
+	// "fmt"
+
 	"library/config"
 	"library/models"
 	"library/utils"
 	"net/http"
 
+	// "time"
+
 	"github.com/gin-gonic/gin"
+	// "github.com/golang-jwt/jwt/v4"
 )
 
 // CreateLibrary godoc
@@ -47,8 +52,21 @@ func CreateLibrary(c *gin.Context) {
 
 	config.DB.Save(&user)
 
+	//Refresh Token
+	tokenString := c.GetHeader("Authorization")
+	// Remove "Bearer " prefix if present
+	if len(tokenString) > 7 && tokenString[:7] == "Bearer " {
+		tokenString = tokenString[7:]
+	}
+	// Parse the token
+	claims, _ := utils.ParseToken(tokenString)
+	claims.Role = "owner"
+	// fmt.Println("Claims:-------", claims)
+	// fmt.Println("User:-------", user)
+	newTokenString, _ := utils.GenerateJWT(claims.UserID, claims.Email, claims.Role)
+
 	//Sending response
-	data := gin.H{"library": library, "Owner Of Library": user.Name, "Role": user.Role}
+	data := gin.H{"library_name": library, "token": newTokenString}
 
 	utils.RespondJSON(c, http.StatusCreated, "Library created successfully", data)
 }

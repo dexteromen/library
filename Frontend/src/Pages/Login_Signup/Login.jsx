@@ -48,28 +48,41 @@ function Login() {
 			const res = await signIn(creadentials);
 
 			// console.log(res.data.data);
-			const { token,user_id } = res.data.data;
+			const { token, user_id } = res.data.data;
 			localStorage.setItem("token", token);
 			localStorage.setItem("user_id", user_id);
 			// localStorage.setItem("email", creadentials.email);
-			navigate("/");
-			console.log("User logged-in successfully !!");
-
+			// console.log("User logged-in successfully !!");
+			toast.success("User logged-in successfully !!");
+			setTimeout(() => {
+				navigate("/");
+			}, 900);
 			// // Set token expiration time (e.g., 2 hours)
-            // const expirationTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
-            // setTimeout(() => {
-            //     logout();
-            // }, expirationTime);
-
+			// const expirationTime = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+			// setTimeout(() => {
+			//     logout();
+			// }, expirationTime);
 		} catch (error) {
 			console.log(error);
+			toast.error("Invalid credentials !!");
 		}
 	};
+
 	return (
 		<>
 			<div className="container-login">
+				<ToastContainer
+					position="top-center"
+					autoClose={500}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
 				<Navbar />
-				<ToastContainer position="top-center" />
 				<FormTemplate
 					title="LOGIN"
 					fields={LoginFields}

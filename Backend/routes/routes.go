@@ -22,7 +22,7 @@ func Routes(router *gin.Engine) {
 	libraryGroup := router.Group("/")
 	libraryGroup.Use(middlewares.AuthMiddleware())
 	{
-		libraryGroup.POST("/library", controllers.CreateLibrary) // Create Library
+		libraryGroup.POST("/library", middlewares.RoleMiddleware("reader"), controllers.CreateLibrary) // Create Library
 	}
 
 	// Book Routes

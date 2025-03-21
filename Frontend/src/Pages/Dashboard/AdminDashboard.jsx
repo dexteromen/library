@@ -1,68 +1,28 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import "./Dashboard.css";
 import Navbar from "../../Components/Navbar/Navbar";
-import { getUsers, getLibraries, getRequests, getIssues } from "../../API/API";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
+import {
+	getUsers,
+	getLibraries,
+	getRequests,
+	getIssues,
+	approveAndIssueRequest,
+} from "../../API/API";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function AdminDashboard() {
 	const navigate = useNavigate();
 	const [libraries, setLibraries] = useState([]);
-	const [bookRequests, setBookRequests] = useState([]);
-	const [issuedBooks, setIssuedBooks] = useState([]);
+	// const [issuedBooks, setIssuedBooks] = useState([]);
+	// const [bookRequests, setBookRequests] = useState([]);
 	const [users, setUsers] = useState([]);
+	const [AllRequests, setAllRequests] = useState([]);
+	const [AllIssue, setAllIssue] = useState([]);
 
 	useEffect(() => {
-		// Dummy data for libraries
-		const dummyLibraries = [
-			{
-				id: 1,
-				name: "Central Library",
-				owner: "John Doe",
-				readersCount: 120,
-				books: [
-					{ id: 1, title: "Book One" },
-					{ id: 2, title: "Book Two" },
-				],
-			},
-			{
-				id: 2,
-				name: "Community Library",
-				owner: "Jane Smith",
-				readersCount: 80,
-				books: [
-					{ id: 3, title: "Book Three" },
-					{ id: 4, title: "Book Four" },
-				],
-			},
-		];
-		// setLibraries(dummyLibraries);
-
-		// Dummy data for book requests
-		const dummyBookRequests = [
-			{ id: 1, bookTitle: "Book One", readerName: "Alice" },
-			{ id: 2, bookTitle: "Book Three", readerName: "Bob" },
-		];
-		setBookRequests(dummyBookRequests);
-
-		// Dummy data for issued books
-		const dummyIssuedBooks = [
-			{
-				id: 1,
-				bookTitle: "Book Two",
-				readerName: "Charlie",
-				issueDate: "2025-03-01",
-			},
-			{
-				id: 2,
-				bookTitle: "Book Four",
-				readerName: "David",
-				issueDate: "2025-03-05",
-			},
-		];
-		setIssuedBooks(dummyIssuedBooks);
-
 		const fetchUsers = async () => {
 			try {
 				const res = await getUsers();
@@ -90,7 +50,7 @@ function AdminDashboard() {
 				const res = await getRequests();
 				const bookRequestDetails = res.data.data;
 				console.log("Book Request: ", bookRequestDetails);
-				// setBookRequests(bookRequestDetails);
+				setAllRequests(bookRequestDetails);
 			} catch (error) {
 				console.log(error);
 			}
@@ -100,8 +60,8 @@ function AdminDashboard() {
 			try {
 				const res = await getIssues();
 				const issuesDetails = res.data.data;
-				console.log("Book Issued: ", issuesDetails);
-				// setIssuedBooks(issuesDetails);
+				console.log("All Issues: ", issuesDetails);
+				setAllIssue(issuesDetails);
 			} catch (error) {
 				console.log(error);
 			}
@@ -109,22 +69,30 @@ function AdminDashboard() {
 		fetchIssues();
 	}, []);
 
-	const handleApproveRequest = (requestId) => {
-		// Approve and issue the book request
-		const approvedRequest = bookRequests.find(
-			(request) => request.id === requestId
-		);
-		if (approvedRequest) {
-			const newIssuedBook = {
-				id: issuedBooks.length + 1,
-				bookTitle: approvedRequest.bookTitle,
-				readerName: approvedRequest.readerName,
-				issueDate: new Date().toISOString().split("T")[0],
-			};
-			setIssuedBooks([...issuedBooks, newIssuedBook]);
-			setBookRequests(
-				bookRequests.filter((request) => request.id !== requestId)
-			);
+	const handleApproveRequest = async (req_Id) => {
+		try {
+			const res = await approveAndIssueRequest(req_Id);
+
+			if (res) {
+				// Process the data
+				var message = res.data.message;
+				console.log(message);
+				toast.success(message);
+
+				// Reload the page
+				setTimeout(() => {
+					window.location.reload();
+				}, 2500);
+			} else {
+				console.error("Response or data is undefined");
+			}
+		} catch (error) {
+			console.error("Error fetching data", error);
+
+			if (error.response.statusText) {
+				var errMessage = error.response.data.error;
+				toast.error(errMessage);
+			}
 		}
 	};
 
@@ -133,54 +101,29 @@ function AdminDashboard() {
 			<Navbar />
 			<div className="dashboard-wrapper">
 				<div className="admin-dashboard">
+					<ToastContainer
+						position="top-center"
+						autoClose={2000}
+						hideProgressBar={false}
+						newestOnTop={false}
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+					/>
 					<h1 className="admin-dashboard__title">Admin Dashboard</h1>
 
 					<div className="widget-container">
-						<div className="widget">
-							<h2 className="widget__title">Book Requests</h2>
-							<ul className="book-requests__list">
-								{bookRequests.map((request) => (
-									<li
-										key={request.id}
-										className="book-requests__item"
-									>
-										{request.bookTitle} requested by{" "}
-										{request.readerName}
-										<button
-											className="book-requests__approve-button"
-											onClick={() =>
-												handleApproveRequest(request.id)
-											}
-										>
-											Approve and Issue
-										</button>
-									</li>
-								))}
-							</ul>
-						</div>
-
-						<div className="widget">
-							<h2 className="widget__title">Issued Books</h2>
-							<ul className="issued-books__list">
-								{issuedBooks.map((issue) => (
-									<li
-										key={issue.id}
-										className="issued-books__item"
-									>
-										{issue.bookTitle} issued to{" "}
-										{issue.readerName} on {issue.issueDate}
-									</li>
-								))}
-							</ul>
-						</div>
-
 						<div className="widget">
 							<h2 className="widget__title">Users</h2>
 							<ul className="users__list">
 								{users.map((user) => (
 									<li key={user.id} className="users__item">
-										{user.name} ({user.email})
-										<button>Delete User</button>
+										{user.id} {user.name} ({user.email})
+										{user.role !== "admin" && (
+											<button>Delete User</button>
+										)}
 									</li>
 								))}
 							</ul>
@@ -195,6 +138,155 @@ function AdminDashboard() {
 									</h4>
 								</div>
 							))}
+						</div>
+
+						<div className="widget">
+							<h2 className="widget__title">Book Requests</h2>
+							<div className="requests-container">
+								{AllRequests.map((request) => (
+									<div
+										className="book-request"
+										key={request.req_id}
+									>
+										<table>
+											<tbody>
+												<tr>
+													<td className="book-table-label">
+														ISBN:
+													</td>
+													<td className="book-table-value">
+														{request.isbn}
+													</td>
+												</tr>
+												<tr>
+													<td className="book-table-label">
+														Request Type:
+													</td>
+													<td className="book-table-value">
+														{request.request_type}
+													</td>
+												</tr>
+												<tr>
+													<td className="book-table-label">
+														Issue Status:
+													</td>
+													<td className="book-table-value">
+														{request.issue_status ===
+														"Approved And Issued"
+															? "Issued"
+															: "Pending"}
+													</td>
+												</tr>
+												<tr>
+													<td className="book-table-label">
+														Reader ID:
+													</td>
+													<td className="book-table-value">
+														{request.reader_id}
+													</td>
+												</tr>
+												{request.approval_date && (
+													<tr>
+														<td className="book-table-label">
+															Approval Date:
+														</td>
+														<td className="book-table-value">
+															{request.approval_date.substring(
+																0,
+																10
+															)}
+														</td>
+													</tr>
+												)}
+											</tbody>
+										</table>
+										{request.issue_status == "Pending" && (
+											<button
+												className="book-approve-btn"
+												onClick={() =>
+													handleApproveRequest(
+														request.req_id
+													)
+												}
+											>
+												Approve and Issue
+											</button>
+										)}
+									</div>
+								))}
+							</div>
+						</div>
+
+						<div className="widget">
+							<h2 className="widget__title">Issued Books</h2>
+							<div className="requests-container">
+								{AllIssue.map((issue) => (
+									<div
+										className="book-request"
+										key={issue.issue_id}
+									>
+										<table>
+											<tbody>
+												<tr>
+													<td className="book-table-label">
+														ISBN:
+													</td>
+													<td className="book-table-value">
+														{issue.isbn}
+													</td>
+												</tr>
+												<tr>
+													<td className="book-table-label">
+														Reader Id:
+													</td>
+													<td className="book-table-value">
+														{issue.reader_id}
+													</td>
+												</tr>
+												<tr>
+													<td className="book-table-label">
+														Issue Status:
+													</td>
+													<td className="book-table-value">
+														{issue.issue_status}
+													</td>
+												</tr>
+												<tr>
+													<td className="book-table-label">
+														Issue Date:
+													</td>
+													<td className="book-table-value">
+														{issue.issue_date.substring(
+															0,
+															10
+														)}
+													</td>
+												</tr>
+												<tr>
+													<td className="book-table-label">
+														Expected Return Date:
+													</td>
+													<td className="book-table-value">
+														{
+															issue.expected_return_date
+														}
+													</td>
+												</tr>
+												{issue.return_date && (
+													<tr>
+														<td className="book-table-label">
+															Return Date:
+														</td>
+														<td className="book-table-value">
+															{issue.return_date}
+														</td>
+													</tr>
+												)}
+											</tbody>
+										</table>
+									</div>
+								))}
+							</div>
 						</div>
 					</div>
 				</div>

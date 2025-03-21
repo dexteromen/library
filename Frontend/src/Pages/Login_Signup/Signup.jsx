@@ -76,8 +76,11 @@ function Signup() {
 			};
 			const res = await signUp(userData);
 			// console.log(res);
-			navigate("/login");
-			console.log("User created successfully !!");
+			// console.log("User created successfully !!");
+			toast.success("User created successfully.");
+			setTimeout(() => {
+				navigate("/login");
+			}, 3000);
 		} catch (error) {
 			var err = error.response.data.error;
 			toast.error(err);
@@ -88,7 +91,17 @@ function Signup() {
 		<>
 			<div className="container-signup">
 				<Navbar />
-				<ToastContainer position="top-center" />
+				<ToastContainer
+					position="top-center"
+					autoClose={2000}
+					hideProgressBar={false}
+					newestOnTop={false}
+					closeOnClick
+					rtl={false}
+					pauseOnFocusLoss
+					draggable
+					pauseOnHover
+				/>
 				<FormTemplate
 					title="SIGNUP"
 					fields={SignupFields}

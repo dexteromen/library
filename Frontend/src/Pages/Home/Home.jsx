@@ -4,7 +4,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import Card from "../../Components/Card/Card";
 import { IoSearch } from "react-icons/io5";
 import { Link } from "react-router-dom";
-import { getBooks } from "../../API/API";
+import { getBooks, searchBooks } from "../../API/API";
 
 const books = [
 	{
@@ -64,31 +64,44 @@ export default function Home() {
 		setFilter(e.target.value);
 	};
 
-	const filteredBooks = books.filter((book) => {
+	const filteredBooks = allbooks.filter((book) => {
 		if (filter === "all") {
 			return (
 				book.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-				book.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+				book.authors.toLowerCase().includes(searchTerm.toLowerCase()) ||
 				book.publisher.toLowerCase().includes(searchTerm.toLowerCase())
 			);
 		}
 		return book[filter].toLowerCase().includes(searchTerm.toLowerCase());
 	});
 
-	// useEffect(() => {
-	// 	async function fetchBooks() {
-	// 		try {
-	// 			const res = await getBooks();
-	// 			const bookData = res.data.data;
-	// 			// const bookData = res;
-	// 			// console.log(bookData);
-	// 			setAllBooks(bookData);
-	// 		} catch (error) {
-	// 			console.log(error);
-	// 		}
-	// 	}
-	// 	fetchBooks();
-	// }, []);
+	useEffect(() => {
+		async function fetchBooks() {
+			try {
+				const res = await getBooks();
+				const bookData = res.data.data;
+				setAllBooks(bookData);
+			} catch (error) {
+				console.log(error);
+			}
+		}
+		async function fetchSearchResults() {
+			if (searchTerm) {
+				try {
+					const res = await searchBooks(searchTerm);
+					const searchResults = res.data.data;
+					setAllBooks(searchResults);
+				} catch (error) {
+					console.log(error);
+				}
+			} else {
+				fetchBooks();
+			}
+		}
+		fetchSearchResults();
+	}, [searchTerm, filter]);
+
+	// console.log(allbooks);
 
 	return (
 		<>
@@ -116,9 +129,9 @@ export default function Home() {
 					</div>
 				</div>
 				<div className="multi-options">
-					<Link to="/home">
-						<button>Home</button>
-					</Link>
+					{/* <Link to="/home">
+                        <button>Home</button>
+                    </Link> */}
 					<Link to="/dashboard">
 						<button>Dashboard</button>
 					</Link>
@@ -128,34 +141,29 @@ export default function Home() {
 					<Link to="/create-library">
 						<button>Create Library</button>
 					</Link>
-					<Link to="/temp">
-						<button>Temp</button>
+					<Link to="/manage-books">
+						<button>Manage Books</button>
 					</Link>
+					{/* <Link to="/temp">
+						<button>Temp</button>
+					</Link> */}
 				</div>
 				<div className="book-cards">
-					{filteredBooks.map((book, index) => (
-						<Card
-							key={index}
-							isbn={book.isbn}
-							title={book.title}
-							author={book.author}
-							publisher={book.publisher}
-							version={book.version}
-						/>
-					))}
+					{filteredBooks.length > 0 ? (
+						filteredBooks.map((book, index) => (
+							<Card
+								key={index}
+								isbn={book.isbn}
+								title={book.title}
+								author={book.authors}
+								publisher={book.publisher}
+								version={book.version}
+							/>
+						))
+					) : (
+						<p>No books found</p>
+					)}
 				</div>
-				{/* <div className="book-cards">
-					{allbooks.map((book, index) => (
-						<Card
-							key={index}
-							isbn={book.isbn}
-							title={book.title}
-							author={book.authors}
-							publisher={book.publisher}
-							version={book.version}
-						/>
-					))}
-				</div> */}
 			</div>
 		</>
 	);
