@@ -13,17 +13,24 @@
   -moz-osx-font-smoothing: grayscale;
 } */
 
+:root {
+    --bg: #513831 url(/bookshelf.min.svg) repeat scroll top center;
+    --bg-color-cream: #f9f1de;
+    --color-blue: #46b2ce;
+}
+
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	/* font-family: "Montserrat", sans-serif; */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: "Montserrat", sans-serif; */
 }
 
 body {
-	/* background-color: rgb(231, 231, 231); */
-	background: #626cd6;
-	/* width: 100%;
+    /* background-color: rgb(231, 231, 231); */
+    background: #626cd6;
+    background: var(--bg);
+    /* width: 100%;
 	min-height: 100vh;
 	padding: 0 10px;
 	display: flex;

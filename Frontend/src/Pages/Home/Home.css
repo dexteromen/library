@@ -4,6 +4,7 @@
     padding: 0;
     box-sizing: border-box;
     background: var(--bg-color-white);
+    /* background: var(--bg-color-cream); */
     font-family: var(--font-family);
     min-height: calc(100vh - var(--navbar-height));
     width: 100%;

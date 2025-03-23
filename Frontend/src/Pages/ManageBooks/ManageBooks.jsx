@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function ManageBooks() {
     const [AllRequests, setAllRequests] = useState([]);
-
+    const [update, setUpdate] = useState(false); // New state to trigger re-render
     useEffect(() => {
         const fetchRequests = async () => {
             try {
@@ -22,7 +22,7 @@ export default function ManageBooks() {
         fetchRequests();
 
         //Return Book also create
-    }, []);
+    }, [update]);
 
     // console.log("All-Requests::", AllRequests);
     const id = parseInt(localStorage.getItem("user_id"));
@@ -60,10 +60,13 @@ export default function ManageBooks() {
                 console.log(res);
                 // toast.success(message);
 
-                // Reload the page
-                setTimeout(() => {
-                    window.location.reload();
-                }, 2500);
+                // Trigger re-render by updating 'update' state
+                setUpdate(!update);
+
+                // // Reload the page
+                // setTimeout(() => {
+                //     window.location.reload();
+                // }, 2500);
             } else {
                 console.error("Response or data is undefined");
             }
