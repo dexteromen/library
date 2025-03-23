@@ -113,63 +113,124 @@ func ReturnBook(c *gin.Context) {
 		return
 	}
 
-	// Check if the book is already returned
 	if issue.IssueStatus == "Returned" {
 		utils.RespondJSON(c, http.StatusConflict, "Book already returned", nil)
 		return
 	}
 
-	// Check if readerid is same as the logged in user
-	readerID, exists := c.Get("user_id")
-	if !exists {
-		utils.RespondJSON(c, http.StatusUnauthorized, "User ID not found in context", nil)
-		return
-	}
-	readerIDUint, ok := readerID.(uint)
-	if !ok {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to cast user ID", nil)
-		return
-	}
-	if issue.ReaderID != readerIDUint {
-		utils.RespondJSON(c, http.StatusUnauthorized, "You are not authorized to return this book", nil)
-		return
-	}
-
-	// Update issue record with return date
 	now := time.Now()
 	issue.ReturnDate = now.Format("2006-01-02 15:04:05")
 	issue.IssueStatus = "Returned"
 
-	if err := config.DB.Save(&issue).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update issue record", nil)
-		return
-	}
-
-	// Update book inventory (increase available copies)
 	var book models.BookInventory
 	if err := config.DB.Where("isbn = ?", issue.ISBN).First(&book).Error; err != nil {
 		utils.RespondJSON(c, http.StatusNotFound, "Book inventory record not found", nil)
 		return
 	}
 
-	book.AvailableCopies++
-	if err := config.DB.Save(&book).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update book inventory", nil)
-		return
-	}
-
-	//update the requestType in requestEvent
 	var request models.RequestEvent
 	if err := config.DB.Where("isbn = ?", issue.ISBN).First(&request).Error; err != nil {
 		utils.RespondJSON(c, http.StatusNotFound, "Request record not found", nil)
 		return
 	}
+
+	tx := config.DB.Begin()
+	defer func() {
+		if r := recover(); r != nil {
+			tx.Rollback()
+		}
+	}()
+
+	if err := tx.Save(&issue).Error; err != nil {
+		tx.Rollback()
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update issue record", nil)
+		return
+	}
+
+	book.AvailableCopies++
+	if err := tx.Save(&book).Error; err != nil {
+		tx.Rollback()
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update book inventory", nil)
+		return
+	}
+
 	request.RequestType = "Return"
-	if err := config.DB.Save(&request).Error; err != nil {
+	if err := tx.Save(&request).Error; err != nil {
+		tx.Rollback()
 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update request record", nil)
 		return
 	}
 
-	// utils.RespondJSON(c, http.StatusOK, "Book returned successfully", gin.H{"issue": issue, "book": book, "request": request})
+	tx.Commit()
 	utils.RespondJSON(c, http.StatusOK, "Book returned successfully", nil)
 }
+
+// func ReturnBook(c *gin.Context) {
+// 	id := c.Param("id")
+
+// 	var issue models.IssueRegistery
+// 	if err := config.DB.Where("isbn = ?", id).First(&issue).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusNotFound, "Issue record not found", nil)
+// 		return
+// 	}
+
+// 	// Check if the book is already returned
+// 	if issue.IssueStatus == "Returned" {
+// 		utils.RespondJSON(c, http.StatusConflict, "Book already returned", nil)
+// 		return
+// 	}
+
+// 	// Check if readerid is same as the logged in user
+// 	// readerID, exists := c.Get("user_id")
+// 	// if !exists {
+// 	// 	utils.RespondJSON(c, http.StatusUnauthorized, "User ID not found in context", nil)
+// 	// 	return
+// 	// }
+// 	// readerIDUint, ok := readerID.(uint)
+// 	// if !ok {
+// 	// 	utils.RespondJSON(c, http.StatusInternalServerError, "Failed to cast user ID", nil)
+// 	// 	return
+// 	// }
+// 	// if issue.ReaderID != readerIDUint {
+// 	// 	utils.RespondJSON(c, http.StatusUnauthorized, "You are not authorized to return this book", nil)
+// 	// 	return
+// 	// }
+
+// 	// Update issue record with return date
+// 	now := time.Now()
+// 	issue.ReturnDate = now.Format("2006-01-02 15:04:05")
+// 	issue.IssueStatus = "Returned"
+
+// 	if err := config.DB.Save(&issue).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update issue record", nil)
+// 		return
+// 	}
+
+// 	// Update book inventory (increase available copies)
+// 	var book models.BookInventory
+// 	if err := config.DB.Where("isbn = ?", issue.ISBN).First(&book).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusNotFound, "Book inventory record not found", nil)
+// 		return
+// 	}
+
+// 	book.AvailableCopies++
+// 	if err := config.DB.Save(&book).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update book inventory", nil)
+// 		return
+// 	}
+
+// 	//update the requestType in requestEvent
+// 	var request models.RequestEvent
+// 	if err := config.DB.Where("isbn = ?", issue.ISBN).First(&request).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusNotFound, "Request record not found", nil)
+// 		return
+// 	}
+// 	request.RequestType = "Return"
+// 	if err := config.DB.Save(&request).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to update request record", nil)
+// 		return
+// 	}
+
+// 	// utils.RespondJSON(c, http.StatusOK, "Book returned successfully", gin.H{"issue": issue, "book": book, "request": request})
+// 	utils.RespondJSON(c, http.StatusOK, "Book returned successfully", nil)
+// }

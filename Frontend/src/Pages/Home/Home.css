@@ -1,86 +1,86 @@
 .home-wrapper {
-	overflow: hidden;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	background: var(--bg-color-white);
-	font-family: var(--font-family);
-	min-height: calc(100vh - var(--navbar-height));
-	width: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background: var(--bg-color-white);
+    font-family: var(--font-family);
+    min-height: calc(100vh - var(--navbar-height));
+    width: 100%;
 }
 
 .logo-centered {
-	height: 50%;
-	width: 50%;
-	padding-top: 10px;
-	padding-bottom: 10px;
-	margin: 0 auto;
+    height: 50%;
+    width: 50%;
+    padding-top: 10px;
+    /* padding-bottom: 10px; */
+    margin: 0 auto;
 }
 
 .logo-centered img {
-	max-width: 100%;
-	height: auto;
-	background-repeat: no-repeat;
-	background-size: contain;
+    max-width: 100%;
+    height: auto;
+    background-repeat: no-repeat;
+    background-size: contain;
 }
 
 .search-box {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin: 20px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
 }
 
 .search-box input[type="text"] {
-	padding: 10px;
-	margin-left: 10px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	width: 200px;
+    padding: 10px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 200px;
 }
 
 .search-box .dropdown-filter {
-	margin-left: 10px;
+    margin-left: 10px;
 }
 
 .search-box select {
-	padding: 10px;
-	border: 1px solid var(--bg-color-gray);
-	border-radius: 4px;
+    padding: 10px;
+    border: 1px solid var(--bg-color-gray);
+    border-radius: 4px;
 }
 
 .search-box select option {
-	padding: 10px;
-	background-color: var(--bg-color-white);
-	color: var(--bg-color-black);
+    padding: 10px;
+    background-color: var(--bg-color-white);
+    color: var(--bg-color-black);
 }
 
 .multi-options {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	flex-wrap: wrap;
-	margin: 20px 0;
-	gap: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+    gap: 5px;
 }
 
 .multi-options button {
-	width: 180px;
-	padding: 10px 20px 10px 20px;
-	margin: auto 15px;
-	border: 1px solid var(--bg-color-gray);
-	border-radius: 4px;
-	font-family: var(--font-family);
-	text-transform: uppercase;
+    width: 180px;
+    padding: 10px 20px 10px 20px;
+    margin: auto 15px;
+    border: 1px solid var(--bg-color-gray);
+    border-radius: 4px;
+    font-family: var(--font-family);
+    text-transform: uppercase;
 }
 
 .multi-options button:hover {
-	border: 1px solid rgb(0, 89, 255);
+    border: 1px solid rgb(0, 89, 255);
 }
 
 .book-cards {
-	font-family: var(--font-family);
-	display: flex;
-	flex-wrap: wrap;
-	place-content: center;
+    font-family: var(--font-family);
+    display: flex;
+    flex-wrap: wrap;
+    place-content: center;
 }
