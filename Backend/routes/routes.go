@@ -22,7 +22,7 @@ func Routes(router *gin.Engine) {
 	libraryGroup := router.Group("/")
 	libraryGroup.Use(middlewares.AuthMiddleware())
 	{
-		libraryGroup.POST("/library", controllers.CreateLibrary) // Create Library
+		libraryGroup.POST("/library", middlewares.RoleMiddleware("reader"), controllers.CreateLibrary) // Create Library
 	}
 
 	// Book Routes
@@ -46,5 +46,14 @@ func Routes(router *gin.Engine) {
 		requestAndIssuesGroup.POST("/request", middlewares.RoleMiddleware("reader"), controllers.CreateRequest)                  // Create Request
 		requestAndIssuesGroup.PUT("/approve-issue/:id", middlewares.RoleMiddleware("admin"), controllers.ApproveAndIssueRequest) // Approve Request and Issue Book
 		requestAndIssuesGroup.PUT("/return/:id", middlewares.RoleMiddleware("reader"), controllers.ReturnBook)                   // Return book by isbn
+	}
+
+	//Additional Routes
+	additionalGroup := router.Group("/")
+	additionalGroup.Use(middlewares.AuthMiddleware())
+	{
+		additionalGroup.GET("/profile", controllers.GetProfile) //Get Profile
+		additionalGroup.POST("/refresh-token", controllers.RefreshToken)
+		additionalGroup.GET("/profile-by-token", controllers.GetProfileByToken)
 	}
 }

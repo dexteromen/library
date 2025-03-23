@@ -22,8 +22,9 @@ type Library struct {
 }
 
 type BookInventory struct {
-	BookID          uint   `gorm:"primaryKey;autoIncrement" json:"book_id"`
-	ISBN            string `gorm:"primaryKey;autoIncrement:false" json:"isbn"`
+	BookID uint   `gorm:"primaryKey;autoIncrement" json:"book_id"`
+	ISBN   string `gorm:"unique" json:"isbn"`
+	// ISBN            string `gorm:"unique;primaryKey;autoIncrement:false;" json:"isbn"`
 	LibID           uint   `json:"lib_id,omitempty"`
 	Title           string `gorm:"unique" json:"title"`
 	Authors         string `json:"authors"`

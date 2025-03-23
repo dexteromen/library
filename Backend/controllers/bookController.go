@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"library/config"
 	"library/models"
 	"library/utils"
@@ -26,7 +27,8 @@ import (
 func CreateBook(c *gin.Context) {
 	var book models.BookInventory
 	if err := c.ShouldBindJSON(&book); err != nil {
-		utils.RespondJSON(c, http.StatusBadRequest, "Invalid input", nil)
+		fmt.Println(book)
+		utils.RespondJSON(c, http.StatusBadRequest, "Invalid input", err)
 		return
 	}
 
@@ -41,7 +43,7 @@ func CreateBook(c *gin.Context) {
 	//update user lib_id of the book
 	book.LibID = user.LibID
 	if err := config.DB.Create(&book).Error; err != nil {
-		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create book", nil)
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create book", err)
 		return
 	}
 

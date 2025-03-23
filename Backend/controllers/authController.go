@@ -90,9 +90,35 @@ func SignUp(c *gin.Context) {
 	hashedPassword, _ := utils.HashPassword(user.Password)
 	user.Password = hashedPassword
 	user.Email = strings.ToLower(user.Email)
+
+	//Already in DB
+	var existingDetails models.User
+	config.DB.Where("email = ?", user.Email).Find(&existingDetails)
+	if existingDetails.ID != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Email Already Exist."})
+		return
+	}
+	var existingDetails1 models.User
+	config.DB.Where("contact_number = ?", user.ContactNumber).Find(&existingDetails1)
+	if existingDetails1.ID != 0 {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Contact Number Already Exist."})
+		return
+	}
+	// if err := config.DB.Where("email = ?", user.Email).Find(&existingDetails).Error; err == nil {
+	// 	fmt.Println("Already ",existingDetails)
+	// 	utils.RespondJSON(c, http.StatusBadRequest, "Email Already Exist !!", nil)
+	// 	return
+	// }
+	// if err := config.DB.Where(&existingDetails, "contact_number = ?", user.ContactNumber).Error; err == nil {
+	// 	fmt.Println(existingDetails)
+	// 	utils.RespondJSON(c, http.StatusBadRequest, "Contact Number Already Exists.", nil)
+	// 	return
+	// }
+
 	config.DB.Create(&user)
 
 	utils.RespondJSON(c, http.StatusCreated, "User created successfully", gin.H{"user": user})
+	// utils.RespondJSON(c, http.StatusCreated, "User created successfully", nil)
 }
 
 // SignIn updates to store session
@@ -155,7 +181,7 @@ func SignIn(c *gin.Context) {
 
 	// Store the new session in the database
 	config.DB.Create(&session)
-	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt})
+	utils.RespondJSON(c, http.StatusOK, "User logged-in successfully !!", gin.H{"token": token, "expiry_time": session.ExpiresAt, "user_id": user.ID})
 }
 
 // SignOut godoc
