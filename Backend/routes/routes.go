@@ -45,7 +45,8 @@ func Routes(router *gin.Engine) {
 		requestAndIssuesGroup.GET("/issues", controllers.GetIssues)                                                              // Get all issues
 		requestAndIssuesGroup.POST("/request", middlewares.RoleMiddleware("reader"), controllers.CreateRequest)                  // Create Request
 		requestAndIssuesGroup.PUT("/approve-issue/:id", middlewares.RoleMiddleware("admin"), controllers.ApproveAndIssueRequest) // Approve Request and Issue Book
-		requestAndIssuesGroup.PUT("/return/:id", middlewares.RoleMiddleware("reader"), controllers.ReturnBook)                   // Return book by isbn
+		// requestAndIssuesGroup.PUT("/return/:id", middlewares.RoleMiddleware("reader"), controllers.ReturnBook)                   // Return book by isbn
+		requestAndIssuesGroup.PUT("/return/:reader_id/:isbn", middlewares.RoleMiddleware("reader"), controllers.ReturnBook)
 	}
 
 	//Additional Routes

@@ -1,5 +1,4 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-
 :root {
 	--font-name: "Montserrat", sans-serif;
 }
@@ -29,8 +28,9 @@
 }
 
 .logo-name {
-	font-size: 20px;
-	font-family: var(--font-name);
+	/* font-size: 20px; */
+	font-size: 1.5em;
+	font-family: var(--font-gilroy-mediumitalic);
 }
 
 .nav-bar .links {

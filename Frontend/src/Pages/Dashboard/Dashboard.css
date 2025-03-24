@@ -20,7 +20,7 @@
 	margin-bottom: 20px;
 	text-transform: uppercase;
 	font-family: var(--font-family);
-	font-weight: 500;
+	font-weight: 600;
 }
 
 .widget-container {
@@ -75,6 +75,42 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+
+	.button-delete {
+		background: #ff4742;
+		border: 1px solid #ff4742;
+		border-radius: 6px;
+		box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+		box-sizing: border-box;
+		color: #ffffff;
+		cursor: pointer;
+		display: inline-block;
+		font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+		font-size: 15px;
+		font-weight: 800;
+		line-height: 16px;
+		min-height: 30px;
+		outline: 0;
+		padding: 2px 14px;
+		text-align: center;
+		text-rendering: geometricprecision;
+		text-transform: none;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
+		vertical-align: middle;
+	}
+
+	.button-delete:hover,
+	.button-delete:active {
+		background-color: initial;
+		background-position: 0 0;
+		color: #ff4742;
+	}
+
+	.button-delete:active {
+		opacity: 0.5;
+	}
 }
 
 /* .book-requests__approve-button {
@@ -138,4 +174,40 @@
 	padding-bottom: 6px;
 	font-family: var(--font-family);
 	/* border: 1px solid green; */
+}
+
+.book-approve-btn {
+	background: #34d842;
+	border: 1px solid #42ff52;
+	border-radius: 6px;
+	box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+	box-sizing: border-box;
+	color: #ffffff;
+	cursor: pointer;
+	display: inline-block;
+	font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+	font-size: 15px;
+	font-weight: 800;
+	line-height: 16px;
+	min-height: 30px;
+	outline: 0;
+	padding: 2px 14px;
+	text-align: center;
+	text-rendering: geometricprecision;
+	text-transform: none;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	vertical-align: middle;
+}
+
+.book-approve-btn:hover,
+.book-approve-btn:active {
+	background-color: initial;
+	background-position: 0 0;
+	color: #24b430;
+}
+
+.book-approve-btn:active {
+	opacity: 0.5;
 }

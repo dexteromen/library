@@ -3,58 +3,22 @@ import "./Home.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import Card from "../../Components/Card/Card";
 import { IoSearch } from "react-icons/io5";
-import { Link } from "react-router-dom";
-import { getBooks, searchBooks } from "../../API/API";
-
-const books = [
-	{
-		isbn: "978-3-16-148410-0",
-		title: "The Great Gatsby",
-		author: "F. Scott Fitzgerald",
-		publisher: "Scribner",
-		version: "1st Edition",
-	},
-	{
-		isbn: "978-0-7432-7356-5",
-		title: "To Kill a Mockingbird",
-		author: "Harper Lee",
-		publisher: "J.B. Lippincott & Co.",
-		version: "1st Edition",
-	},
-	{
-		isbn: "978-0-452-28423-4",
-		title: "1984",
-		author: "George Orwell",
-		publisher: "Secker & Warburg",
-		version: "1st Edition",
-	},
-	{
-		isbn: "978-0-7432-7356-6",
-		title: "Pride and Prejudice",
-		author: "Jane Austen",
-		publisher: "T. Egerton",
-		version: "1st Edition",
-	},
-	{
-		isbn: "978-0-7432-7356-7",
-		title: "The Catcher in the Rye",
-		author: "J.D. Salinger",
-		publisher: "Little, Brown and Company",
-		version: "1st Edition",
-	},
-	{
-		isbn: "978-0-7432-7356-8",
-		title: "The Hobbit",
-		author: "J.R.R. Tolkien",
-		publisher: "George Allen & Unwin",
-		version: "1st Edition",
-	},
-];
+import { Link, useNavigate } from "react-router-dom";
+import { getBooks, searchBooks, getProfile } from "../../API/API";
 
 export default function Home() {
+	const navigate = useNavigate();
 	const [allbooks, setAllBooks] = useState([]);
 	const [searchTerm, setSearchTerm] = useState("");
 	const [filter, setFilter] = useState("title");
+	const [user, setUser] = useState({
+		name: "",
+		email: "",
+		role: "",
+		contact_number: "",
+		libid: 0,
+	});
+	const [update, setUpdate] = useState(false); // New state to trigger re-render
 
 	const handleSearchChange = (e) => {
 		setSearchTerm(e.target.value);
@@ -99,9 +63,30 @@ export default function Home() {
 			}
 		}
 		fetchSearchResults();
-	}, [searchTerm, filter]);
+
+		async function fetchUserData() {
+			try {
+				const res = await getProfile();
+				const userData = res.data.data;
+				// console.log(userData);
+				setUser({
+					name: userData.name,
+					email: userData.email,
+					role: userData.role,
+					contact_number: userData.contact_number,
+					libid: userData.lib_id,
+				});
+			} catch (error) {
+				console.error("Token not found in localStorage");
+			}
+		}
+		fetchUserData();
+	}, [searchTerm, filter, update]);
 
 	// console.log(allbooks);
+	const setUpdates = () => {
+		setUpdate(!update);
+	};
 
 	return (
 		<>
@@ -129,24 +114,27 @@ export default function Home() {
 					</div>
 				</div>
 				<div className="multi-options">
-					{/* <Link to="/home">
-                        <button>Home</button>
-                    </Link> */}
-					<Link to="/dashboard">
-						<button>Dashboard</button>
-					</Link>
-					<Link to="/create-book">
-						<button>Create Book</button>
-					</Link>
-					<Link to="/create-library">
-						<button>Create Library</button>
-					</Link>
-					<Link to="/manage-books">
-						<button>Manage Books</button>
-					</Link>
-					{/* <Link to="/temp">
-						<button>Temp</button>
-					</Link> */}
+					{user.role === "admin" && (
+						<Link to="/dashboard">
+							<button>Dashboard</button>
+						</Link>
+					)}
+					{user.role === "owner" && (
+						<Link to="/create-book">
+							<button>Create Book</button>
+						</Link>
+					)}
+					{user.role === "owner" ||
+						(user.role === "reader" && (
+							<Link to="/create-library">
+								<button>Create Library</button>
+							</Link>
+						))}
+					{user.role === "reader" && (
+						<Link to="/manage-books-reader">
+							<button>Manage Books</button>
+						</Link>
+					)}
 				</div>
 				<div className="book-cards">
 					{filteredBooks.length > 0 ? (
@@ -158,6 +146,11 @@ export default function Home() {
 								author={book.authors}
 								publisher={book.publisher}
 								version={book.version}
+								lib_id={book.lib_id}
+								total_copies={book.total_copies}
+								available_copies={book.available_copies}
+								user={user}
+								updates={setUpdates}
 							/>
 						))
 					) : (

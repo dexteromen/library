@@ -49,19 +49,87 @@ function Signup() {
 
 	const validate = (formData) => {
 		let tempErrors = {};
-		if (!formData.name) tempErrors.name = "Name is required";
-		if (formData.contact_number.length !== 10)
-			tempErrors.contact_number = "Contact number must be 10 digits";
-		if (!formData.email) tempErrors.email = "Email is required";
-		if (!/\S+@\S+\.\S+/.test(formData.email))
+
+		// Validate Name: Only letters and spaces
+		if (!formData.name) {
+			tempErrors.name = "Name is required";
+		} else if (!/^[A-Za-z\s]+$/.test(formData.name)) {
+			tempErrors.name = "Name must contain only letters and spaces";
+		}
+
+		// Validate Contact Number: Exactly 10 digits
+		if (!formData.contact_number) {
+			tempErrors.contact_number = "Contact number is required";
+		} else if (!/^\d{10}$/.test(formData.contact_number)) {
+			tempErrors.contact_number =
+				"Contact number must be exactly 10 digits";
+		}
+
+		// Validate Email: Format
+		if (!formData.email) {
+			tempErrors.email = "Email is required";
+		} else if (!/\S+@\S+\.\S+/.test(formData.email)) {
 			tempErrors.email = "Email is invalid";
-		if (!formData.password) tempErrors.password = "Password is required";
-		if (formData.password.length < 6)
-			tempErrors.password = "Password must be at least 6 characters";
-		if (formData.password !== formData.confirmPassword)
+		}
+
+		// Validate Password: 8 characters, uppercase, number, special character
+		if (!formData.password) {
+			tempErrors.password = "Password is required";
+		} else {
+			// Check for minimum length
+			if (formData.password.length < 8) {
+				tempErrors.password =
+					"Password must be at least 8 characters long";
+			}
+
+			// Check for at least one uppercase letter
+			else if (!/[A-Z]/.test(formData.password)) {
+				tempErrors.password =
+					"Password must include 1 uppercase letter";
+			}
+
+			// Check for at least one number
+			else if (!/\d/.test(formData.password)) {
+				tempErrors.password = "Password must include 1 number";
+			}
+
+			// Check for at least one special character
+			else if (!/[@$!%*?&]/.test(formData.password)) {
+				tempErrors.password =
+					"Password must include 1 special character";
+			}
+		}
+
+		// Validate Confirm Password: Matches Password
+		if (formData.password !== formData.confirmPassword) {
 			tempErrors.confirmPassword = "Passwords do not match";
+		}
+
 		return tempErrors;
 	};
+
+	// const validate = (formData) => {
+	// 	let tempErrors = {};
+	// 	if (!formData.name) tempErrors.name = "Name is required";
+
+	// 	if (formData.contact_number.length !== 10)
+	// 		tempErrors.contact_number = "Contact number must be 10 digits";
+
+	// 	if (!formData.email) tempErrors.email = "Email is required";
+
+	// 	if (!/\S+@\S+\.\S+/.test(formData.email))
+	// 		tempErrors.email = "Email is invalid";
+
+	// 	if (!formData.password) tempErrors.password = "Password is required";
+
+	// 	if (formData.password.length < 6)
+	// 		tempErrors.password = "Password must be at least 6 characters";
+
+	// 	if (formData.password !== formData.confirmPassword)
+	// 		tempErrors.confirmPassword = "Passwords do not match";
+
+	// 	return tempErrors;
+	// };
 
 	const handleSubmit = async (formData) => {
 		console.log("Form submitted successfully");

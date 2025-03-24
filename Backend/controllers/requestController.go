@@ -47,41 +47,101 @@ func CreateRequest(c *gin.Context) {
 		return
 	}
 
-	//Finding Book by ISBN
+	// Finding the book by ISBN
 	var book models.BookInventory
 	if err := config.DB.Where("isbn = ?", request.ISBN).First(&book).Error; err != nil {
 		utils.RespondJSON(c, http.StatusNotFound, "Book not found", nil)
 		return
 	}
 
-	//Checking if book is available
+	// Checking if the book is available
 	if book.AvailableCopies <= 0 {
-		utils.RespondJSON(c, http.StatusConflict, "Request Cannot be made !!, Book is not available.", nil)
+		utils.RespondJSON(c, http.StatusConflict, "Request cannot be made! Book is not available.", nil)
 		return
 	}
 
-	// Because reader is creating the request
 	// Assuming middleware sets user_id in context
 	readerID, _ := c.Get("user_id")
 	readerIDUint, _ := readerID.(uint)
 
-	request.ReaderID = readerIDUint
+	// Checking if the user has already borrowed the book and hasn't returned it
+	var borrowedRequest models.RequestEvent
+	if err := config.DB.Where("isbn = ? AND reader_id = ? AND request_type = ? AND issue_status IN (?, ?)",
+		request.ISBN, readerIDUint, "Borrow", "Approved", "Issued").First(&borrowedRequest).Error; err == nil {
+		utils.RespondJSON(c, http.StatusConflict, "You must return the book before making another request for it.", nil)
+		return
+	}
 
-	//checking if user has already requested for the book
+	// Checking if there is an existing pending request
+	var pendingRequest models.RequestEvent
+	if err := config.DB.Where("isbn = ? AND reader_id = ? AND issue_status = ?", request.ISBN, readerIDUint, "Pending").First(&pendingRequest).Error; err == nil {
+		utils.RespondJSON(c, http.StatusConflict, "You already have a pending request for this book.", nil)
+		return
+	}
+
+	// Checking if the user has already requested the book and approval_date is NULL
 	var existingRequest models.RequestEvent
-	if err := config.DB.Where("isbn = ? AND reader_id = ? AND approval_date IS NULL", request.ISBN, request.ReaderID).First(&existingRequest).Error; err == nil {
+	if err := config.DB.Where("isbn = ? AND reader_id = ? AND approval_date IS NULL", request.ISBN, readerIDUint).First(&existingRequest).Error; err == nil {
 		utils.RespondJSON(c, http.StatusConflict, "Request already exists", nil)
 		return
 	}
 
+	// Creating new request
 	request.ReaderID = readerIDUint
 	request.RequestDate = time.Now().Format("2006-01-02 15:04:05")
 	request.RequestType = "Borrow"
 	request.IssueStatus = "Pending"
 
-	config.DB.Create(&request)
+	if err := config.DB.Create(&request).Error; err != nil {
+		utils.RespondJSON(c, http.StatusInternalServerError, "Failed to create request", gin.H{"error": err.Error()})
+		return
+	}
+
 	utils.RespondJSON(c, http.StatusCreated, "Request Created", request)
 }
+
+// func CreateRequest(c *gin.Context) {
+// 	var request models.RequestEvent
+// 	if err := c.ShouldBindJSON(&request); err != nil {
+// 		utils.RespondJSON(c, http.StatusBadRequest, "Cannot Bind JSON Data", gin.H{"error": err.Error()})
+// 		return
+// 	}
+
+// 	//Finding Book by ISBN
+// 	var book models.BookInventory
+// 	if err := config.DB.Where("isbn = ?", request.ISBN).First(&book).Error; err != nil {
+// 		utils.RespondJSON(c, http.StatusNotFound, "Book not found", nil)
+// 		return
+// 	}
+
+// 	//Checking if book is available
+// 	if book.AvailableCopies <= 0 {
+// 		utils.RespondJSON(c, http.StatusConflict, "Request Cannot be made !!, Book is not available.", nil)
+// 		return
+// 	}
+
+// 	// Because reader is creating the request
+// 	// Assuming middleware sets user_id in context
+// 	readerID, _ := c.Get("user_id")
+// 	readerIDUint, _ := readerID.(uint)
+
+// 	request.ReaderID = readerIDUint
+
+// 	//checking if user has already requested for the book
+// 	var existingRequest models.RequestEvent
+// 	if err := config.DB.Where("isbn = ? AND reader_id = ? AND approval_date IS NULL", request.ISBN, request.ReaderID).First(&existingRequest).Error; err == nil {
+// 		utils.RespondJSON(c, http.StatusConflict, "Request already exists", nil)
+// 		return
+// 	}
+
+// 	request.ReaderID = readerIDUint
+// 	request.RequestDate = time.Now().Format("2006-01-02 15:04:05")
+// 	request.RequestType = "Borrow"
+// 	request.IssueStatus = "Pending"
+
+// 	config.DB.Create(&request)
+// 	utils.RespondJSON(c, http.StatusCreated, "Request Created", request)
+// }
 
 /*
 // Approve Request

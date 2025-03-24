@@ -1,58 +1,59 @@
 .home-wrapper {
-    font-family: var(--font-family);
+	font-family: var(--font-family);
+	position: relative;
 }
 
 .book-wrapper {
-    /* display: flex; */
-    width: 80%;
-    margin: 0 auto;
-    padding: 10px;
-    text-align: center;
+	/* display: flex; */
+	width: 80%;
+	margin: 0 auto;
+	padding: 10px;
+	text-align: center;
 }
 
 .manage-book-title {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-transform: uppercase;
-    margin-bottom: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-transform: uppercase;
+	margin-bottom: 20px;
 }
 
 .book-list {
-    /* border: 1px solid red; */
-    box-sizing: content-box;
-    padding: 0;
-    margin: 0;
+	/* border: 1px solid red; */
+	box-sizing: content-box;
+	padding: 0;
+	margin: 0;
 }
 
 .book {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 5px;
-    padding: 15px;
-    border: 1px solid var(--bg-color-gray);
-    border-radius: 10px;
-    /* background-color: #f0f0f0; */
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin: 5px;
+	padding: 15px;
+	border: 1px solid var(--bg-color-gray);
+	border-radius: 10px;
+	/* background-color: #f0f0f0; */
 }
 
 .book-label {
-    font-weight: bold;
-    text-transform: uppercase;
-    width: 200em;
+	font-weight: bold;
+	text-transform: uppercase;
+	width: 200em;
 }
 
 .book-value {
-    font-weight: 400;
-    text-transform: capitalize;
+	font-weight: 400;
+	text-transform: capitalize;
 }
 
 .book-actions {
-    /* button { */
-    /* padding: 10px;
+	/* button { */
+	/* padding: 10px;
         border: 1px solid var(--bg-color-gray);
         border-radius: 4px; */
-    /* width: 180px;
+	/* width: 180px;
         padding: 10px 20px 10px 20px;
         margin: auto 15px;
         border: 1px solid var(--bg-color-gray);
@@ -61,72 +62,72 @@
         text-transform: uppercase;
     } */
 
-    /* From Uiverse.io by nathAd17 */
-    .button {
-        display: flex;
-        justify-content: center;
-        gap: 0.5rem;
-        align-items: center;
-        margin: 0 auto;
-        font-size: 1.125rem;
-        font-weight: 600;
-        background-color: rgb(249, 250, 251);
-        backdrop-filter: blur(10px);
-        position: relative;
-        z-index: 10;
-        padding: 0.5rem 1rem;
-        border: 2px solid rgb(249, 250, 251);
-        border-radius: 9999px;
-        overflow: hidden;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
-            0 4px 6px -2px rgba(0, 0, 0, 0.05);
-        cursor: pointer;
-        transition: color 0.3s ease-in-out;
-    }
+	/* From Uiverse.io by nathAd17 */
+	.button {
+		display: flex;
+		justify-content: center;
+		gap: 0.5rem;
+		align-items: center;
+		margin: 0 auto;
+		font-size: 1.125rem;
+		font-weight: 600;
+		background-color: rgb(249, 250, 251);
+		backdrop-filter: blur(10px);
+		position: relative;
+		z-index: 10;
+		padding: 0.5rem 1rem;
+		border: 2px solid rgb(249, 250, 251);
+		border-radius: 9999px;
+		overflow: hidden;
+		box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1),
+			0 4px 6px -2px rgba(0, 0, 0, 0.05);
+		cursor: pointer;
+		transition: color 0.3s ease-in-out;
+	}
 
-    .button::before {
-        content: "";
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        background-color: rgb(16, 185, 129);
-        /* border-radius: 50%; */
-        transition: all 0.7s ease-in-out;
-        left: -100%;
-        z-index: -10;
-    }
+	.button::before {
+		content: "";
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		background-color: rgb(16, 185, 129);
+		/* border-radius: 50%; */
+		transition: all 0.7s ease-in-out;
+		left: -100%;
+		z-index: -10;
+	}
 
-    .button:hover::before {
-        left: 0;
-        width: 150%;
-    }
+	.button:hover::before {
+		left: 0;
+		width: 150%;
+	}
 
-    .button:hover {
-        color: rgb(249, 250, 251);
-    }
+	.button:hover {
+		color: rgb(249, 250, 251);
+	}
 
-    .button svg {
-        width: 2rem;
-        height: 2rem;
-        padding: 0.5rem;
-        border-radius: 50%;
-        border: 1px solid rgb(55, 65, 81);
-        transform: rotate(45deg);
-        transition: transform 0.3s ease-in-out,
-            background-color 0.3s ease-in-out, border 0.3s ease-in-out;
-    }
+	.button svg {
+		width: 2rem;
+		height: 2rem;
+		padding: 0.5rem;
+		border-radius: 50%;
+		border: 1px solid rgb(55, 65, 81);
+		transform: rotate(45deg);
+		transition: transform 0.3s ease-in-out,
+			background-color 0.3s ease-in-out, border 0.3s ease-in-out;
+	}
 
-    .button:hover svg {
-        transform: rotate(90deg);
-        background-color: rgb(249, 250, 251);
-        border: none;
-    }
+	.button:hover svg {
+		transform: rotate(90deg);
+		background-color: rgb(249, 250, 251);
+		border: none;
+	}
 
-    .button svg path {
-        fill: rgb(31, 41, 55);
-    }
+	.button svg path {
+		fill: rgb(31, 41, 55);
+	}
 
-    .button:hover svg path {
-        fill: rgb(31, 41, 55);
-    }
+	.button:hover svg path {
+		fill: rgb(31, 41, 55);
+	}
 }

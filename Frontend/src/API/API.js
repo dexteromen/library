@@ -92,7 +92,11 @@ export const updateBookById = async (id, bookData) => {
 
 export const deleteBookById = async (id) => {
     var token = localStorage.getItem("token");
-    return await axios.delete(`${API_URL}/book/${id}`);
+    return await axios.delete(`${API_URL}/book/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 };
 
 // Request Issues Return Routes
@@ -132,9 +136,18 @@ export const approveAndIssueRequest = async (id) => {
     });
 };
 
-export const returnBook = async (id) => {
+// export const returnBook = async (id) => {
+//     var token = localStorage.getItem("token");
+//     return await axios.put(`${API_URL}/return/${id}`, {}, {
+//         headers: {
+//             'Authorization': `Bearer ${token}`
+//         }
+//     });
+// };
+
+export const returnBook = async (reader_id,isbn) => {
     var token = localStorage.getItem("token");
-    return await axios.put(`${API_URL}/return/${id}`, {}, {
+    return await axios.put(`${API_URL}/return/${reader_id}/${isbn}`, {}, {
         headers: {
             'Authorization': `Bearer ${token}`
         }

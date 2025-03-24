@@ -47,7 +47,7 @@ export default function Navbar() {
                             <img src={logo} alt="Logo" />
                         </Link>
                     </div>
-                    <div className="logo-name">Z-Lib</div>
+                    <div className="logo-name">z-Library</div>
                 </div>
                 {/* <div className="links">
 					<NavLink to="/">Home</NavLink>

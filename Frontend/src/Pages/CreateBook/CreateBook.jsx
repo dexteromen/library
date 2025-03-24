@@ -5,6 +5,7 @@ import Navbar from "../../Components/Navbar/Navbar";
 import { createBook, refreshToken } from "../../API/API";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
 
 function CreateBook() {
 	const dummyBook = {
@@ -236,11 +237,16 @@ function CreateBook() {
 							</button>
 						</div>
 					</form>
-					<div className="multi-options">
+					<div className="child-back-btn">
+						<Link to="/home">
+							<MdOutlineKeyboardBackspace size={45} />
+						</Link>
+					</div>
+					{/* <div className="multi-options">
 						<Link to="/home">
 							<button>Home</button>
 						</Link>
-					</div>
+					</div> */}
 				</div>
 			</div>
 		</>

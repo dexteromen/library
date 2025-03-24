@@ -53,6 +53,7 @@
 
 .templete-form .input_box {
 	line-height: 50%;
+	position: relative;
 }
 
 .templete-form .input_box label {
@@ -75,6 +76,7 @@
 	background: var(--bg-color-gray);
 	font-size: 17px;
 	padding: 0px 20px;
+	padding-right: 40px; /* Space for the icon */
 	margin-bottom: 10px;
 	transition: 0.2s ease;
 }
@@ -90,6 +92,23 @@
 	/* border-color: #626cd6; */
 	border-color: var(--bg-color-yellow);
 }
+
+/* Password toggle icon styling */
+.password-toggle-icon {
+	position: absolute;
+	right: 15px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
+	font-size: 1.2em;
+	color: #777; /* Adjust color as needed */
+	transition: color 0.2s ease;
+}
+
+.password-toggle-icon:hover {
+	color: var(--bg-color-yellow); /* Hover effect */
+}
+
 .templete-form .input_box .password_title {
 	display: flex;
 	justify-content: space-between;

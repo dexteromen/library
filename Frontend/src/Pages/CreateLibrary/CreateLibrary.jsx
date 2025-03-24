@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./CreateLibrary.css";
 import Navbar from "../../Components/Navbar/Navbar";
 import { createLibrary, refreshToken } from "../../API/API";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { MdOutlineKeyboardBackspace } from "react-icons/md";
 
 function CreateLibrary() {
 	const navigate = useNavigate();
@@ -124,6 +125,11 @@ function CreateLibrary() {
 							</button>
 						</div>
 					</form>
+					<div className="child-back-btn">
+						<Link to="/home">
+							<MdOutlineKeyboardBackspace size={45} />
+						</Link>
+					</div>
 				</div>
 			</div>
 		</>
