@@ -1,16 +1,16 @@
 .card {
-	color: black;
-	width: fit-content;
-	/* border: 2px solid gray; */
-	padding: 20px 20px 20px 20px;
-	margin: 5px 5px 5px 5px;
-	font-family: var(--font-family);
-	border-radius: 20px;
+    color: black;
+    width: fit-content;
+    /* border: 2px solid gray; */
+    padding: 20px 20px 20px 20px;
+    margin: 5px 5px 5px 5px;
+    font-family: var(--font-family);
+    border-radius: 20px;
 
-	/* background: var(--color-blue); */
-	background: #40c4e9a5;
+    /* background: var(--color-blue); */
+    background: #40c4e9a5;
 
-	/* background: rgb(34, 125, 195);
+    /* background: rgb(34, 125, 195);
     background: linear-gradient(
         0deg,
         rgb(37, 102, 158) 0%,
@@ -20,112 +20,217 @@
 }
 
 .book-details {
-	width: 100%;
-	border-collapse: collapse;
-	margin-bottom: 2px;
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 2px;
 }
 
 .book-details .table-label {
-	font-weight: 700;
-	padding: 8px;
-	color: rgb(69, 64, 64);
-	/* background-color: #f5f5f5; */
-	/* border: 1px solid #ddd; */
+    font-weight: 700;
+    padding: 8px;
+    color: rgb(69, 64, 64);
+    /* background-color: #f5f5f5; */
+    /* border: 1px solid #ddd; */
 }
 
 .book-details td {
-	padding: 8px;
-	/* border: 1px solid #ddd; */
+    padding: 8px;
+    /* border: 1px solid #ddd; */
 }
 
 .btn-request {
-	width: 100%;
-	margin-top: 15px;
-	text-transform: uppercase;
-	align-items: center;
-	background-color: #fff;
-	border: 2px solid #000;
-	box-sizing: border-box;
-	color: #000;
-	cursor: pointer;
-	display: inline-flex;
-	fill: #000;
-	font-family: Inter, sans-serif;
-	font-size: 16px;
-	font-weight: 600;
-	height: 48px;
-	justify-content: center;
-	letter-spacing: -0.8px;
-	line-height: 24px;
-	min-width: 140px;
-	outline: 0;
-	padding: 0 17px;
-	text-align: center;
-	text-decoration: none;
-	transition: all 0.3s;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
+    width: 100%;
+    margin-top: 15px;
+    text-transform: uppercase;
+    align-items: center;
+    background-color: #fff;
+    border: 2px solid #000;
+    box-sizing: border-box;
+    color: #000;
+    cursor: pointer;
+    display: inline-flex;
+    fill: #000;
+    font-family: Inter, sans-serif;
+    font-size: 16px;
+    font-weight: 600;
+    height: 48px;
+    justify-content: center;
+    letter-spacing: -0.8px;
+    line-height: 24px;
+    min-width: 140px;
+    outline: 0;
+    padding: 0 17px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
 
-	border-radius: 10px;
+    border-radius: 10px;
 }
 
 .btn-request:focus {
-	color: #171e29;
+    color: #171e29;
 }
 
 .btn-request:hover {
-	border-color: #06f;
-	color: #06f;
-	fill: #06f;
+    border-color: #06f;
+    color: #06f;
+    fill: #06f;
 }
 
 .btn-request:active {
-	border-color: #06f;
-	color: #06f;
-	fill: #06f;
+    border-color: #06f;
+    color: #06f;
+    fill: #06f;
 }
 
 @media (min-width: 768px) {
-	.btn-request {
-		min-width: 170px;
-	}
+    .btn-request {
+        min-width: 170px;
+    }
 }
 
 .button-delete-book {
-	width: 100%;
-	margin-top: 10px;
-	background: #ff4742;
-	border: 1px solid #ff4742;
-	border-radius: 6px;
-	box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
-	box-sizing: border-box;
-	color: #ffffff;
-	cursor: pointer;
-	display: inline-block;
-	font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
-	font-size: 15px;
-	font-weight: 800;
-	line-height: 16px;
-	min-height: 30px;
-	outline: 0;
-	padding: 12px 14px;
-	text-align: center;
-	text-rendering: geometricprecision;
-	text-transform: none;
-	user-select: none;
-	-webkit-user-select: none;
-	touch-action: manipulation;
-	vertical-align: middle;
+    width: 100%;
+    margin-top: 10px;
+    background: #ff4742;
+    border: 1px solid #ff4742;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 30px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
 }
 
 .button-delete-book:hover,
 .button-delete-book:active {
-	background-color: initial;
-	background-position: 0 0;
-	color: #ff4742;
+    background-color: initial;
+    background-position: 0 0;
+    color: #ff4742;
 }
 
 .button-delete-book:active {
-	opacity: 0.5;
+    opacity: 0.5;
+}
+
+.button-update-book {
+    width: 100%;
+    margin-top: 10px;
+    background: #1dd14a;
+    border: 2px solid #1dc046;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #ffffff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito, roboto, proxima-nova, "proxima nova", sans-serif;
+    font-size: 15px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 30px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+}
+
+.button-update-book:hover,
+.button-update-book:active {
+    background-color: initial;
+    background-position: 0 0;
+    color: #1dd14a;
+}
+
+.button-update-book:active {
+    opacity: 0.9;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.overlay-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    max-width: 90%;
+}
+
+.overlay-content h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.overlay-content form {
+    display: flex;
+    flex-direction: column;
+}
+
+.overlay-content label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.overlay-content input {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.overlay-content button {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 3px;
+    background: #007bff;
+    color: white;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.overlay-content button[type="button"] {
+    background: #6c757d;
+}
+
+.overlay-content button:hover {
+    opacity: 0.9;
 }

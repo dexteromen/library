@@ -8,132 +8,133 @@ import "react-toastify/dist/ReactToastify.css";
 import { MdOutlineKeyboardBackspace } from "react-icons/md";
 
 function CreateLibrary() {
-	const navigate = useNavigate();
-	const [formData, setFormData] = useState({
-		email: "",
-		library_name: "",
-	});
-	const [errors, setErrors] = useState({});
-	const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        // email: "",
+        library_name: "",
+    });
+    const [errors, setErrors] = useState({});
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-	const handleChange = (event) => {
-		const { name, value } = event.target;
-		setFormData({
-			...formData,
-			[name]: value,
-		});
-	};
+    const handleChange = (event) => {
+        const { name, value } = event.target;
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+    };
 
-	const validate = () => {
-		const newErrors = {};
+    const validate = () => {
+        const newErrors = {};
 
-		if (!formData.email) newErrors.email = "User Id is required";
+        // if (!formData.email) newErrors.email = "User Id is required";
 
-		if (!formData.library_name)
-			newErrors.library_name = "Library name is required";
+        if (!formData.library_name)
+            newErrors.library_name = "Library name is required";
 
-		if (formData.library_name && formData.library_name.length < 5)
-			newErrors.library_name =
-				"Library name must be at least 5 characters long";
+        if (formData.library_name && formData.library_name.length < 5)
+            newErrors.library_name =
+                "Library name must be at least 5 characters long";
 
-		return newErrors;
-	};
+        return newErrors;
+    };
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		const newErrors = validate();
-		if (Object.keys(newErrors).length > 0) {
-			setErrors(newErrors);
-		} else {
-			setErrors({});
-			setIsSubmitting(true);
-		}
-	};
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const newErrors = validate();
+        if (Object.keys(newErrors).length > 0) {
+            setErrors(newErrors);
+        } else {
+            setErrors({});
+            setIsSubmitting(true);
+        }
+    };
 
-	useEffect(() => {
-		if (!isSubmitting) return;
+    useEffect(() => {
+        if (!isSubmitting) return;
 
-		async function fetchData() {
-			try {
-				const res = await createLibrary(formData.library_name);
-				console.log("Library Created Successfully");
-				console.log(res);
-				const newToken = res.data.data.token;
-				localStorage.setItem("token", newToken);
-				toast.success("Library Created Successfully.");
-				// toast.success("Token Updated Successfully.");
+        async function fetchData() {
+            try {
+                // console.log(formData);
+                const res = await createLibrary(formData.library_name);
+                console.log("Library Created Successfully");
+                console.log(res);
+                const newToken = res.data.data.token;
+                localStorage.setItem("token", newToken);
+                toast.success("Library Created Successfully.");
+                // toast.success("Token Updated Successfully.");
 
-				setTimeout(() => {
-					navigate("/create-book");
-				}, 3000);
-			} catch (error) {
-				var err = error.response.data.data;
-				toast.error(err);
-				// console.log(error.response.data.error);
-				var errMeassage = error.response.data.error;
-				toast.error(errMeassage);
-			} finally {
-				setIsSubmitting(false);
-			}
-		}
-		fetchData();
-	}, [isSubmitting, formData]);
+                setTimeout(() => {
+                    navigate("/create-book");
+                }, 3000);
+            } catch (error) {
+                var err = error.response.data.data;
+                toast.error(err);
+                // console.log(error.response.data.error);
+                var errMeassage = error.response.data.error;
+                toast.error(errMeassage);
+            } finally {
+                setIsSubmitting(false);
+            }
+        }
+        fetchData();
+    }, [isSubmitting, formData]);
 
-	return (
-		<>
-			<Navbar />
-			<div className="create-book-wrapper">
-				<ToastContainer position="top-center" />
-				<div className="create-book-form-container">
-					<h1 className="create-book-title">Create Library</h1>
-					<form onSubmit={handleSubmit}>
-						<div className="form-group">
-							<label htmlFor="email">Email</label>
-							<input
-								type="email"
-								name="email"
-								id="email"
-								placeholder="Enter Email"
-								value={formData.email}
-								onChange={handleChange}
-							/>
-							{errors.email && (
-								<span className="error">{errors.email}</span>
-							)}
-						</div>
+    return (
+        <>
+            <Navbar />
+            <div className="create-book-wrapper">
+                <ToastContainer position="top-center" />
+                <div className="create-book-form-container">
+                    <h1 className="create-book-title">Create Library</h1>
+                    <form onSubmit={handleSubmit}>
+                        {/* <div className="form-group">
+                            <label htmlFor="email">Email</label>
+                            <input
+                                type="email"
+                                name="email"
+                                id="email"
+                                placeholder="Enter Email"
+                                value={formData.email}
+                                onChange={handleChange}
+                            />
+                            {errors.email && (
+                                <span className="error">{errors.email}</span>
+                            )}
+                        </div> */}
 
-						<div className="form-group">
-							<label htmlFor="library_name">Library Name</label>
-							<input
-								type="text"
-								name="library_name"
-								id="library_name"
-								placeholder="Enter Library Name"
-								value={formData.library_name}
-								onChange={handleChange}
-							/>
-							{errors.library_name && (
-								<span className="error">
-									{errors.library_name}
-								</span>
-							)}
-						</div>
+                        <div className="form-group">
+                            <label htmlFor="library_name">Library Name</label>
+                            <input
+                                type="text"
+                                name="library_name"
+                                id="library_name"
+                                placeholder="Enter Library Name"
+                                value={formData.library_name}
+                                onChange={handleChange}
+                            />
+                            {errors.library_name && (
+                                <span className="error">
+                                    {errors.library_name}
+                                </span>
+                            )}
+                        </div>
 
-						<div className="btn-submit">
-							<button className="button-59" type="submit">
-								Submit
-							</button>
-						</div>
-					</form>
-					<div className="child-back-btn">
-						<Link to="/home">
-							<MdOutlineKeyboardBackspace size={45} />
-						</Link>
-					</div>
-				</div>
-			</div>
-		</>
-	);
+                        <div className="btn-submit">
+                            <button className="button-59" type="submit">
+                                Submit
+                            </button>
+                        </div>
+                    </form>
+                    <div className="child-back-btn">
+                        <Link to="/home">
+                            <MdOutlineKeyboardBackspace size={45} />
+                        </Link>
+                    </div>
+                </div>
+            </div>
+        </>
+    );
 }
 
 export default CreateLibrary;

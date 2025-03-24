@@ -87,7 +87,19 @@ export const createBook = async (bookData) => {
 
 export const updateBookById = async (id, bookData) => {
     var token = localStorage.getItem("token");
-    return await axios.put(`${API_URL}/book/${id}`, bookData);
+    return await axios.put(`${API_URL}/book/${id}`, {
+        "isbn": bookData.isbn,
+        "title": bookData.title,
+        "authors": bookData.authors,
+        "publisher": bookData.publisher,
+        "version": bookData.version,
+        "total_copies": parseInt(bookData.total_copies, 10),
+        "available_copies": parseInt(bookData.available_copies, 10)
+    }, {
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 };
 
 export const deleteBookById = async (id) => {
@@ -145,7 +157,7 @@ export const approveAndIssueRequest = async (id) => {
 //     });
 // };
 
-export const returnBook = async (reader_id,isbn) => {
+export const returnBook = async (reader_id, isbn) => {
     var token = localStorage.getItem("token");
     return await axios.put(`${API_URL}/return/${reader_id}/${isbn}`, {}, {
         headers: {
