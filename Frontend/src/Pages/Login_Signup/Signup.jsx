@@ -54,7 +54,7 @@ function Signup() {
 		if (!formData.name) {
 			tempErrors.name = "Name is required";
 		} else if (!/^[A-Za-z\s]+$/.test(formData.name)) {
-			tempErrors.name = "Name must contain only letters and spaces";
+			tempErrors.name = "Only letters and spaces";
 		}
 
 		// Validate Contact Number: Exactly 10 digits
@@ -65,11 +65,18 @@ function Signup() {
 				"Contact number must be exactly 10 digits";
 		}
 
-		// Validate Email: Format
+		// // Validate Email: Format
+		// if (!formData.email) {
+		// 	tempErrors.email = "Email is required";
+		// } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+		// 	tempErrors.email = "Email is invalid";
+		// }
+
+		// Validate Gmail Email: Format
 		if (!formData.email) {
 			tempErrors.email = "Email is required";
-		} else if (!/\S+@\S+\.\S+/.test(formData.email)) {
-			tempErrors.email = "Email is invalid";
+		} else if (!/^[a-zA-Z0-9._%+-]+@gmail\.com$/.test(formData.email)) {
+			tempErrors.email = "Enter Valid Gmail Address";
 		}
 
 		// Validate Password: 8 characters, uppercase, number, special character
@@ -143,7 +150,7 @@ function Signup() {
 				role: formData.role,
 			};
 			const res = await signUp(userData);
-			// console.log(res);
+			console.log(res);
 			// console.log("User created successfully !!");
 			toast.success("User created successfully.");
 			setTimeout(() => {
@@ -152,6 +159,14 @@ function Signup() {
 		} catch (error) {
 			var err = error.response.data.error;
 			toast.error(err);
+
+			if (
+				error.response.data.message ===
+				"Cannot create more than one admin"
+			) {
+				// console.log("cant");
+				toast.error("Can Not Create One More Admin.");
+			}
 			// console.log(error);
 		}
 	};

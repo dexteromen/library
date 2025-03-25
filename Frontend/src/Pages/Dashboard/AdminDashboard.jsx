@@ -29,7 +29,7 @@ function AdminDashboard() {
 			try {
 				const res = await getUsers();
 				const userDetails = res.data.data.User;
-				// console.log("User Details: ", userDetails);
+				console.log("User Details: ", userDetails);
 				setUsers(userDetails);
 			} catch (error) {
 				console.log("Error Fetching Users:", error);
@@ -42,7 +42,7 @@ function AdminDashboard() {
 				const parse_user_id = parseInt(user_id);
 				const res = await getUserById(parse_user_id);
 				const adminDetails = res.data.data.User;
-				// console.log("Admin Details: ", adminDetails);
+				console.log("Admin Details: ", adminDetails);
 				setAdmin(adminDetails);
 			} catch (error) {
 				console.log("Error Fetching Admin:", error);
@@ -53,7 +53,7 @@ function AdminDashboard() {
 			try {
 				const res = await getLibraries();
 				const libraryDetails = res.data.data;
-				// console.log("Libraries: ", libraryDetails);
+				console.log("Libraries: ", libraryDetails);
 				setLibraries(libraryDetails);
 			} catch (error) {
 				console.log(error);
@@ -64,7 +64,7 @@ function AdminDashboard() {
 			try {
 				const res = await getRequests();
 				const bookRequestDetails = res.data.data;
-				// console.log("Book Request: ", bookRequestDetails);
+				console.log("Book Request: ", bookRequestDetails);
 				setAllRequests(bookRequestDetails);
 			} catch (error) {
 				console.log(error);
@@ -75,7 +75,7 @@ function AdminDashboard() {
 			try {
 				const res = await getIssues();
 				const issuesDetails = res.data.data;
-				// console.log("All Issues: ", issuesDetails);
+				console.log("All Issues: ", issuesDetails);
 				setAllIssue(issuesDetails);
 			} catch (error) {
 				console.log(error);
